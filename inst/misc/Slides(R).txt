@@ -1,0 +1,34 @@
+library(akqdecay); library(lmomco)
+DVs <- dvget("07030392", sdate="1995-10-01", edate="1995-12-31")
+AKd <- akqdecay(DVs); AKi <- akqdecay(DVs, method ="increasing" )
+
+
+pdf("slides.pdf", useDingbats=FALSE, width=6.5, height=5)
+plot(DVs$Date, DVs$Flow, type="l", log="y", ylim=c(50,1000),
+     xlab="1995", ylab="Discharge, in cfs")
+points(AKd$table$date, AKd$table$fqc, col=2)
+points(AKi$table$date, AKi$table$fqc, col=4)
+mtext("07030392 WOLF RIVER AT LAGRANGE, TN")
+
+
+
+plot(AKd$table$date, AKd$table$days_per_log, col=2,
+     xlab="1995", ylab="Days per log-cycle change")
+points(AKi$table$date, AKi$table$days_per_log, col=4)
+mtext("07030392 WOLF RIVER AT LAGRANGE, TN")
+
+FF <- nonexceeds()
+plot(pp(AKd$table$days_per_log), sort(AKd$table$days_per_log), col=2, log="y",
+     xlab="Nonexceedance probability", ylab="Days per log-cycle decline",
+     ylim=c(5,500))
+lmr <- lmoms(AKd$table$days_per_log)
+gpa <- pargpa(lmr)
+lines(FF, qlmomco(FF, gpa), col=1)
+arrows(0.9, 0.000001, y1=qlmomco(0.9, gpa), col=6)
+arrows(0.9, qlmomco(0.9, gpa), x1=0.000001, col=6)
+text(0.000001, qlmomco(0.9, gpa)+50, round(qlmomco(0.9, gpa),digits=1), pos=4)
+text(0.9, 5, "90th percentile", pos=3)
+mtext("'Gfactor' at 07030392 WOLF RIVER AT LAGRANGE, TN")
+dev.off()
+
+

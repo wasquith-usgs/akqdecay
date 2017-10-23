@@ -1,0 +1,114 @@
+visAnnuals <- function(sites, file="Annuals.pdf", ann_envir=NULL, mon_envir=NULL, pks_envir=NULL, ...) {
+   if(is.null(ann_envir)) {
+      warning(" need to specify the ann_envir environment")
+      return()
+   } else if(! is.environment(ann_envir)) {
+      warning(" ann_envir is not testing as an environment")
+      return()
+   }
+   if(is.null(mon_envir)) {
+      warning(" need to specify the mon_envir environment")
+      return()
+   } else if(! is.environment(mon_envir)) {
+      warning(" mon_envir is not testing as an environment")
+      return()
+   }
+   if(is.null(pks_envir)) {
+      warning(" need to specify the pks_envir environment")
+      return()
+   } else if(! is.environment(pks_envir)) {
+      warning(" pks_envir is not testing as an environment")
+      return()
+   }
+   a <- m <- p <- 0; n <- length(sites)
+   pars <- par(las=1, mgp=c(3,0.5,0))
+   pdf(file, useDingbats=FALSE, width=7, height=5)
+   for(site in sites) {
+      message(site)
+      ann <- NULL
+      try(ann <- dataRetrieval::readNWISstat(site, parameterCd="00060", statReportType="annual"), silent=TRUE)
+      if(is.null(ann)) {
+         message("************************** annual data not found for ", site)
+         assign(site, NA, envir=ann_envir)
+         next
+      }
+      if(length(ann[,1]) == 0) {
+         assign(site, NA, envir=ann_envir)
+      } else {
+         a <- a + 1
+         assign(site, ann,  envir=ann_envir)
+      }
+      mon <- NULL
+      try(mon <- dataRetrieval::readNWISstat(site, parameterCd=c("00060"), statReportType="monthly"), silent=TRUE)
+      if(is.null(mon)) {
+         message("************************** monthly data not found for ", site)
+         assign(site, NA, envir=ann_envir)
+         next
+      }
+      if(length(mon[,1]) == 0) {
+         assign(site, NA, envir=mon_envir)
+      } else {
+         m <- m + 1
+         assign(site, mon,  envir= mon_envir)
+      }
+      pks <- NULL
+      try(pks <- dataRetrieval::readNWISpeak(site, convertType=FALSE), silent=FALSE)
+      if(is.null(pks)) {
+         message("************************** peak data not found for ", site)
+         assign(site, NA, envir=pks_envir)
+         next
+      }
+      if(length(pks[,1]) == 0) {
+         assign(site, NA, envir=pks_envir)
+      } else {
+         p <- p + 1
+         assign(site, pks,  envir= pks_envir)
+      }
+      #print(head(ann))
+      #print(head(mon))
+      suppressWarnings(min <- aggregate(mon, by=list(mon$year_nu), min, na.rm=TRUE))
+      suppressWarnings(max <- aggregate(mon, by=list(mon$year_nu), max, na.rm=TRUE))
+      monOFmin <- sapply(unique(mon$year_nu), function(y) {
+                         tmpa <- mon[mon$year_nu == y,]
+                         tmpa$month_nu[tmpa$mean_va == min$mean_va[min$year_nu == y]][1] })
+      monOFmax <- sapply(unique(mon$year_nu), function(y) {
+                         tmpa <- mon[mon$year_nu == y,]
+                         tmpa$month_nu[tmpa$mean_va == max$mean_va[max$year_nu == y]][1] })
+      mincex <- 1.5*monOFmin/12+0.3; maxcex <- 1.5*monOFmax/12+0.3
+      ylim <- range(c(ann$mean_va, min$mean_va, max$mean_va))
+      if(ylim[1] <= 0) {
+         #message("*** INFINITE MINIMUM")
+         ylim[1] <- 0.001
+      }
+      if(! is.finite(ylim[2])) {
+         message("*** INFINITE MAXIMUM", site)
+      }
+      print(ylim)
+    #  print(range(mon$year_nu))
+
+      plot(ann$year_nu, ann$mean_va, log="y", type="p",
+           xlab="Calendar year", tcl=0.5, ylim=ylim,
+           ylab="Annual streamflow, cfs", col=3, pch=21, bg=8, lwd=0.8, ...)
+      points(min$year_nu, min$mean_va, col=2, cex=mincex, pch=21, bg=8, lwd=0.8)
+      points(max$year_nu, max$mean_va, col=4, cex=maxcex, pch=21, bg=8, lwd=0.8)
+      lines( ann$year_nu, ann$mean_va, col=rgb(0,.8,0))
+      lines( min$year_nu, min$mean_va, col=rgb(.8,0,0))
+      lines( max$year_nu, max$mean_va, col=rgb(0,0,.8))
+      mtext(site)
+   }
+   dev.off()
+   message("processed ",a," annual tables ",m," monthly tables for ",n," sites")
+   par(pars)
+}
+
+
+#library(dataRetrieval)
+wolfsites <- c("07030392", "07030500", "07031650",
+               "07031660", "07031700", "07031740") # USGS streamgages
+
+setwd("~/CodeMine/R_d/FormalPackages/akqdecay/inst/misc")
+D <- read.table("StudySites.txt", header=TRUE, colClasses="character")
+sites <- D$site_no
+ANN <- new.env(); MON <- new.env(); PKS <- new.env()
+visAnnuals(sites, file="ECOms_Annuals.pdf", ann_envir=ANN, mon_envir=MON, pks_envir=PKS)
+

@@ -1,0 +1,26 @@
+Package: akqdecay
+Title: Distributional Statistics of USGS Daily Hydrograph Recession (Decay)
+Version: 0.17
+Depends: R (>= 3.0.0), utils
+Imports: dataRetrieval, lmomco, graphics, sp, stats
+Suggests: mcparallelDo
+Date: 2017-04-03
+Author: William H. Asquith [aut, cre], Rodney R. Knight [ctb]
+Description: Compute distributional statistics of hydrograph recession (decay) based on
+  N-day-over-day changes of daily-mean streamflows for an arbitrary number of U.S.
+  Geological Survey streamgages. Computations are oriented around what are termed
+  Asquith--Knight discharge decay analyses. The analyses are focused on the distributional
+  properties of the N-day-over-day changes, and such changes are defined herein as the
+  inverse of the difference in logarithms of daily-mean streamflow and hence have units of
+  days per log-cycle change. L-moments are computed to summarize distributional geometry
+  of these changes, and so-called Gfactors (geologic factors) are computed as P-percentiles
+  of the changes. Several utilities for data extraction and  manipulation are provided.
+  Hydrograph rises or no change periods can also be considered.
+Maintainer: William H. Asquith <wasquith@usgs.gov>
+License: file LICENSE
+Copyright: This software is in the public domain because it contains materials that   
+  originally came from the United States Geological Survey, an agency of the
+  United States Department of Interior. For more information, see the official
+  USGS copyright policy at
+  http://www.usgs.gov/visual-id/credit_usgs.html#copyright
+NeedsCompilation: no

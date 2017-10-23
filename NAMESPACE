@@ -1,0 +1,42 @@
+importFrom("graphics",
+           "boxplot")
+importFrom("stats", "aggregate", "complete.cases", "cor", "cor.test",
+                    "median", "quantile", "qnorm")
+importFrom("utils", "write.table")
+importFrom("grDevices", "dev.off", "pdf")
+importFrom("graphics", "abline", "legend", "lines", "par", "plot",
+           "points", "text")
+#-----------------------------------------------
+importFrom("dataRetrieval",
+           "readNWISdv", "renameNWISColumns", "readNWISsite")
+importFrom("lmomco",
+           "lmoms", "qlmomco", "lmom2par")
+importFrom("sp",
+           "spTransform", "CRS", "SpatialPointsDataFrame")
+#-----------------------------------------------
+export(akqdecay)
+export(akq_counts)
+export(akq_globe)
+export(akq_lmom)
+export(akq_lmom_yeardecade)
+export(akq_lmom_year)
+export(akq_lmom_decade)
+export(akq_na)
+export(akq_rm)
+export(akq_summary)
+export(akq_table)
+export(akq_write)
+export(akq_scibase)
+export(akq_summaryfilter)
+export(countLMdfs)
+export(dvget)
+export(fdctrend)
+export(fill_akqenv)
+export(fill_akqenv_parallel)
+export(fill_dvenv)
+export(fill_tfdcenv)
+export(gfredo)
+export(lmrdf2gfactor)
+export(gsid2str)
+export(sites_to_SpatialPointsDataFrame)
+export(visFDCtrend)

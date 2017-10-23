@@ -1,0 +1,30 @@
+A1 <- dataRetrieval::readNWISdv("08025360", parameterCd = "00060")
+head(A1); tail(A1)
+B1 <- dataRetrieval::readNWISdv("08025360", parameterCd = "00060", endDate="2016-09-30")
+head(B1)
+C1 <- dataRetrieval::readNWISdv("08025360", parameterCd = "00060", startDate="1971-10-01", endDate="2016-09-30")
+head(C1)
+
+A2 <- dataRetrieval::readNWISdv("08057300", parameterCd = "00060")
+head(A2); tail(A2)
+B2 <- dataRetrieval::readNWISdv("08057300", parameterCd = "00060", endDate="2016-09-30")
+head(B2)
+C2 <- dataRetrieval::readNWISdv("08057300", parameterCd = "00060", startDate="1971-10-01", endDate="2016-09-30")
+head(C2)
+
+readNWISdv2 <- edit(dataRetrieval::readNWISdv) # add option ", verbose=TRUE"
+# and add "if(verbose) message(url)" just after the url is created.
+
+A1 <- readNWISdv2("08025360", parameterCd = "00060")
+head(A1); tail(A1)
+B1 <- readNWISdv2("08025360", parameterCd = "00060", endDate="2016-09-30")
+head(B1)
+C1 <- readNWISdv2("08025360", parameterCd = "00060", startDate="1971-10-01", endDate="2016-09-30")
+head(C1)
+
+A2 <- readNWISdv2("08057300", parameterCd = "00060")
+head(A2); tail(A2)
+B2 <- readNWISdv2("08057300", parameterCd = "00060", endDate="2016-09-30")
+head(B2)
+C2 <- readNWISdv2("08057300", parameterCd = "00060", startDate="1971-10-01", endDate="2016-09-30")
+head(C2)

@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage[left=1.2in, right=1.2in, top=1in, bottom=1in]{geometry}
+\usepackage{xytree}
+\usepackage{mathptmx}
+
+\usepackage{xcolor}
+\definecolor{codegreen}{cmyk}{1, 0, 0.414, 0.565}
+
+\righthyphenmin=3 % USGS does not like two letter
+\lefthyphenmin=3  % leading hyphenations, to go from 2 to 3
+% the lefthyphenmin is defaulted to 3 anyway
+
+\usepackage{listings}
+\lstloadlanguages{R}
+\lstset{basicstyle = \footnotesize\ttfamily,
+        breaklines=true,
+%        frame=tb,
+        framesep=2.5pt,
+        columns=fixed}
+\newcommand{\textic}[1]{\lstinline[basicstyle = \small\ttfamily, columns=fixed]!#1!}
+        
+        
+\newcommand{\datatype}[1]{{\ensuremath{<}{\color{codegreen}\texttt{#1}}\ensuremath{>}}}
+
+
+\newcommand{\elemtext}[3][$\Rightarrow$]{\makebox[.93in][l]{\textic{#2}} #1  \quad #3}
+
+\begin{document}
+
+\begin{lstlisting}
+library(akqdecay)
+# Six USGS streamgages of the Wolf River in Tennessee
+wolfriver <- c("07030392", "07030500", "07031650",
+               "07031660", "07031700", "07031740")
+wolf.env <- new.env()
+fill_dvenv(wolfriver, dvenv=wolf.env) # wolf.env now filled with six tables.
+\end{lstlisting}
+
+\small
+\noindent\yytree[2]{
+\yynode[1,2,3,4,5,6]{\normalsize Daily Values \datatype{environment} (e.g. \textic{wolf.env}):}\\
+& \yynode{station number (e.g. \texttt{"07030392"})}\\
+& \yynode{\textic{"07030500"} : \datatype{data.frame} (table of daily streamflow)}\\
+& \yynode{\textic{"07031650"} : table of daily streamflow}\\
+& \yynode{\textic{"07031660"} : table of daily streamflow}\\
+& \yynode{\textic{"07031700"} : table of daily streamflow}\\
+& \yynode[1,2,3,4,5,6,7,8,9]{\textic{"07031740"} : \datatype{data.frame}}\\
+  & & \yynode{\elemtext{agency_cd}{The agency code.}}\\
+  & & \yynode{\elemtext{site_no}{A repeat of the station number}}\\
+  & & \yynode{\elemtext{Date}{The date of the daily mean streamflow.}}\\
+  & & \yynode{\elemtext{Flow}{The daily mean streamflow in cubic feet per second.}}\\
+  & & \yynode{\elemtext{Flow_cd}{Flow code (\texttt{A}pproved, \texttt{P}rovisional, \texttt{W}orking (stripped internally)}}\\
+  & & \yynode{\elemtext{year}{The year of the \texttt{Date}.}}\\
+  & & \yynode{\elemtext{month}{The month of the \texttt{Date}.}}\\
+  & & \yynode{\elemtext{decade}{The decade of the \texttt{Date} (e.g. \texttt{2016}$\,\rightarrow\,$\texttt{2010}).}}\\
+  & & \yynode{\elemtext{wyear}{The water year of the \texttt{Date}.}}\\
+}
+
+\bigskip
+\hrule
+\bigskip
+
+
+\begin{lstlisting}
+akqwolf.env <- new.env() # the standard declaration of an environment
+fill_akqenv(wolf.env, akqenv=akqwolf.env)
+\end{lstlisting}
+
+
+\noindent\yytree[2]{
+\yynode[1,2,3,4,5,6]{\normalsize Asquith--Knight Discharge Decay \datatype{environment} (e.g. \texttt{akqwolf.env}):}\\
+& \yynode{\textic{"07030392"} : \datatype{list} (Asquith--Knight discharge decay analysis for station number)}\\
+& \yynode{\textic{"07030500"} : \datatype{list} }\\
+& \yynode{\textic{"07031650"} : \datatype{list} }\\
+& \yynode{\textic{"07031660"} : \datatype{list} }\\
+& \yynode{\textic{"07031700"} : \datatype{list} }\\
+& \yynode{\textic{"07031740"} : \datatype{list} }
+}
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent\yytree[2]{
+\yynode[1,10,12,16]{\normalsize Asquith--Knight Discharge Decay Analysis (e.g. \texttt{akqwolf.env\$"07030500"}) : \datatype{list}}\\
+& \yynode[1,2,3,4,5,6,7,8]{\texttt{table} : \datatype{data.frame}, $n$-rows long}\\
+& & \yynode{\elemtext{site}{The station number (usually) but a user could emplace their own.}}\\
+& & \yynode{\elemtext{wyear}{The water from the date.}}\\
+& & \yynode{\elemtext{year}{The calendar from the year.}}\\
+& & \yynode{\elemtext{month}{The month from the date.}}\\
+& & \yynode{\elemtext{decade}{The decade from the date.}}\\
+& & \yynode{\elemtext{date}{The date (forward bias).}}\\
+& & \yynode{\elemtext{fdc, fqc}{Flow-duration curve (probability \textic{fdc} and flow \textic{fqc} [cubic feet per second].}}\\
+& & \yynode{\elemtext{days_per_log}{Days for one log-cycle change (base10) in streamflow.}}\\
+& \yynode[1]{\textic{counts} : \datatype{vector} (named \datatype{integer}; The counts computed during the analysis.)}\\
+& & \yynode{\textic{total_count}, \textic{decreases}, \textic{increases}, \textic{nochanges}, \textic{NAs}}\\
+& \yynode[1,2,3]{\textic{lmoments} : \datatype{list} (Bundle of L-moment results, see its separate structural definition)}\\
+& & \yynode{\elemtext{por}{The L-moment \datatype{list} for the period of record.}}\\
+& & \yynode{\elemtext{by_year}{The L-moment \datatype{data.frame} for each \textit{calendar} year.}}\\
+& & \yynode{\elemtext{by_decade}{The L-moment \datatype{data.frame} lumped to decades.}}\\
+& \yynode[1,2,3,4,5,6,8,9]{\textic{summary} : \datatype{data.frame} (one row)}\\
+& & \yynode{\textic{site}, \textic{beg_year}, \textic{end_year}\quad$\Rightarrow$\quad Site and first/last years of the period of record.}\\
+& & \yynode{\elemtext{yr_range_str}{A string representing the year range.}}\\
+& & \yynode{\textic{total_count}, \textic{count}\quad$\Rightarrow$\quad The \textic{count} is the sample size $n$ of the analysis.}\\
+& & \yynode{\textic{kendall_tau}, \textic{spearman_rho}\quad$\Rightarrow$\quad Correlations by name between \textic{days_per_log} and \textic{fqc}.}\\
+& & \yynode{\elemtext{median}{The median statistic [days per log-cycle].}}\\
+& & \yynode{\elemtext{L1L2}{A statistic (\textic{L1}, $\lambda_1$, mean) and L-scale (\textic{L2}, $\lambda_2$):}}\\
+& & \yynode{\elemtext[\mbox{}\quad\quad]{}{computed as \textic{L1L2} = $\lambda_1 + \lambda_2\sqrt{\pi}$ [days per log-cycle].}}\\
+& & \yynode{\elemtext{gfactor}{A ``G-factor'' from L-moment-fit prob. distribution [days per log-cycle].}}\\
+& & \yynode{\elemtext{gfactor_emp}{An empirical ``G-factor'' from rank ordering [days per log-cycle].}}\\
+& & \yynode{\elemtext[\mbox{}\quad\quad]{}{The G-factor probability level is stored in \datatype{row.names} (e.g. \textic{"90\%"}).}}
+}
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent\yytree[2]{
+\yynode[2,13,24]{\normalsize L-moment results (e.g. \texttt{akqwolf.env\$"07030500"\$lmoments}) : \datatype{list}}\\
+& \yynode{Note, G-factor probability is \textic{names(akqwolf.env\$"07030500"\$lmoments\$por\$gfactor_emp)}.}\\
+& \yynode[1,2,3,4,5,6,7,8,9,10]{\textic{por} : \datatype{list} (Results for the period of record.)}\\
+& & \yynode{\elemtext{lambdas}{The first six L-moments ($\lambda_r$ for $r \in [1,6]$) of the \textic{days_per_log} data.}}\\
+& & \yynode{\elemtext{ratios}{The L-moment ratios ($\tau_r$ for $r \in [2,6]$) from the $\lambda_r$.}}\\
+& & \yynode{\elemtext{site}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{yr_range}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{yr_range_str}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{count}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{median}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{L1L2}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{gfactor}{Numerically identical to that in \textic{summary} described previously.}}\\
+& & \yynode{\elemtext{gfactor_emp}{Numerically identical to that in \textic{summary} described previously.}}\\
+& \yynode[1,2,3,4,5,6,7,8,9,10]{\textic{by_year} : \datatype{data.frame} (Results tabulated by year, one row per year.)}\\
+& & \yynode{\elemtext{site}{A repeating station number.}}\\
+& & \yynode{\elemtext{year}{The calendar year.}}\\
+& & \yynode{\elemtext{count}{The number of samples in the corresponding years.}}\\
+& & \yynode{\elemtext{median}{The median statistic of the sample size for the year [days per log-cycle].}}\\
+& & \yynode{\elemtext{L1L2}{Computed as $\lambda_{1y} + \lambda_{2y}\sqrt{\pi}$ for the year [days per log-cycle].}}\\
+& & \yynode{\elemtext{gfactor}{A ``G-factor'' from L-moment-fit prob. distribution [days per log-cycle].}}\\
+& & \yynode{\elemtext{gfactor_emp}{An empirical ``G-factor'' from rank ordering [days per log-cycle].}}\\
+& & \yynode{\elemtext{L1}{The L-moment $\lambda_1$ (arithmetic mean) [days per log-cycle]}}\\
+& & \yynode{\elemtext{L2}{The second L-moment $\lambda_2$ (L-scale) [days per log-cycle]}}\\
+& & \yynode{\textic{T3}, \textic{T4}, \textic{T5}, \textic{T6} \quad$\Rightarrow$\quad The L-moment ratios $\tau_r$.}\\
+& \yynode[1,2,3,4,5,6,7,8,9,10]{\textic{by_decade} : \datatype{data.frame} (Results tabulated by decade, one row per decade.) }\\
+& & \yynode{\elemtext{site}{A repeating station number.}}\\
+& & \yynode{\elemtext{decade}{The decade.}}\\
+& & \yynode{\elemtext{count}{The number of samples in the corresponding decades.}}\\
+& & \yynode{\elemtext{median}{The median statistic of the sample size for the decade [days per log-cycle].}}\\
+& & \yynode{\elemtext{L1L2}{Computed as $\lambda_{1d} + \lambda_{2d}\sqrt{\pi}$ for the decade [days per log-cycle].}}\\
+& & \yynode{\elemtext{gfactor}{A ``G-factor'' from L-moment-fit prob. distribution [days per log-cycle].}}\\
+& & \yynode{\elemtext{gfactor_emp}{An empirical ``G-factor'' from rank ordering [days per log-cycle].}}\\
+& & \yynode{\elemtext{L1}{The L-moment $\lambda_1$ (arithmetic mean) [days per log-cycle]}}\\
+& & \yynode{\elemtext{L2}{The second L-moment $\lambda_2$ (L-scale) [days per log-cycle]}}\\
+& & \yynode{\textic{T3} \& \textic{T4} \& \textic{T5} \& \textic{T6} \quad$\Rightarrow$\quad The L-moment ratios $\tau_r$.}
+}
+
+\end{document}
+names(akqwolf.env$"07030500"$lmoments$por$gfactor_emp)
+
