@@ -1,8 +1,10 @@
-"visFDCtrend" <- function(fdcenv=NULL, file=NA, alpha=0.05, fast=FALSE, ...) {
+"visFDCtrend" <- function(fdcenv=NULL, file=NA, alpha=0.05, fast=FALSE, site=NA, ...) {
+   was.data.frame <- FALSE
    if(is.null(fdcenv)) {
       warning(" need to specify the fdcenv environment")
       return()
    } else if(is.data.frame(fdcenv)) {
+      was.data.frame <- TRUE
       df <- fdcenv; fdcenv <- new.env()
       assign("site", df, envir=fdcenv)
    } else if(! is.environment(fdcenv)) {
@@ -24,8 +26,10 @@
          Z <- data.frame(DAY=NA, prob=NA, estimate=NA, p.value=NA)
       }
       nm <- names(Z); yrs <- nm[2:(length(nm)-3)]; n <- length(yrs)
-      txt  <- paste0(station,": ",yrs[1],"-",yrs[n]," (",n," yrs)")
-      site <- rep(station, 365); count <- rep(n, 365)
+      station.text <- station
+      if(was.data.frame & ! is.na(site)) station.text <- site
+      txt  <- paste0(station.text,": ",yrs[1],"-",yrs[n]," (",n," yrs)")
+      site <- rep(station.text, 365); count <- rep(n, 365)
 
       if(! fast) {
          w  <- length(Z[1,]); tmp <- cbind(site, count, Z[,(w-2):w])

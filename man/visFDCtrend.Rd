@@ -5,13 +5,14 @@
 Draw plots of the Kendall's tau trend test of the annual daily-flow-duration curves housed in the \code{environment} from \code{\link{fill_tfdcenv}}.
 }
 \usage{
-visFDCtrend(fdcenv=NULL, file=NA, alpha=0.05, fast=FALSE, ...)
+visFDCtrend(fdcenv=NULL, file=NA, alpha=0.05, fast=FALSE, site=NA, ...)
 }
 \arguments{
   \item{fdcenv}{An \R \code{environment} previously populated by \code{\link{fill_tfdcenv}}. This argument can also be a \code{data.frame} if a single site is desired (see \bold{Examples});}
   \item{file}{An optional file name for a portable document format graphics file;}
   \item{alpha}{The statistical significance (two-tailed), it will be divided in two when the large sample approximation for Kendall's tau is needed. Otherwise is it is used as is for comparison to the p-value from the \code{cor.test()} function  built-in to \R that had already been called by \code{\link{fdctrend}} via \code{\link{fill_tfdcenv}};}
-  \item{fast}{A logical controlling whether the progressively lengthing returned \code{data.frame} is actually made. This can be really CPU heavy and potentially unneeded by the user. If set, just \code{"fast option used"} will be retured, and all graphics proceed normally; and}
+  \item{fast}{A logical controlling whether the progressively lengthing returned \code{data.frame} is actually made. This can be really CPU heavy and potentially unneeded by the user. If set, just \code{"fast option used"} will be retured, and all graphics proceed normally;}
+  \item{site}{A possible optional string for the site number to annotate on the graphic and used as the site identifier in the returned \code{data.frame} otherwise just plain-old \dQuote{site} is used. Finally, this \code{site} is only picked up if the \code{fdcenv} was a \code{data.frame} and the \code{site} is not missing; and}
   \item{...}{Additional arguments to pass to the \code{par()} function built-in to \R that is called internally.}
 }
 \value{
