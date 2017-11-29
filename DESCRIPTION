@@ -1,10 +1,10 @@
 Package: akqdecay
 Title: Distributional Statistics of USGS Daily Hydrograph Recession (Decay)
-Version: 0.17
+Version: 0.18
 Depends: R (>= 3.0.0), utils
 Imports: dataRetrieval, lmomco, graphics, sp, stats
 Suggests: mcparallelDo
-Date: 2017-04-03
+Date: 2017-11-29
 Author: William H. Asquith [aut, cre], Rodney R. Knight [ctb]
 Description: Compute distributional statistics of hydrograph recession (decay) based on
   N-day-over-day changes of daily-mean streamflows for an arbitrary number of U.S.
@@ -15,7 +15,8 @@ Description: Compute distributional statistics of hydrograph recession (decay) b
   days per log-cycle change. L-moments are computed to summarize distributional geometry
   of these changes, and so-called Gfactors (geologic factors) are computed as P-percentiles
   of the changes. Several utilities for data extraction and  manipulation are provided.
-  Hydrograph rises or no change periods can also be considered.
+  Hydrograph rises or no change periods can also be considered. Considerable flow-
+  duration curve computations can also be made.
 Maintainer: William H. Asquith <wasquith@usgs.gov>
 License: file LICENSE
 Copyright: This software is in the public domain because it contains materials that   
