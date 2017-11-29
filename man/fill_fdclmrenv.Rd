@@ -29,7 +29,7 @@ fill_dvenv(wolfriver, envir=wolf.env) # wolf.env now filled with six tables.
 wolf.fdclmr <- new.env() # the standard declaration of an environment
 fill_lmrfdcenv(dvenv=wolf.env, envir=wolf.fdclmr)
 lmomco::plotlmrdia(lmomco::lmrdia(), xlim=c(0,0.5), ylim=c(-0.1,0.3))
-for(i in 1:length(wolfriver)) {
+for(i in 1:length(wolfriver)) { # Now plot the L-moment ratios of these sites.
    tmp <- get(wolfriver[i], envir=wolf.fdclmr)
    points(tmp$T3, tmp$T4, pch=i, col=grey(0.2))
 } # }
