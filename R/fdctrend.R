@@ -2,7 +2,7 @@
 function(akdvtable, missing.days=7, type=5, ...) {
   if(length(unique(akdvtable$site_no)) > 1) {
     warning("can not have move than one streamgage in the daily value table, please ",
-            "consult fill_dvenv() and fill_akqenv() for multiple streamgage processing, ",
+            "consult fill_dvenv() for multiple streamgage processing, ",
             "returning NA immediately")
     return(NA)
   }
