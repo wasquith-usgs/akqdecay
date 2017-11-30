@@ -14,7 +14,7 @@ fdclmr(akdvtable, missing.days=7, site="",
   \item{site}{An optional streamgage identification number (or other character string). It is deliberate that this function does not pickup the \code{site_no} from the daily-value table \code{akdvtable}. This permits the user to potentially intercept the site number or name and replace with their own for flexibility in categorical statistical analyses in their own custom scripts;}
   \item{log}{Should base-10 logarithms of the daily streamflow be computed before L-moments computed;}
   \item{subzero}{A value for substitution for zero values when \code{log=TRUE}. This feature is subject to change because of the nonoptimality of such substitution;}
-  \item{verbose}{A logical controlling a potentially helpful message that prints the site and the current year as they are looped through. This is similar to the \code{silent} in \code{\link{fill_lmrfdcenv}}, but named different here for discrete functionality between \code{fdclmr} and \code{\link{fill_lmrfdcenv}}; and}
+  \item{verbose}{A logical controlling a potentially helpful message that prints the site and the current year as they are looped through. This is similar to the \code{silent} in \cr \code{\link{fill_lmrfdcenv}}, but named different here for discrete functionality between \code{fdclmr} and \code{\link{fill_lmrfdcenv}}; and}
   \item{...}{Additional arguments to pass.}
 }
 \value{
@@ -27,7 +27,7 @@ An \R \code{data.frame} of mutable length but containing the following columns:
   \item{T3}{L-skew (\eqn{\tau_3}), third L-moment ratio;}
   \item{T4}{L-kurtosis (\eqn{\tau_4}), fourth L-moment ratio;}
   \item{T5}{Fifth unnamed L-moment ratio (\eqn{\tau_5}), but the term L-cinco occassionally could be used; and}
-  \item{T6}{Fifth unnamed L-moment ratio (\eqn{\tau_6}), but the term L-sies could be used.}
+  \item{T6}{Fifth unnamed L-moment ratio (\eqn{\tau_6}), but the term L-seis could be used.}
 }
 \author{ W.H. Asquith}
 \references{

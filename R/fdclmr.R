@@ -21,12 +21,12 @@ function(akdvtable, missing.days=7, site="",
   for(y in years) {
      if(verbose) message("    ", site," -- ",y)
      fdc  <- akdvtable$Flow[year == y]; nzero <- length(fdc[fdc == 0])
+     n <- length(fdc[! is.na(fdc)]); fdc <- fdc[! is.na(fdc)]
      if(log) {
         nzero <- length(fdc[fdc == 0])
         if(subzero) fdc[fdc == 0] <- subzero
         fdc <- log10(fdc); fdc <- fdc[is.finite(fdc)]
      }
-     n <- length(fdc[! is.na(fdc)])
      if(any(is.na(fdc))) {
         message("a least one missing value for year ",y)
         lmr <- empty
