@@ -18,7 +18,7 @@ fill_lmrfdcenv(sites=NULL, dvenv=NULL, envir=NULL, silent=FALSE, ...)
 This function is used for its side effects on the \code{envir} argument but does return a count of the sites processed by \code{\link{fdclmr}}.
 }
 \author{ W.H. Asquith}
-\seealso{\code{\link{fdclmr}}, \code{\link{fill_dvenv}}
+\seealso{\code{\link{fdclmr}}, \code{\link{lmrfdc2df}}, \code{\link{fill_dvenv}}
 }
 \examples{
 \dontrun{
