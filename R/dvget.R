@@ -86,7 +86,7 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL, date2s=NA, da
    #print(head(zz))
    # dvget("02413210", edate="2016-09-30") # caused problems because of some
    # weird Flow == NA issues so the length test below is for that.
-   if(length(zz$Flow[! is.na(zz$Flow)]) == 0 & any(zz$Flow == -999999)) { # station 07040000 for year 2015 had -999999
+   if(length(zz$Flow[zz$Flow == -999999]) > 0) { # station 07040000 for year 2015 had -999999
       message("  at least one -999999 discharge") # I did not know this was possible
       zz$Flow[zz$Flow == -999999] <- NA
    }
