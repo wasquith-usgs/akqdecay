@@ -42,7 +42,7 @@ dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,
   \item{month}{The month.}
 }
 \note{
-For the greater purposes of the \pkg{akqdecay} package, the arguments \code{pCode} and \code{sCode} for their defaults are expected to be left untouched. The capitalization inconsistency in the returned \R \code{data.frame} is left intact as it is consistent with the operation of the \code{dataRetrieval::}\code{renameNWISColumns()} function that is called internally.
+For the greater purposes of the \pkg{akqdecay} package, the arguments \code{pCode} and \code{sCode} for their defaults are expected to be left untouched. The capitalization inconsistency in the returned \R \code{data.frame} is left intact as it is consistent with the operation of the \code{dataRetrieval::}\code{renameNWISColumns()} function that is called internally. Lastly, at least one streamgage (07040000 in 2015 [as for Nov. 2017 testing]) has been found in massive-scale testing that has -999999 for a daily flow. Such values are converted to \code{NA}.
 }
 \author{ W.H. Asquith}
 \references{

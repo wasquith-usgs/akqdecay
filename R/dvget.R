@@ -83,6 +83,10 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL, date2s=NA, da
    }
    if(! is.null(flowlo))  zz$Flow[ zz$Flow > flowlo] <- NA
    if(! is.null(flowhi))  zz$Flow[ zz$Flow < flowhi] <- NA
+   if(any(zz$Flow == -999999)) { # station 07040000 for year 2015 had -999999
+      message("  at least one -999999 discharge") # I did not know this was possible
+      zz$Flow[zz$Flow == -999999] <- NA
+   }
    return(zz)
 }
 
