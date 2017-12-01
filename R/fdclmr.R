@@ -1,6 +1,6 @@
 "fdclmr" <-
 function(akdvtable, missing.days=7, site="",
-                    log=TRUE, subzero=0.001, verbose=FALSE, ...) {
+                    log=TRUE, subzero=NULL, plusit=1, verbose=FALSE, ...) {
   if(length(unique(akdvtable$site_no)) > 1) {
     warning("can not have move than one streamgage in the daily value table, please ",
             "consult fill_dvenv() for multiple streamgage processing, ",
@@ -24,8 +24,13 @@ function(akdvtable, missing.days=7, site="",
      n <- length(fdc[! is.na(fdc)]); fdc <- fdc[! is.na(fdc)]
      if(log) {
         nzero <- length(fdc[fdc == 0])
-        if(subzero) fdc[fdc == 0] <- subzero
-        fdc <- log10(fdc); fdc <- fdc[is.finite(fdc)]
+        if(! is.null(subzero)) fdc[fdc == 0] <- subzero
+        if(! is.null(plusit))  fdc <- fdc + plusit
+        opts <- options(warn=-1)
+        if(length(fdc[is.nan(fdc)]) > 0) message("  NaN -- ", site, " for ", y)
+        fdc <- log10(fdc)
+        fdc <- fdc[is.finite(fdc)]
+        #options(opts)
      }
      if(any(is.na(fdc))) {
         message("a least one missing value for year ",y)
