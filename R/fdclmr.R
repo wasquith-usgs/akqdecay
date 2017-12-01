@@ -27,10 +27,10 @@ function(akdvtable, missing.days=7, site="",
         if(! is.null(subzero)) fdc[fdc == 0] <- subzero
         if(! is.null(plusit))  fdc <- fdc + plusit
         opts <- options(warn=-1)
-        if(length(fdc[is.nan(fdc)]) > 0) message("  NaN -- ", site, " for ", y)
-        fdc <- log10(fdc)
-        fdc <- fdc[is.finite(fdc)]
-        #options(opts)
+          fdc <- log10(fdc)
+          if(length(fdc[is.nan(fdc)]) > 0) message("  NaN -- ", site, " for ", y)
+          fdc <- fdc[is.finite(fdc)]
+        options(opts)
      }
      if(any(is.na(fdc))) {
         message("a least one missing value for year ",y)
