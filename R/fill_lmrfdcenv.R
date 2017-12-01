@@ -14,7 +14,7 @@
    n <- length(SITES); k <- 0
    for(i in 1:n) {
       site <- SITES[i]
-      if(! silent) message(" fdctrend() for ",site," (",i,"/",n,")")
+      if(! silent) message(" fdclmr() for ",site," (",i,"/",n,")")
       D <- get(site, envir=dvenv)
       if(length(as.data.frame(D)[1,]) == 1) {
          assign(site, NA, envir=envir)
