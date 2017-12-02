@@ -18,7 +18,7 @@ fill_lmrfdcenv(sites=NULL, dvenv=NULL, envir=NULL, silent=FALSE, ...)
 This function is used for its side effects on the \code{envir} argument but does return a count of the sites processed by \code{\link{fdclmr}}.
 }
 \author{ W.H. Asquith}
-\seealso{\code{\link{fdclmr}}, \code{\link{lmrfdc2df}}, \code{\link{fill_dvenv}}
+\seealso{\code{\link{fdclmr}}, \code{\link{lmrfdc_table}}, \code{\link{fill_dvenv}}
 }
 \examples{
 \dontrun{
@@ -28,6 +28,8 @@ wolf.env <- new.env() # the standard declaration of an environment
 fill_dvenv(wolfriver, envir=wolf.env) # wolf.env now filled with six tables.
 wolf.fdclmr <- new.env() # the standard declaration of an environment
 fill_lmrfdcenv(dvenv=wolf.env, envir=wolf.fdclmr)
+# LMRs <- lmrfdc_table(wolf.fdclmr) # we could use the LMRs data.frame
+# but in the L-moment ratio diagram below, we are incrementing the plot character.
 lmomco::plotlmrdia(lmomco::lmrdia(), xlim=c(0,0.5), ylim=c(-0.1,0.3))
 for(i in 1:length(wolfriver)) { # Now plot the L-moment ratios of these sites.
    tmp <- get(wolfriver[i], envir=wolf.fdclmr)

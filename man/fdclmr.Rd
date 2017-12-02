@@ -46,7 +46,7 @@ Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the
 
 Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.7 at \url{https://cran.r-project.org/package=lmomco}.
 }
-\seealso{\code{\link{fill_lmrfdcenv}}, \code{\link{lmrfdc2df}}
+\seealso{\code{\link{fill_lmrfdcenv}}, \code{\link{lmrfdc_table}}
 }
 \examples{
 # See Examples under fill_lmrfdcenv and elsewhere in this documentation.
