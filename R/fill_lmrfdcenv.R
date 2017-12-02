@@ -1,4 +1,4 @@
-"fill_lmrfdcenv2" <- function(sites=NULL, dvenv=NULL, envir=NULL, silent=FALSE,  ...) {
+"fill_lmrfdcenv" <- function(sites=NULL, dvenv=NULL, envir=NULL, silent=FALSE,  ...) {
    if(! is.environment(dvenv)) {
       warning(" dvenv is not testing as an environment")
       return()
@@ -19,7 +19,7 @@
       if(length(as.data.frame(D)[1,]) == 1) {
          assign(site, NA, envir=envir)
       } else {
-         Z <- fdclmr2(D, site=site, ...)
+         Z <- fdclmr(D, site=site, ...)
          k <- k + 1
          assign(site, Z,  envir=envir)
       }
