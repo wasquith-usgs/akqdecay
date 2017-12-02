@@ -1,4 +1,4 @@
-"akq_table" <- function(akqenv, silent=FALSE, NAline.insert=TRUE, ...) {
+"akq_table" <- function(akqenv, NAline.insert=TRUE, silent=FALSE, ...) {
   if(is.null(akqenv)) {
      warning(" need to specify the akqenv environment")
      return()
