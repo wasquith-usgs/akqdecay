@@ -1,4 +1,4 @@
-"akq_table" <- function(akqenv, silent=FALSE, ...) {
+"akq_table" <- function(akqenv, silent=FALSE, NAline.insert=TRUE, ...) {
   if(is.null(akqenv)) {
      warning(" need to specify the akqenv environment")
      return()
@@ -30,6 +30,7 @@
        }
     }
   }
+  if(! NAline.insert) TAB <- TAB[! is.na(TAB$site), ]
   if(length(TAB) != 2) TAB$date <- as.Date(TAB$date)
   return(TAB)
 }
