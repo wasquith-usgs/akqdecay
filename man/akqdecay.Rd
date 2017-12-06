@@ -74,9 +74,9 @@ A nonparametric estimate for the \code{f} is emplaced in \code{gfactor_emp}. The
 \references{
 Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University, accessed on March 15, 2017 at \url{https://ttu-ir.tdl.org/ttu-ir/handle/2346/ETD-TTU-2011-05-1319}.
 
-Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith, 2011a, with errata]
+Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
 
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.7 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
 
 Bingham, R.H., 1982, Low-flow characteristics of Alabama streams, USGS Water Supply Paper 2083, 27 p., \url{http://pubs.er.usgs.gov/publication/wsp2083}
 

@@ -56,11 +56,11 @@ Though advanced statistical concepts are involved (Asquith, 2011a,b), the relati
 \references{
 Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University, accessed on March 15, 2017 at \url{https://ttu-ir.tdl.org/ttu-ir/handle/2346/ETD-TTU-2011-05-1319}.
 
-Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand, \url{http://www.amazon.com/dp/1463508417/}], ISBN 978--146350841--8, [reprinting of Asquith, 2011a, with errata]
+Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
 
 Asquith, W.H., 2014, Parameter estimation for the 4-parameter asymmetric exponential power distribution by the method of L-moments using R: Computational Statistics and Data Analysis, v. 71, pp. 955--970, \url{http://dx.doi.org/10.1016/j.csda.2012.12.013}
 
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, \cr censored L-moments, and many distributions: R package version 2.2.7 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
 
 Bingham, R.H., 1982, Low-flow characteristics of Alabama streams, USGS Water Supply Paper 2083, 27 p., \url{http://pubs.er.usgs.gov/publication/wsp2083}
 

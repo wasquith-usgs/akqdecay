@@ -23,7 +23,7 @@ gfredo(akqenv, f=0.90, type="gpa", which=c("por", "year", "decade"),
   This function is intended to be used for its side effects on the \code{akenv}. Though if that argument is an \R \code{data.frame} then that after \eqn{G_f} modification is returned.
 }
 \references{
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.7 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
 }
 \author{ W.H. Asquith}
 \seealso{\code{\link{lmrdf2gfactor}}
