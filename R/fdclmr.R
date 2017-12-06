@@ -7,6 +7,9 @@ function(akdvtable, missing.days=7, site="",
             "returning NA immediately")
     return(NA)
   }
+  if(is.null(subzero) & is.null(plusit)) {
+    warning("subzero and plusit both set (! NULL), not certain if a good idea")
+  }
   site[1] <- as.character(site[1])
 
   if(length(akdvtable$year) == 0) return(NA)
@@ -26,7 +29,7 @@ function(akdvtable, missing.days=7, site="",
      if(log) {
         nzero <- length(fdc[fdc == 0])
         if(! is.null(subzero)) fdc[fdc == 0] <- subzero
-        if(! is.null(plusit))  fdc <- fdc + plusit
+        if(! is.null(plusit )) fdc <- fdc + plusit
         opts <- options(warn=-1)
           fdc <- log10(fdc)
           if(length(fdc[is.nan(fdc)]) > 0) message("  NaN -- ", site, " for ", y)
