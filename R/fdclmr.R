@@ -11,7 +11,8 @@ function(akdvtable, missing.days=7, site="",
 
   if(length(akdvtable$year) == 0) return(NA)
 
-  empty <- list(lambdas=rep(NA, 6), ratios=rep(NA, 6), source="not valid")
+  empty <- list(median=NA, min=NA, max=NA, min7day=NA, max7day=NA,
+                lambdas=rep(NA, 6), ratios=rep(NA, 6), source="not valid")
   avail <- 365 - missing.days
   akdvtable <- akdvtable[order(akdvtable$Date),]
   year      <- akdvtable$year; years <- unique(year)
@@ -45,9 +46,14 @@ function(akdvtable, missing.days=7, site="",
            if(! lmomco::are.lmom.valid(lmr)) {
               lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdc, nmom=6))
            }
+           lmr$median <- median(fdc); lmr$min <- min(fdc); lmr$max <- max(fdc)
+           fdc7 <- sapply(1:(n-6), function(i) { mean(fdc[i:(i+6)]) })
+           lmr$min7day <- min(fdc7); lmr$max7day <- max(fdc7)
         }
      }
      tmp <- data.frame(site=site, year=y, n=n, nzero=nzero,
+                       min=lmr$min, median=lmr$median, max=lmr$max,
+                       min7day=lmr$min7day, max7day=lmr$max7day,
                        L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],
                        T4=lmr$ratios[4], T5=lmr$ratios[5], T6=lmr$ratios[6])
      zz <- rbind(zz, tmp)
