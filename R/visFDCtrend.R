@@ -1,4 +1,5 @@
-"visFDCtrend" <- function(fdcenv=NULL, file=NA, alpha=0.05, fast=FALSE, site=NA, ...) {
+"visFDCtrend2" <- function(fdcenv=NULL, file=NA, alpha=0.05,
+                           fast=FALSE, site=NA, ...) {
    was.data.frame <- FALSE
    if(is.null(fdcenv)) {
       warning(" need to specify the fdcenv environment")
@@ -27,7 +28,7 @@
       }
       nm <- names(Z); yrs <- nm[2:(length(nm)-3)]; n <- length(yrs)
       station.text <- station
-      if(was.data.frame & ! is.na(site)) station.text <- site
+      if(was.data.frame && ! is.na(site)) station.text <- site
       txt  <- paste0(station.text,": ",yrs[1],"-",yrs[n]," (",n," yrs)")
       site <- rep(station.text, 365); count <- rep(n, 365)
 
