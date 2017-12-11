@@ -1,4 +1,4 @@
-"visFDCtrend2" <- function(fdcenv=NULL, file=NA, alpha=0.05,
+"visFDCtrend" <- function(fdcenv=NULL, file=NA, alpha=0.05,
                            fast=FALSE, site=NA, ...) {
    was.data.frame <- FALSE
    if(is.null(fdcenv)) {
