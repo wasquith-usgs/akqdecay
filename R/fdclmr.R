@@ -20,9 +20,9 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
   if(decade) {
      yds <- unique(akdvtable$decade)
      avail <- 365*10 - missing.days*10
-     empty <- list(fdc_quantiles=rep(NA, length(probs)),  min=NA, max=NA,
+     empty <- list(fdc_quantiles=rep(NA, length(probs)),  min=NA, max=NA, pplo=NA,
                    lambdas=rep(NA, 6), ratios=rep(NA, 6), source="not valid")
-     zz <- data.frame(site=site, decade=NA, n=NA, nzero=NA,
+     zz <- data.frame(site=site, decade=NA, n=NA, nzero=NA, pplo=NA,
           min=NA,  f0.02=NA, f0.05=NA, f0.1=NA, f0.2=NA, f0.5=NA, f01=NA,
           f02=NA, f05=NA, f10=NA, f20=NA, f25=NA, f30=NA, f40=NA, f50=NA, f60=NA,
           f70=NA, f75=NA, f80=NA, f90=NA, f95=NA, f98=NA, f99=NA, f99.5=NA,
@@ -32,9 +32,9 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
   } else {
      yds <- unique(akdvtable$year)
      avail <- 365 - missing.days
-     empty <- list(median=NA, min=NA, max=NA, min7day=NA, max7day=NA,
+     empty <- list(median=NA, min=NA, max=NA, min7day=NA, max7day=NA, pplo=NA,
                    lambdas=rep(NA, 6), ratios=rep(NA, 6), source="not valid")
-     zz <- data.frame(site=site, year=NA, n=NA, nzero=NA,
+     zz <- data.frame(site=site, year=NA, n=NA, nzero=NA, pplo=NA,
                       min=NA, median=NA, max=NA, min7day=NA, max7day=NA,
                       L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA)
      zz <- zz[0,]
@@ -65,10 +65,13 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
         if(n <= avail) {
            lmr <- empty
         } else {
-           lmr <- lmomco::lmoms(fdc, nmom=6, no.stop=TRUE)
+           fdclo <- lmomco::x2xlo(fdc)
+           #print(yd); print(fdclo$xin)
+           lmr <- lmomco::lmoms(fdclo$xin, nmom=6, no.stop=TRUE)
            if(! lmomco::are.lmom.valid(lmr)) {
-              lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdc, nmom=6))
+              lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdclo$xin, nmom=6))
            }
+           lmr$pplo <- fdclo$pp
            lmr$min <- min(fdc); lmr$max <- max(fdc)
            if(decade) {
              lmr$fdc_quantiles <- quantile(fdc, probs=probs, type=6)
@@ -79,9 +82,9 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
            }
         }
      }
-     if(decade) {
+     if(decade) { #print(lmr)
             q <- lmr$fdc_quantiles
-            tmp <- data.frame(site=site, decade=yd, n=n, nzero=nzero,
+            tmp <- data.frame(site=site, decade=yd, n=n, nzero=nzero, pplo=lmr$pplo,
                       min=lmr$min, f0.02=q[1], f0.05=q[2], f0.1=q[3], f0.2=q[4],
                       f0.5=q[5], f01=q[6],  f02=q[7],  f05=q[8],  f10=q[9],
                       f20=q[10], f25=q[11], f30=q[12], f40=q[13], f50=q[14],
@@ -91,7 +94,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
                       L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],
                       T4=lmr$ratios[4],  T5=lmr$ratios[5],  T6=lmr$ratios[6])
      } else {
-      tmp <- data.frame(site=site, year=yd, n=n, nzero=nzero,
+      tmp <- data.frame(site=site, year=yd, n=n, nzero=nzero, pplo=lmr$pplo,
                        min=lmr$min, median=lmr$median, max=lmr$max,
                        min7day=lmr$min7day, max7day=lmr$max7day,
                        L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],

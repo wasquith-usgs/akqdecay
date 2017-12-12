@@ -26,6 +26,7 @@ An \R \code{data.frame} of mutable length but containing the following columns f
   \item{site}{An echo of the \code{site};}
   \item{n}{The number of days (values) entering into the L-moment computations;}
   \item{nzero}{The number of zero flow days that would not enter into L-moment computations if and only if \code{log=TRUE};}
+  \item{pplo}{The plotting position (Weibull) of the zero flow when \code{log=FALSE}. The \code{x2xlo} function is used from the \pkg{lmomco} package before the L-moments are computed (see internals here and documentation for \code{x2xlo}). The defaults to \code{x2xlo} are used because it is set to zero as the threshold for truncation, which is appropriate for many potential applications in the arid and semi-arid regions of the world. Lastly, it is very important that the user of the L-moments track the value for \code{pplo} and use it in quantile function definition.;}
   \item{min}{The minimum daily mean streamflow;}
   \item{median}{The median daily mean streamflow;}
   \item{max}{The maximum daily mean streamflow;}
