@@ -107,7 +107,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
 }
 
 
-# from USGS SIR 2014–5231
+# from USGS SIR 2014--5231
 #
 #probs <- c(0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 25, 30, 40, 50,
 #           60, 70, 75, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.98)
