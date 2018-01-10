@@ -26,7 +26,7 @@ An \R \code{data.frame} of mutable length but containing the following columns f
   \item{site}{An echo of the \code{site};}
   \item{n}{The number of days (values) entering into the L-moment computations;}
   \item{nzero}{The number of zero flow days that would not enter into L-moment computations if and only if \code{log=TRUE};}
-  \item{pplo}{The plotting position (Weibull) of the zero flow when \code{log=FALSE}. The \code{x2xlo} function is used from the \pkg{lmomco} package before the L-moments are computed (see internals here and documentation for \code{x2xlo}). The defaults to \code{x2xlo} are used because it is set to zero as the threshold for truncation, which is appropriate for many potential applications in the arid and semi-arid regions of the world. Lastly, it is very important that the user of the L-moments track the value for \code{pplo} and use it in quantile function definition.;}
+  \item{pplo}{The plotting position (Weibull) of the zero flow when \code{log=FALSE}. The \code{x2xlo} function is used from the \pkg{lmomco} package before the L-moments are computed (see internals here and documentation for \code{x2xlo}). \bold{It is critical} to know that the L-moments are computed by \code{lmoms(fdclo$in)}, which means that the L-moments are for the nonzero values as \code{x2xlo} has a default of \code{leftout = 0}. The defaults to \code{x2xlo} are used because it is set to zero as the threshold for truncation, which is appropriate for many potential applications in the arid and semi-arid regions of the world. Lastly, it is very important that the user of the L-moments track the value for \code{pplo} and use it in quantile function definition;}
   \item{min}{The minimum daily mean streamflow;}
   \item{median}{The median daily mean streamflow;}
   \item{max}{The maximum daily mean streamflow;}
@@ -36,8 +36,11 @@ An \R \code{data.frame} of mutable length but containing the following columns f
   \item{L2}{L-scale (\eqn{\lambda_2});}
   \item{T3}{L-skew (\eqn{\tau_3}), third L-moment ratio;}
   \item{T4}{L-kurtosis (\eqn{\tau_4}), fourth L-moment ratio;}
-  \item{T5}{Fifth unnamed L-moment ratio (\eqn{\tau_5}), but the term L-cinco occassionally could be used; and}
-  \item{T6}{Fifth unnamed L-moment ratio (\eqn{\tau_6}), but the term L-seis could be used.}
+  \item{T5}{Fifth unnamed L-moment ratio (\eqn{\tau_5}), but the term L-cinco occasionally could be used;}
+  \item{T6}{Sixth unnamed L-moment ratio (\eqn{\tau_6}), but the term L-seis could be used;}
+  \item{T7}{Seventh unnamed L-moment ratio (\eqn{\tau_7}), but the term L-siete could be used; and}
+  \item{T8}{Eighth unnamed L-moment ratio (\eqn{\tau_8}), but the term L-ocho could be used; and}
+  \item{median_nozero}{The median of the nonzero flows (computation is \code{median(fdclo$xin)}, see source code).}
   The output is the effectively the same with \code{decade=TRUE}, except \code{year} becomes \code{decade}, the \code{median}, \code{min7day}, and \code{max7day} are dropped. Some 27 columns holding quantiles of the empirical FDC are then included. These have column titles such as \code{f50} (median), \code{f0.1} (0.1 percentile), or \code{f99.98} (99.98 percentile). These column titles are percentiles and not nonexceedance probabilities so division by 100 would be needed if the titles were parsed (leading \code{f} stripped) to dynamically compute the probabilities. These percentiles are fixed internally. Finally because \eqn{1 - 1/(10 \times 365.25+1) = 0.99972}, the computed percentile extremum will match the \code{min} and \code{max} where 365.25 is the approximate average number of days and 10 represents a decade. The \code{quantile()} function with its argument \code{type=6} (Weibull) is used internally to compute the empirical FDC.
 }
 \note{

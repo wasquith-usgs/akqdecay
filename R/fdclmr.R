@@ -21,22 +21,22 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      yds <- unique(akdvtable$decade)
      avail <- 365*10 - missing.days*10
      empty <- list(fdc_quantiles=rep(NA, length(probs)),  min=NA, max=NA, pplo=NA,
-                   lambdas=rep(NA, 6), ratios=rep(NA, 6), source="not valid")
+                   lambdas=rep(NA, 8), ratios=rep(NA, 8), median_nonzero=NA, source="not valid")
      zz <- data.frame(site=site, decade=NA, n=NA, nzero=NA, pplo=NA,
           min=NA,  f0.02=NA, f0.05=NA, f0.1=NA, f0.2=NA, f0.5=NA, f01=NA,
           f02=NA, f05=NA, f10=NA, f20=NA, f25=NA, f30=NA, f40=NA, f50=NA, f60=NA,
           f70=NA, f75=NA, f80=NA, f90=NA, f95=NA, f98=NA, f99=NA, f99.5=NA,
           f99.8=NA, f99.9=NA, f99.95=NA, f99.98=NA, max=NA,
-          L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA)
+          L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA, T7=NA, T8=NA, median_nonzero=NA)
      zz <- zz[0,]
   } else {
      yds <- unique(akdvtable$year)
      avail <- 365 - missing.days
      empty <- list(median=NA, min=NA, max=NA, min7day=NA, max7day=NA, pplo=NA,
-                   lambdas=rep(NA, 6), ratios=rep(NA, 6), source="not valid")
+                   lambdas=rep(NA, 8), ratios=rep(NA, 8), median_nonzero=NA, source="not valid")
      zz <- data.frame(site=site, year=NA, n=NA, nzero=NA, pplo=NA,
                       min=NA, median=NA, max=NA, min7day=NA, max7day=NA,
-                      L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA)
+                      L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA, T7=NA, T8=NA, median_nonzero=NA)
      zz <- zz[0,]
   }
 
@@ -67,9 +67,10 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
         } else {
            fdclo <- lmomco::x2xlo(fdc)
            #print(yd); print(fdclo$xin)
-           lmr <- lmomco::lmoms(fdclo$xin, nmom=6, no.stop=TRUE)
+           lmr <-         lmomco::lmoms(fdclo$xin, nmom=8, no.stop=TRUE)
+           lmr$median_nonzero <- median(fdclo$xin)
            if(! lmomco::are.lmom.valid(lmr)) {
-              lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdclo$xin, nmom=6))
+              lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdclo$xin, nmom=8))
            }
            lmr$pplo <- fdclo$pp
            lmr$min <- min(fdc); lmr$max <- max(fdc)
@@ -92,13 +93,15 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
                       f95=q[20], f98=q[21], f99=q[22], f99.5=q[23], f99.8=q[24],
                       f99.9=q[25], f99.95=q[26], f99.98=q[27], max=lmr$max,
                       L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],
-                      T4=lmr$ratios[4],  T5=lmr$ratios[5],  T6=lmr$ratios[6])
+                      T4=lmr$ratios[4],  T5=lmr$ratios[5],  T6=lmr$ratios[6],
+                      T7=lmr$ratios[7], T8=lmr$ratios[8], median_nonzero=lmr$median_nonzero)
      } else {
       tmp <- data.frame(site=site, year=yd, n=n, nzero=nzero, pplo=lmr$pplo,
                        min=lmr$min, median=lmr$median, max=lmr$max,
                        min7day=lmr$min7day, max7day=lmr$max7day,
                        L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],
-                       T4=lmr$ratios[4], T5=lmr$ratios[5], T6=lmr$ratios[6])
+                       T4=lmr$ratios[4], T5=lmr$ratios[5], T6=lmr$ratios[6],
+                       T7=lmr$ratios[7], T8=lmr$ratios[8], median_nonzero=lmr$median_nonzero)
      }
      zz <- rbind(zz, tmp)
      row.names(zz) <- NULL
