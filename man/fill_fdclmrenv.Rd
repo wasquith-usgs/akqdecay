@@ -26,14 +26,20 @@ wolfriver <- c("07030392", "07030500", "07031650",
                "07031660", "07031700", "07031740")
 wolf.env <- new.env() # the standard declaration of an environment
 fill_dvenv(wolfriver, envir=wolf.env) # wolf.env now filled with six tables.
-wolf.fdclmr <- new.env() # the standard declaration of an environment
-fill_lmrfdcenv(dvenv=wolf.env, envir=wolf.fdclmr)
-# LMRs <- lmrfdc_table(wolf.fdclmr) # we could use the LMRs data.frame
+wolf.fdclmr.yr <- new.env() # the standard declaration of an environment
+wolf.fdclmr.de <- new.env() # the standard declaration of an environment
+fill_lmrfdcenv(dvenv=wolf.env, envir=wolf.fdclmr.yr)
+fill_lmrfdcenv(dvenv=wolf.env, envir=wolf.fdclmr.de, decade=TRUE)
+# LMRs <- lmrfdc_table(wolf.fdclmr.de) # we could use the LMRs data.frame
 # but in the L-moment ratio diagram below, we are incrementing the plot character.
-lmomco::plotlmrdia(lmomco::lmrdia(), xlim=c(0,0.5), ylim=c(-0.1,0.3))
+lmomco::plotlmrdia(lmomco::lmrdia(), xlim=c(0,0.8), ylim=c(0,0.8))
 for(i in 1:length(wolfriver)) { # Now plot the L-moment ratios of these sites.
-   tmp <- get(wolfriver[i], envir=wolf.fdclmr)
+   tmp <- get(wolfriver[i], envir=wolf.fdclmr.yr)
    points(tmp$T3, tmp$T4, pch=i, col=grey(0.2))
+}
+for(i in 1:length(wolfriver)) { # Now plot the L-moment ratios of these sites.
+   tmp <- get(wolfriver[i], envir=wolf.fdclmr.de)
+   points(tmp$T3, tmp$T4, pch=i, col=6)
 } # }
 }
 \keyword{environment filling}
