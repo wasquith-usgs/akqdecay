@@ -42,7 +42,7 @@ However, such an operation would be destructive to the \code{old_dv} environment
 }
 }
 \author{ W.H. Asquith}
-\seealso{\code{\link{dvget}}, \code{\link{akqdecay}}, \code{\link{fill_akqenv}}
+\seealso{\code{\link{dvget}}, \code{\link{akqdecay}}, \code{\link{fill_akqenv}}, \code{\link{dvoverlap}}
 }
 \examples{
 \dontrun{
