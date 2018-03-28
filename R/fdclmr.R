@@ -1,5 +1,6 @@
 "fdclmr" <-
 function(akdvtable, missing.days=7, site="", decade=FALSE,
+                    minyear=NA, maxyear=NA,
                     log=FALSE, subzero=NULL, plusit=1, verbose=FALSE, ...) {
   if(length(unique(akdvtable$site_no)) > 1) {
     warning("can not have move than one streamgage in the daily value table, please ",
@@ -12,6 +13,8 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
   }
   site[1] <- as.character(site[1])
 
+  if(! is.na(minyear)) akdvtable <- akdvtable[akdvtable$year >= minyear,]
+  if(! is.na(maxyear)) akdvtable <- akdvtable[akdvtable$year <= maxyear,]
   if(length(akdvtable$year) == 0) return(NA)
 
   probs <- c(0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 25, 30, 40, 50,

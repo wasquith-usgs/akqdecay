@@ -8,6 +8,7 @@ The function also computes the minimum, median, and maximum in conjunction with 
 }
 \usage{
 fdclmr(akdvtable, missing.days=7, site="", decade=FALSE,
+                  minyear=NA, maxyear=NA,
                   log=FALSE, subzero=NULL, plusit=1, verbose=FALSE, ...)
 }
 \arguments{
@@ -15,6 +16,8 @@ fdclmr(akdvtable, missing.days=7, site="", decade=FALSE,
   \item{missing.days}{The number of permissible missing days in a given year on which to still compute the annual flow-duration curve and use that year in the trend test; The default is one week and it is advised to not exceed that count. The streamflow values are first reduced by removing \code{NA} before comparing the total number of values for a year against the value 365 minus \code{missing.days}. This argument is scaled up by 10 if \code{decade=TRUE} (computations are internal, user just needs to think about how many missing days per year might be acceptable, but internally these could be a consecutive block, for example, if a week was permitted for the decadal computations 70 missing days in a row would be permissible);}
   \item{site}{An optional streamgage identification number (or other character string). It is deliberate that this function does not pickup the \code{site_no} from the daily-value table \code{akdvtable}. This permits the user to potentially intercept the site number or name and replace with their own for flexibility in categorical statistical analyses in their own custom scripts;}
   \item{decade}{A logical to switch to decadal computations. A decade is already available in the \code{akdvtable} and see its documentation in \code{\link{dvget}} for the definition of decade for this package.}
+  \item{minyear}{The optional minimum year of the daily-values table before any futher computations are made.}
+  \item{maxyear}{The optional maximum year of the daily-values table before any futher computations are made.}
   \item{log}{Should base-10 logarithms of the daily streamflow be computed before L-moments computed;}
   \item{subzero}{A value for substitution for zero values when \code{log=TRUE}. This feature is subject to change because of the nonoptimality of such substitution;}
   \item{plusit}{A value for added to \emph{also} values (not just those that are zero);}
