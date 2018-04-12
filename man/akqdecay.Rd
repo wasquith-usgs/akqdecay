@@ -109,6 +109,26 @@ head(AK$table) # We can see the foundational computations:
 # shows 78 cfs as the first row and retains it on the actual date 10/05/1995.}
 
 \dontrun{
+# Continuing the above example, let us look at then a statistic of
+# the 52 declining days. Let us look first at the general computations
+head(AK$lmoments$por) # The period of record statistics are here.
+# site yr_range_str count  median     L1L2  gfactor gfactor_emp
+#         1995--1995    52 51.4158 162.5754 194.3716    180.7505
+#       L1       L2        T3      T4         T5         T6
+# 83.71642 44.49143 0.3981854 0.17382 0.07210696 0.02502416
+# We see the median declining days for one log10-cycle decline is about 51.4, and
+# the sample size is 52. The 90th percentile (default) of the empirical
+# distribution of the values is about 180.8 days. Finally, we can compare the
+# median here to the "RA7" statistic.
+RA7 <- akqdecay(DVs, as.ra7=TRUE)
+print(RA7)
+# natural_logarithm_median_decreasing
+#                         0.04484609
+names(RA7) <- NULL
+1/log10(exp(RA7))
+# [1] 51.34416 which approximately matches the 51.4 reported previously.}
+
+\dontrun{
 # USGS 08167000 Guadalupe River at Comfort, Texas
 site <- "08167000"; my.data <- dvget("08167000")
 recession_limb <- akqdecay(my.data, as.list=TRUE, method="decreasing", site=site)
