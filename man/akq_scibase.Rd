@@ -7,6 +7,8 @@ Extract all of the various results of Asquith--Knight discharge decay analyses a
 \usage{
 akq_scibase(akqenv, basename="SciBase_", extension=".txt",
                     dotable=FALSE, doyearlmr=FALSE, dodecadelmr=FALSE,
+                    rm.gfactor=TRUE, rm.L1L2=TRUE,
+                    is.nochange.env=FALSE, site2site_no=FALSE,
                     silent=FALSE, ...)
 }
 \arguments{
@@ -16,6 +18,10 @@ akq_scibase(akqenv, basename="SciBase_", extension=".txt",
   \item{dotable}{Should \code{\link{akq_table}} also be called---this can be CPU and file system intensive;}
   \item{doyearlmr}{Should the call to \code{\link{akq_lmom}} dumping the yearly L-moments and Gfactors be made---this can be CPU and file system intensive;}
   \item{dodecadelmr}{Should the call to \code{\link{akq_lmom}} dumping the decadal L-moments and Gfactors be made---this will be 10 times less CPU and file system intensive than if \code{doyearlmr} is set. Try turning this one (\code{dodecadelmr}) on first;}
+  \item{rm.gfactor}{Remove the \code{gfactor} column as applicable. This is the default as it is arguable that the decision to use a parametric distribution model is interpretive;}
+  \item{rm.L1L2}{Remove the \code{L1L2} column as applicable. This is the default because of the additional burden of describing why the product of \eqn{\lambda_1\lambda_2} is being tendered---the general reasoning was that it was a simply to explain distribution-free measure of a depth into the right tail;}
+  \item{is.nochange.env}{The \dQuote{no change} conditions have many columns as \code{Inf} and \code{NA} throughout but have these because \code{akqdecay} constructs parallel output with the other two change definitions (increasing and decreasing). This logical causes these columns to be dropped, but the function does not rely on knowing this automatically and hence the argument here;}
+  \item{site2site_no}{For design reasons, the package uses a \code{site} as the leading column identifying a site, but likely for a Science Base release, the conventional idea of streamgage were used and not some special marking mechanism. This logical triggers the leading column of \code{site} to be renamed to \code{site_no} as a matter of likely convenience;}
   \item{silent}{Suppress informative calls to \code{message()}; and}
   \item{...}{Additional arguments to pass to control \code{\link{akq_write}}.}
 }
