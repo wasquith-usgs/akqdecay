@@ -7,7 +7,7 @@
      return()
   }
   SITES <- sort(ls(lmrfdcenv)); n <- length(SITES)
-  TAB <- TMP <- BLANK <- NULL
+  TAB <- TMP <- BLANK <- NULL; j <- 0
   for(i in 1:n) {
     if(! silent) message(" Tables for ", SITES[i], " (",i,"/",n,")", appendLF = FALSE)
     Z <- get(SITES[i], envir=lmrfdcenv)
@@ -16,11 +16,11 @@
     } else {
        if(! silent) message(" -- got'em")
     }
-    TMP <- Z
-    if(length(TMP) == 2) {
+    TMP <- Z; j <- j + 1 # the j counter deals with fact that the first sites could be NAs, themselves
+    if(length(TMP) == 1) {
        ifelse(i == 1, TAB <- TMP, TAB <- rbind(TAB, TMP))
     } else {
-       if(i == 1) {
+       if(j == 1) {
           BLANK <- TMP[1,]; BLANK[1,] <- NA
           if(i != n) TMP[length(TMP[,1])+1,] <- BLANK
           TAB <- TMP
