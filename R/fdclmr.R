@@ -11,18 +11,19 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
   if(is.null(subzero) & is.null(plusit)) {
     warning("subzero and plusit both set (! NULL), not certain if a good idea")
   }
-  site[1] <- as.character(site[1])
+  site[1] <- as.character(site[1]) # site is a special override on the site id
 
   if(! is.na(minyear)) akdvtable <- akdvtable[akdvtable$year >= minyear,]
   if(! is.na(maxyear)) akdvtable <- akdvtable[akdvtable$year <= maxyear,]
   if(length(akdvtable$year) == 0) return(NA)
 
+  # probabilities from USGS SIR 2014--5231
   probs <- c(0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 25, 30, 40, 50,
              60, 70, 75, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.98)
-  probs <- probs/100
+  probs <- probs/100 # make them fractions
   if(decade) {
-     yds <- unique(akdvtable$decade)
-     avail <- 365*10 - missing.days*10
+     yds <- unique(akdvtable$decade) # note yds in a loop could be years or decades
+     avail <- 365*10 - missing.days*10 # missing record allowance
      empty <- list(fdc_quantiles=rep(NA, length(probs)),  min=NA, max=NA, pplo=NA,
                    lambdas=rep(NA, 8), ratios=rep(NA, 8), median_nonzero=NA, source="not valid")
      zz <- data.frame(site=site, decade=NA, n=NA, nzero=NA, pplo=NA,
@@ -33,7 +34,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
           L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA, T7=NA, T8=NA, median_nonzero=NA)
      zz <- zz[0,]
   } else {
-     yds <- unique(akdvtable$year)
+     yds <- unique(akdvtable$year) # note yds in a loop could be years or decades
      avail <- 365 - missing.days
      empty <- list(median=NA, min=NA, max=NA, min7day=NA, max7day=NA, pplo=NA,
                    lambdas=rep(NA, 8), ratios=rep(NA, 8), median_nonzero=NA, source="not valid")
@@ -43,13 +44,17 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      zz <- zz[0,]
   }
 
+  # The akdvtable must has a decade, year, and Flow (daily mean flow) column.
+  # All other information in that table is ignored (not used). NA protection
+  # exists in the loop that follows.
+
   for(yd in yds) {  # yd means year_or_decade
      if(verbose) message("    ", site," -- ",yd)
      ifelse(decade, fdc <- akdvtable$Flow[akdvtable$decade == yd],
                     fdc <- akdvtable$Flow[akdvtable$year   == yd])
      nzero <- length(fdc[fdc == 0])
      n <- length(fdc[! is.na(fdc)]); fdc <- fdc[! is.na(fdc)]
-     if(log) {
+     if(log) { # if a user needs logarithms
         nzero <- length(fdc[fdc == 0])
         if(! is.null(subzero)) fdc[fdc == 0] <- subzero
         if(! is.null(plusit )) fdc <- fdc + plusit
@@ -68,17 +73,17 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
         if(n <= avail) {
            lmr <- empty
         } else {
-           fdclo <- lmomco::x2xlo(fdc)
-           #print(yd); print(fdclo$xin)
+           fdclo <- lmomco::x2xlo(fdc) # L-moments of zero left-truncation
+           #print(yd); print(fdclo$xin) # The xin are the values "left in" or nonzero.
            lmr <-         lmomco::lmoms(fdclo$xin, nmom=8, no.stop=TRUE)
-           lmr$median_nonzero <- median(fdclo$xin)
-           if(! lmomco::are.lmom.valid(lmr)) {
-              lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdclo$xin, nmom=8))
-           }
-           lmr$pplo <- fdclo$pp
+           lmr$median_nonzero <- median(fdclo$xin) # alert median of the nonzero part
+           if(! lmomco::are.lmom.valid(lmr)) { # bailout to probability weighted moment
+              lmr <- lmomco::pwm2lmom(lmomco::pwm.pp(fdclo$xin, nmom=8)) # by plotting
+           } # position L-moments. This ensures maximal availability of the L-moments.
+           lmr$pplo <- fdclo$pp # The percentage of no flow
            lmr$min <- min(fdc); lmr$max <- max(fdc)
            if(decade) {
-             lmr$fdc_quantiles <- quantile(fdc, probs=probs, type=6)
+             lmr$fdc_quantiles <- quantile(fdc, probs=probs, type=6) # Weibull type
            } else {
              lmr$median <- median(fdc)
              fdc7 <- sapply(1:(n-6), function(i) { mean(fdc[i:(i+6)]) })
@@ -109,12 +114,5 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      zz <- rbind(zz, tmp)
      row.names(zz) <- NULL
   }
-  return(zz)
+  return(zz) # return a one to many rowed data.frame depending on years or decades available
 }
-
-
-# from USGS SIR 2014--5231
-#
-#probs <- c(0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 25, 30, 40, 50,
-#           60, 70, 75, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.98)
-
