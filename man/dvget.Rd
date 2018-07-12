@@ -6,9 +6,9 @@ Retrieve U.S. Geological Survey (USGS) daily mean-streamflow values for a stream
 }
 \usage{
 dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,
-                   date2s=NA,  date2e=NA, ignore.working=TRUE,
+                  date2s=NA,  date2e=NA, ignore.working=TRUE,
                   ignore.provisional=TRUE, silent=FALSE,
-                  drsilent=TRUE, drget=FALSE, pCode="00060", sCode = "00003",
+                  drsilent=TRUE, drget=FALSE, pCode="00060", sCode="00003",
                   message="", ...)
 }
 \arguments{
@@ -20,7 +20,7 @@ dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,
   \item{date2s}{An optional start date of record (greater than and equal to) in the same format as \code{sdate}. This option is only used \bold{after} the \code{readNWISdv()} function has retrieved the data; this option is provided for accommodating situations in which \code{readNWISdv()} has difficulties in pulling the correct data. This option is provided on an experimental basis because the author has become aware that sites with multiple daily-streamflow data descriptors do not have similar behavior when \code{sdate} is attempted for the start of record. The issues causing the inclusion of this option otherwise difficult to explain---please contact the authors as needed.}
   \item{date2e}{An optional ending date of record (less than and equal to) in the same format as \code{edate}. This option is only used \bold{after} the \code{readNWISdv()} function has retrieved the data; this option is provided for accommodating situations in which \code{readNWISdv()} has difficulties in pulling the correct data. This option is provided on an experimental basis because the author has become aware that sites with multiple daily-streamflow data descriptors do not have similar behavior when \code{edate} is attempted for the start of record. The issues causing the inclusion of this option otherwise difficult to explain---please contact the authors as needed.}
   \item{ignore.working}{The USGS identifies at least \dQuote{Approved} (\code{A}), \dQuote{Provisional} (\code{P}), and \dQuote{Working} (\code{W}) record types. The default triggers the deletion of data rows flagged as working record;}
-\item{ignore.provisional}{The USGS identifies at least \dQuote{Approved} (\code{A}), \dQuote{Provisional} (\code{P}), and \dQuote{Working} (\code{W}) record types. The default triggers the deletion of data rows flagged as provisional record;}
+  \item{ignore.provisional}{The USGS identifies at least \dQuote{Approved} (\code{A}), \dQuote{Provisional} (\code{P}), and \dQuote{Working} (\code{W}) record types. The default triggers the deletion of data rows flagged as provisional record;}
   \item{silent}{Suppress informative calls to \code{message};}
   \item{drsilent}{The argument though converted to \dQuote{silent} that is passed to \code{try} for a level of informative error trapping on top of \code{dataRetrieval::}\code{readNWISdv()};}
   \item{drget}{If set, the retrieval from \code{dataRetrieval::}\code{readNWISdv()} is immediately returned following the internal call to \code{dataRetrieval::}\code{renameNWISColumns()};}
