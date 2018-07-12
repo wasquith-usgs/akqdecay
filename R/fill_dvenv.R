@@ -23,9 +23,9 @@ function(siteNumbers, envir=NULL,
    for(i in 1:n) {
       siteNumber <- siteNumbers[i]
       txt <- paste0("via fill_dvenv (",i,"/",n,")")
-      akqtable <- dvget(siteNumber, message=txt, silent=silent,
+      akqdv <- dvget(siteNumber, message=txt, silent=silent,
                           sdate=sdates[i],   edate=edates[i],
                         flowlo=flowlos[i], flowhi=flowhis[i], ...)
-      assign(siteNumber, akqtable, envir=envir)
+      assign(siteNumber, akqdv, envir=envir)
    }
 }
