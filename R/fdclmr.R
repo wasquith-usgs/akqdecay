@@ -3,7 +3,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
                     minyear=NA, maxyear=NA,
                     log=FALSE, subzero=NULL, plusit=1, verbose=FALSE, ...) {
   if(length(unique(akdvtable$site_no)) > 1) {
-    warning("can not have move than one streamgage in the daily value table, please ",
+    warning("can not have more than one streamgage in the daily value table, please ",
             "consult fill_dvenv() for multiple streamgage processing, ",
             "returning NA immediately")
     return(NA)
@@ -102,14 +102,16 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
                       f99.9=q[25], f99.95=q[26], f99.98=q[27], max=lmr$max,
                       L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],
                       T4=lmr$ratios[4],  T5=lmr$ratios[5],  T6=lmr$ratios[6],
-                      T7=lmr$ratios[7], T8=lmr$ratios[8], median_nonzero=lmr$median_nonzero)
+                      T7=lmr$ratios[7], T8=lmr$ratios[8], median_nonzero=lmr$median_nonzero,
+                      stringsAsFactors=FALSE)
      } else {
       tmp <- data.frame(site=site, year=yd, n=n, nzero=nzero, pplo=lmr$pplo,
                        min=lmr$min, median=lmr$median, max=lmr$max,
                        min7day=lmr$min7day, max7day=lmr$max7day,
                        L1=lmr$lambdas[1], L2=lmr$lambdas[2], T3=lmr$ratios[3],
                        T4=lmr$ratios[4], T5=lmr$ratios[5], T6=lmr$ratios[6],
-                       T7=lmr$ratios[7], T8=lmr$ratios[8], median_nonzero=lmr$median_nonzero)
+                       T7=lmr$ratios[7], T8=lmr$ratios[8], median_nonzero=lmr$median_nonzero,
+                       stringsAsFactors=FALSE)
      }
      zz <- rbind(zz, tmp)
      row.names(zz) <- NULL
