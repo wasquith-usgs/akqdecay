@@ -17,9 +17,11 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
   if(! is.na(maxyear)) akdvtable <- akdvtable[akdvtable$year <= maxyear,]
   if(length(akdvtable$year) == 0) return(NA)
 
-  # probabilities from USGS SIR 2014--5231
-  probs <- c(0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 25, 30, 40, 50,
-             60, 70, 75, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.98)
+  # probabilities from USGS SIR 2014--5231, but modified for 0.03 and 99.97 end points
+  # and not 0.02 and 99.98 because (1/(10*365.25 + 1))*100 ===> 0.03 and
+  # (1 - 1/(10*365.25 + 1))*100 == 99.97
+  probs <- c(0.03, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 25, 30, 40, 50,
+             60, 70, 75, 80, 90, 95, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.97)
   probs <- probs/100 # make them fractions
   if(decade) {
      yds <- unique(akdvtable$decade) # note yds in a loop could be years or decades
@@ -27,10 +29,10 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      empty <- list(fdc_quantiles=rep(NA, length(probs)),  min=NA, max=NA, pplo=NA,
                    lambdas=rep(NA, 8), ratios=rep(NA, 8), median_nonzero=NA, source="not valid")
      zz <- data.frame(site=site, decade=NA, n=NA, nzero=NA, pplo=NA,
-          min=NA,  f0.02=NA, f0.05=NA, f0.1=NA, f0.2=NA, f0.5=NA, f01=NA,
+          min=NA,  f0.03=NA, f0.05=NA, f0.1=NA, f0.2=NA, f0.5=NA, f01=NA,
           f02=NA, f05=NA, f10=NA, f20=NA, f25=NA, f30=NA, f40=NA, f50=NA, f60=NA,
           f70=NA, f75=NA, f80=NA, f90=NA, f95=NA, f98=NA, f99=NA, f99.5=NA,
-          f99.8=NA, f99.9=NA, f99.95=NA, f99.98=NA, max=NA,
+          f99.8=NA, f99.9=NA, f99.95=NA, f99.97=NA, max=NA,
           L1=NA, L2=NA, T3=NA, T4=NA, T5=NA, T6=NA, T7=NA, T8=NA, median_nonzero=NA)
      zz <- zz[0,]
   } else {
@@ -55,7 +57,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      nzero <- length(fdc[fdc == 0])
      n <- length(fdc[! is.na(fdc)]); fdc <- fdc[! is.na(fdc)]
      if(log) { # if a user needs logarithms
-        nzero <- length(fdc[fdc == 0])
+        nzero <- length(fdc[fdc <= 0])
         if(! is.null(subzero)) fdc[fdc == 0] <- subzero
         if(! is.null(plusit )) fdc <- fdc + plusit
         opts <- options(warn=-1)
@@ -67,7 +69,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      if(any(is.na(fdc))) {
         message("a least one missing value for year or decade ",yd)
         lmr <- empty
-     } else if (length(unique(fdc)) == 1) {
+     } else if(length(unique(fdc)) == 1) {
         lmr <- empty
      } else {
         if(n <= avail) {
