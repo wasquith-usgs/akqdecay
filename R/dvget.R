@@ -60,6 +60,7 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL, date2s=NA, da
       warning("** Flow is missing for ", siteNumber,
               ", emergency inclusion of 'Flow <- NA'")
       zz$Flow <- rep(NA, length(zz$site))
+      attr(zz, "akqdecay::dvget|Flow") <- "missing, emergency inclusion of NA"
    }
    if(exists("Flow_cd", zz)) {
      # Flow test dam releases  H <- dvget("08025360")
@@ -72,23 +73,31 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL, date2s=NA, da
       warning("** Flow_cd is missing for ", siteNumber,
               ", emergency inclusion of 'Flow_cd <- NA'")
       zz$Flow_cd <- rep(NA, length(zz$site))
+      attr(zz, "akqdecay::dvget|Flow_cd") <- "missing, emergency inclusion of NA"
    }
 
-   # though akqdecay() also checks for this, one station have more than 2,000 different
+   # though akqdecay() also checks for this, one station on more than 2,000 different
    # station tests causes a breakage. See comments below for "02310000" and note the
    # lines above
    if(length(unique(zz$site)) != 1) {
-      warning("though only one site pursued on dvget() retrieval, processing yields ",
-              "either zero or > one, still returning the data.frame")
+      warning("  though only one site pursued on dvget() retrieval, ",
+              "processing yields either zero or > one,\n    still returning ",
+              "the data.frame, which likely has zero rows as that is the most ",
+              "common\n    trigger of this message")
    }
    if(! is.null(flowlo))  zz$Flow[ zz$Flow > flowlo] <- NA
    if(! is.null(flowhi))  zz$Flow[ zz$Flow < flowhi] <- NA
    #print(head(zz))
    # dvget("02413210", edate="2016-09-30") # caused problems because of some
    # weird Flow == NA issues so the length test below is for that.
-   if(length(zz$Flow[zz$Flow == -999999]) > 0) { # station 07040000 for year 2015 had -999999
+   if(length(zz$Flow[! is.na(zz$Flow) & zz$Flow == -999999]) > 0) { # station 07040000 for year 2015 had -999999
       message("  at least one -999999 discharge") # I did not know this was possible
+      last_hit <- zz$Date[zz$Flow == -999999]; first_hit <- last_hit[1]
+      last_hit <- last_hit[length(last_hit)]
       zz$Flow[zz$Flow == -999999] <- NA
+      attr(zz, "akqdecay::dvget|Flow_-999999") <-
+                                         paste0("at least one -999999 discharge: first=",
+                                                first_hit," and last=",last_hit)
    }
    return(zz)
 }
