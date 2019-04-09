@@ -1,7 +1,7 @@
 "fdclmr" <-
 function(akdvtable, missing.days=7, site="", decade=FALSE,
                     minyear=NA, maxyear=NA,
-                    log=FALSE, subzero=NULL, plusit=1, verbose=FALSE, ...) {
+                    log=FALSE, subzero=NULL, plusit=0, verbose=FALSE, ...) {
   if(length(unique(akdvtable$site_no)) > 1) {
     warning("can not have more than one streamgage in the daily value table, please ",
             "consult fill_dvenv() for multiple streamgage processing, ",
@@ -54,12 +54,12 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      if(verbose) message("    ", site," -- ",yd)
      ifelse(decade, fdc <- akdvtable$Flow[akdvtable$decade == yd],
                     fdc <- akdvtable$Flow[akdvtable$year   == yd])
-     nzero <- length(fdc[fdc == 0])
+     nzero <- length(fdc[fdc <= 0])
      n <- length(fdc[! is.na(fdc)]); fdc <- fdc[! is.na(fdc)]
      if(log) { # if a user needs logarithms
-        nzero <- length(fdc[fdc <= 0])
-        if(! is.null(subzero)) fdc[fdc == 0] <- subzero
+        if(! is.null(subzero)) fdc[fdc <= 0] <- subzero
         if(! is.null(plusit )) fdc <- fdc + plusit
+        nzero <- length(fdc[fdc <= 0])
         opts <- options(warn=-1)
           fdc <- log10(fdc)
           if(length(fdc[is.nan(fdc)]) > 0) message("  NaN -- ", site, " for ", yd)

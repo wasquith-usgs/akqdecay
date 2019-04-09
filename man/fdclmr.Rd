@@ -9,7 +9,7 @@ The function also computes the minimum, median, and maximum in conjunction with 
 \usage{
 fdclmr(akdvtable, missing.days=7, site="", decade=FALSE,
                   minyear=NA, maxyear=NA,
-                  log=FALSE, subzero=NULL, plusit=1, verbose=FALSE, ...)
+                  log=FALSE, subzero=NULL, plusit=0, verbose=FALSE, ...)
 }
 \arguments{
   \item{akdvtable}{A USGS daily-value of streamflow table with some extensions unique to this package as returned by \code{\link{dvget}};}
@@ -18,9 +18,9 @@ fdclmr(akdvtable, missing.days=7, site="", decade=FALSE,
   \item{decade}{A logical to switch to decadal computations. A decade is already available in the \code{akdvtable} and see its documentation in \code{\link{dvget}} for the definition of decade for this package.}
   \item{minyear}{The optional minimum year of the daily-values table before any futher computations are made.}
   \item{maxyear}{The optional maximum year of the daily-values table before any futher computations are made.}
-  \item{log}{Should base-10 logarithms of the daily streamflow be computed before L-moments computed;}
-  \item{subzero}{A value for substitution for zero values when \code{log=TRUE}. This feature is subject to change because of the nonoptimality of such substitution;}
-  \item{plusit}{A value for added to \emph{also} values (not just those that are zero);}
+  \item{log}{Should base-10 logarithms of the daily streamflow be computed before L-moments computed (see also \code{subzero} and \code{plusit});}
+  \item{subzero}{If \code{log=TRUE}, a value for substitution for zero or less than zero values when \code{log=TRUE}. This feature is subject to change because of the nonoptimality of such substitution. The \code{subzero} is used before the \code{plusit};}
+  \item{plusit}{If \code{log=TRUE}, a value for added to \emph{also} values (not just those that are zero or less than zero);}
   \item{verbose}{A logical controlling a potentially helpful message that prints the site and the current year as they are looped through. This is similar to the \code{silent} in \cr \code{\link{fill_lmrfdcenv}}, but named different here for discrete functionality between \code{fdclmr} and \code{\link{fill_lmrfdcenv}}; and}
   \item{...}{Additional arguments to pass.}
 }
@@ -28,7 +28,7 @@ fdclmr(akdvtable, missing.days=7, site="", decade=FALSE,
 An \R \code{data.frame} of mutable length but containing the following columns for \code{decade=FALSE}:
   \item{site}{An echo of the \code{site};}
   \item{n}{The number of days (values) entering into the L-moment computations;}
-  \item{nzero}{The number of zero flow days that would not enter into L-moment computations if and only if \code{log=TRUE}. This count if logarithmic transformation is request also includes the number of values less than zero as well;}
+  \item{nzero}{The number of zero or less than zero flow days that would not enter into L-moment computations. This number has been recomputed internally if \code{log=TRUE} because the \code{plusit} and \code{subzero} are evaluated first;}
   \item{pplo}{The plotting position (Weibull) of the zero flow when \code{log=FALSE}. The \code{x2xlo} function is used from the \pkg{lmomco} package before the L-moments are computed (see internals here and documentation for \code{x2xlo}). \bold{It is critical} to know that the L-moments are computed by \code{lmoms(fdclo$in)}, which means that the L-moments are for the nonzero values as \code{x2xlo} has a default of \code{leftout = 0}. The defaults to \code{x2xlo} are used because it is set to zero as the threshold for truncation, which is appropriate for many potential applications in the arid and semi-arid regions of the world. Lastly, it is very important that the user of the L-moments track the value for \code{pplo} and use it in quantile function definition;}
   \item{min}{The minimum daily mean streamflow;}
   \item{median}{The median daily mean streamflow;}
