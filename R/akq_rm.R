@@ -11,6 +11,12 @@
      warning("siteNumbers is NULL")
      return(NULL)
   }
+  siteNumbers <- siteNumbers[! is.na(siteNumbers)]
+  siteNumbers <- unique(siteNumbers)
+  if(length(siteNumbers) == 0) {
+    warning("length of non-NA siteNumbers is zero, returning as.list(envir)")
+    return(as.list(envir))
+  }
   ifelse(invert, them <- setdiff(sites, siteNumbers), them <- siteNumbers)
   tmp <- as.list(envir)
   tmp[them] <- NULL

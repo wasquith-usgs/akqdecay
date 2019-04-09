@@ -8,7 +8,7 @@ Remove from either the environments related to calls to \code{\link{fill_akqenv}
 akq_rm(siteNumbers, envir, invert=FALSE, ...)
 }
 \arguments{
-  \item{siteNumbers}{A vector of USGS streamgage identification numbers;}
+  \item{siteNumbers}{A vector of USGS streamgage identification numbers. Any \code{NA} entries are removed and then a unique list of the site numbers is used. After the \code{NA} are removed and if then the length of the vector is zero, then \code{as.list(envir)} is returned with an informative warning message;}
   \item{envir}{The \R \code{environment} previously populated by \code{\link{fill_akqenv}} or  \code{\link{fill_dvenv}};}
   \item{invert}{Instead of deleting and returning the remainder, with \code{invert=}\code{TRUE}, return an \code{environment} of sites identified by \code{siteNumbers}; and}
   \item{...}{Additional arguments to pass (see source code to ascertain flexible usage).}
