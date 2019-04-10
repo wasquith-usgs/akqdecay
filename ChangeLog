@@ -5,4 +5,9 @@ NEWS for R Package "akqdecay"
 Version 0.14--
 1.  Initial Release
 
+Version 0.20--2019-04-10
+1.  Very minor changes but <= 0 is now used to find "zeros" for purposes of the
+      nozero count. Also the edges of the decadal FDC of 0.03 and 99.97 are
+      correct relative to the old 0.02 and 99.98 because 1/(3652+1).
+ 
 
