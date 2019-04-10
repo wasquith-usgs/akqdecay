@@ -1,0 +1,14 @@
+citHeader("To cite akqdecay in publications, please use:")
+
+bibentry(bibtype = "Manual",
+ author = c(person(c("William", "H."), "Asquith",  role=c("aut", "cre")),
+            person(c("Rodney",    "R."), "Knight",  role=c("ctb"))),
+  title = "akqdecay--Many Distributional Statistics of USGS Daily Streamflow Hydrographs and Powerful Utilities",
+  organization = "U.S. Geological Survey",
+  address="Reston, Va.",
+  year = "2019",
+  note = "R package version 0.21",
+  url = "https://github.com/wasquith-usgs/akqdecay",
+  key = "akqdecay-package",
+  textVersion = "Asquith, W.H., and Knight, R.R., 2019, akqdecay---Many distributional statistics of USGS daily streamflow hydrographs and powerful utilities: (unpublished research code base), U.S. Geological Survey, Reston, Va."
+)
