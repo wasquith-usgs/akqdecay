@@ -79,12 +79,17 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   dates <- dates[sel]
   flows <- pmax(flows[sel], 1e-99) # Convert 0 to a small number
   num_flows <- length(flows)
+  ixs <- 1:num_flows
   if(any(is.na(flows))) {
     warning("Missing values between ", sdate, " and ", edate)
     return(NULL)
   }
   if(any(diff(as.double(dates)) != 1)) {
-    warning("Date data are not continuous between sdate and edate")
+    gxs <- ixs[c(0,diff(as.double(dates))) > 1]
+    gaps <- paste(dates[gxs], collapse=", ")
+    warning("noncontinuous date between ",
+            "sdate=",sdate," and edate=",edate,
+            "\n  gaps at *about*: ",gaps)
     return(NULL)
   }
   Nact <- max(cda^0.2, 1)
@@ -120,7 +125,6 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   ALLGWC1 <- ifelse(ALLGWC1 & CkQ, FALSE, ALLGWC1)
   
   # Step 4 Interpolate Baseflows
-  ixs <- 1:num_flows
   BaseQF  <- exp(approx(ixs[ALLGWF],  log(flows[ALLGWF]),  xout=ixs, rule=2)$y)
   BaseQC  <- exp(approx(ixs[ALLGWC],  log(flows[ALLGWC]),  xout=ixs, rule=2)$y)
   BaseQC1 <- exp(approx(ixs[ALLGWC1], log(flows[ALLGWC1]), xout=ixs, rule=2)$y)
@@ -201,8 +205,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
 #lines(pdv$Date, pdv$FlowPart2, col=3)
 #lines(pdv$Date, pdv$FlowPart3, col=4)
 
-dv <- dvget2("08167000", sdate="2010-10-01", edate="2019-04-01")
-pdv <- dvpart2(dv, cda=839)
+#dv <- dvget("08167000", sdate="1969-10-01", edate="")
+#pdv <- dvpart(dv, cda=839)
 #plot(pdv$Date,  pdv$Flow, log="y", type="l", col=8)
 #lines(pdv$Date, pdv$FlowBase,  col=1)
 #lines(pdv$Date, pdv$FlowPart1, col=2)
