@@ -16,6 +16,12 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL, date2s=NA, da
    }
    if(is.na(sdate)) sdate <- ""
    if(is.na(edate)) edate <- ""
+   if(sdate != "" && edate != "") {
+     if(as.Date(sdate) > as.Date(edate)) {
+       warning("sdate is after edate, returning NULL")
+       return(NULL)
+     }
+   }
    zz <- NULL
    try(zz <- dataRetrieval::readNWISdv(siteNumber, startDate=sdate, endDate=edate,
                          parameterCd=pCode, statCd=sCode, ...), silent=drsilent)
