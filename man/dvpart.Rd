@@ -5,7 +5,7 @@
 Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::part} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The algorithms implement the procedures of Rutledge (1998). \bold{For the \pkg{akqdecay} package, some new development needs to be made on how to handle missing flows. Instead of issuing \code{stop} as in the \code{part}, the \code{dvpart} implementation returns \code{NULL}. This will help in data mining studies. Need to design a ``lift the pen'' strategy to the \code{NAs} before worrying about \code{fillenv}-like logic.}
 }
 \usage{
-dvpart(akdvtable, sdate=NULL, edate=NULL, cda=NULL, site_no=NA, ...)
+dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...)
 }
 \arguments{
   \item{akdvtable}{A USGS daily-value of streamflow table with some extensions unique to this package as returned by \code{\link{dvget}};}

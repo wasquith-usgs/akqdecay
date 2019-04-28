@@ -1,5 +1,5 @@
 "dvpart" <-
-function(akdvtable, sdate=NULL, edate=NULL, cda=NULL, site_no=NA, ...) {
+function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   # BEGIN EMBEDMENT (utility functions from other sources)
   "na2miss" <- # from smwrBase::na2miss()
   function(x, to=-99999) { # WHA removed the special factor handling
@@ -192,6 +192,14 @@ function(akdvtable, sdate=NULL, edate=NULL, cda=NULL, site_no=NA, ...) {
 
 #dv <- dvget("08167000", sdate="1969-10-01", edate="1997-09-30")
 #pdv <- dvpart(dv, cda=839)
+#plot(pdv$Date,  pdv$Flow, log="y", type="l", col=8)
+#lines(pdv$Date, pdv$FlowBase,  col=1)
+#lines(pdv$Date, pdv$FlowPart1, col=2)
+#lines(pdv$Date, pdv$FlowPart2, col=3)
+#lines(pdv$Date, pdv$FlowPart3, col=4)
+
+dv <- dvget("08167000", sdate="2010-10-01", edate="1997-09-30")
+pdv <- dvpart(dv, cda=839)
 #plot(pdv$Date,  pdv$Flow, log="y", type="l", col=8)
 #lines(pdv$Date, pdv$FlowBase,  col=1)
 #lines(pdv$Date, pdv$FlowPart1, col=2)
