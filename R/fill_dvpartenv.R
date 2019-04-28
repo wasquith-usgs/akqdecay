@@ -19,7 +19,7 @@
       if(length(as.data.frame(D)[1,]) == 1) {
          assign(site, NA, envir=envir)
       } else {
-         Z <- dvpart2(D, site_no=site, ...)
+         Z <- dvpart(D, site_no=site, ...)
          k <- k + 1
          assign(site, Z,  envir=envir)
       }
