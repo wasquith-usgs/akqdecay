@@ -78,18 +78,19 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   sel <- (dates >= sdate) & (dates <= edate)
   dates <- dates[sel]
   flows <- pmax(flows[sel], 1e-99) # Convert 0 to a small number
+  akdvtable <- akdvtable[sel,]
   num_flows <- length(flows)
   ixs <- 1:num_flows
   if(any(is.na(flows))) {
-    warning("Missing values between ", sdate, " and ", edate)
+    message("for ",site_no," NA flows between ",
+                   sdate, " to ", edate)
     return(NULL)
   }
   if(any(diff(as.double(dates)) != 1)) {
     gxs <- ixs[c(0,diff(as.double(dates))) > 1]
     gaps <- paste(dates[gxs], collapse=", ")
-    warning("noncontinuous date between ",
-            "sdate=",sdate," and edate=",edate,
-            "\n  gaps at *about*: ",gaps)
+    message("for ",site_no," noncontinuous data between ",
+            sdate," to ",edate, "\n  gaps at *about*: ",gaps)
     return(NULL)
   }
   Nact <- max(cda^0.2, 1)
@@ -181,7 +182,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   ## Compute the linear interpolation of baseflow
   Ffact <- NC - Nact # Must be between 0 and 1
   BaseQ <- BaseQF*Ffact + BaseQC*(1-Ffact)
-  zz <- data.frame(site_no=site_no, Date=dates,
+  zz <- data.frame(agency_cd=akdvtable$agency_cd,
+                   site_no=site_no, Date=dates,
                    Flow     =round(flows,   digits=3L),
                    Flow_cd  =akdvtable$Flow_cd,
                    year     =akdvtable$year,
