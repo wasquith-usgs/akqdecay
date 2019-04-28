@@ -81,16 +81,17 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   akdvtable <- akdvtable[sel,]
   num_flows <- length(flows)
   ixs <- 1:num_flows
-  if(any(is.na(flows))) {
-    message("for ",site_no," NA flows between ",
-                   sdate, " to ", edate)
+  if(any(diff(as.double(dates)) != 1)) {
+    dffs <- c(0,diff(as.double(dates)))
+    gxs <- ixs[dffs > 1];
+    gaps <- paste(dates[gxs],"[",dffs[gxs],"days]", sep="", collapse=", ")
+    message("          for ",site_no," noncontinuous data between ",
+            sdate," to ",edate, "\n          gaps about: ",gaps)
     return(NULL)
   }
-  if(any(diff(as.double(dates)) != 1)) {
-    gxs <- ixs[c(0,diff(as.double(dates))) > 1]
-    gaps <- paste(dates[gxs], collapse=", ")
-    message("for ",site_no," noncontinuous data between ",
-            sdate," to ",edate, "\n  gaps at *about*: ",gaps)
+  if(any(is.na(flows))) {
+    message("          for ",site_no," NA flows between ",
+            sdate, " to ", edate)
     return(NULL)
   }
   Nact <- max(cda^0.2, 1)
