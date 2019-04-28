@@ -1,5 +1,8 @@
 "dvpart" <-
 function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
+  if(is.null(akdvtable)) {
+    warning("akdvtable is NULL, returning NULL"); return(NULL)
+  }
   # BEGIN EMBEDMENT (utility functions from other sources)
   "na2miss" <- # from smwrBase::na2miss()
   function(x, to=-99999) { # WHA removed the special factor handling
@@ -62,12 +65,12 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   if(is.na(site_no)) { # working on defaults etc
     site_no <- akdvtable$site_no[1]
   }
-  if(is.null(sdate)) { # working on defaults etc
+  if(sdate == "") { # working on defaults etc
     sdate <- dates[1L]
   } else {
     sdate <- as.Date(as.character(sdate))
   }
-  if(is.null(edate)) {
+  if(edate == "") {
     edate <- dates[length(dates)]
   } else {
     edate <- as.Date(as.character(edate))
@@ -140,8 +143,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   }
   
   while(any(CkQ <- (BaseQC > flows + SMALL))) { # Avoid rounding problems
-    CkQ <- CkQ & !ALLGWC # The trouble makers
-    Ck0 <- eventNum(!ALLGWC, reset=TRUE) # Each block of !ALLGW
+    CkQ <- CkQ & ! ALLGWC # The trouble makers
+    Ck0 <- eventNum(! ALLGWC, reset=TRUE) # Each block of !ALLGW
     CkE <- unique(Ck0[CkQ])
     ## Find the largest ratio (log difference) in each block of !ALLGW
     for(i in CkE) {
@@ -156,8 +159,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   }
   
   while(any(CkQ <- (BaseQC1 > flows + SMALL))) { # Avoid rounding problems
-    CkQ <- CkQ & !ALLGWC1 # The trouble makers
-    Ck0 <- eventNum(!ALLGWC1, reset=TRUE) # Each block of !ALLGW
+    CkQ <- CkQ & ! ALLGWC1 # The trouble makers
+    Ck0 <- eventNum(! ALLGWC1, reset=TRUE) # Each block of !ALLGW
     CkE <- unique(Ck0[CkQ])
     ## Find the largest ratio (log difference) in each block of !ALLGW
     for(i in CkE) {
@@ -198,8 +201,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
 #lines(pdv$Date, pdv$FlowPart2, col=3)
 #lines(pdv$Date, pdv$FlowPart3, col=4)
 
-dv <- dvget("08167000", sdate="2010-10-01", edate="1997-09-30")
-pdv <- dvpart(dv, cda=839)
+dv <- dvget2("08167000", sdate="2010-10-01", edate="2019-04-01")
+pdv <- dvpart2(dv, cda=839)
 #plot(pdv$Date,  pdv$Flow, log="y", type="l", col=8)
 #lines(pdv$Date, pdv$FlowBase,  col=1)
 #lines(pdv$Date, pdv$FlowPart1, col=2)
