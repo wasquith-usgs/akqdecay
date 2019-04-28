@@ -4,7 +4,7 @@ Version: 0.21
 Depends: R (>= 3.0.0), utils
 Imports: dataRetrieval, lmomco, graphics, sp, stats
 Suggests: mcparallelDo
-Date: 2019-04-10
+Date: 2019-04-28
 Author: William H. Asquith [aut, cre], Rodney R. Knight [ctb]
 Description: Compute distributional statistics of hydrograph recession (decay) based on
   N-day-over-day changes of daily-mean streamflows for an arbitrary number of U.S.
