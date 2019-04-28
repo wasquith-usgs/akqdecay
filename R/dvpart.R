@@ -32,7 +32,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
     }
     return(x)
   } # end shiftData() function
-  
+
   "eventNum" <- # from smwrBase::eventNum()
   function(event, reset=FALSE, na.fix=FALSE) {
     event[is.na(event)] <- na.fix
@@ -56,15 +56,22 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
     return(ret.val)
   } # end eventNum function
   # END EMBEDMENT
- 
-  # Begin now the algorithm for dvpart
-  dates <- akdvtable$Date # daily dates
-  flows <- akdvtable$Flow # streamflows
+
   SMALL <- 1E-6 # new standardization from DVstats::part() use
-  
   if(is.na(site_no)) { # working on defaults etc
+    if(length(unique(akdvtable$site_no)) != 1) {
+      warning("multiple sites on the akdvtable, returning NULL")
+      return(NULL)
+    }
     site_no <- akdvtable$site_no[1]
+  } else {
+    if(length(site_no) != 1) {
+      warning("multiple sites in site_no provided, returning NULL")
+      return(NULL)
+    }
   }
+
+  dates <- akdvtable$Date # daily dates
   if(sdate == "") { # working on defaults etc
     sdate <- dates[1L]
   } else {
@@ -75,18 +82,35 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   } else {
     edate <- as.Date(as.character(edate))
   }
+
+  akdvtable <- akdvtable[akdvtable$site_no == site_no,]
   sel <- (dates >= sdate) & (dates <= edate)
-  dates <- dates[sel]
-  flows <- pmax(flows[sel], 1e-99) # Convert 0 to a small number
   akdvtable <- akdvtable[sel,]
+
+  flows <- akdvtable$Flow # streamflows
+  dates <- akdvtable$Date # daily dates
+
+  flows <- pmax(flows, 1e-99) # Convert 0 to a small number
+
+  #nova_core <- seq(sdate, edate, by=1)
+  #gap_infill_flow <- approx(dates[! is.na(flows)],
+  #                          flows[! is.na(flows)], xout=nova_core)$y
+  #df <- data.frame(Date=nova_core, GapFlow=gap_infill_flow)
+  #do <- data.frame(Date=dates, Flow=flows)
+  #hj <- merge(df,do, all=TRUE); print(head(hj))
+  #return(hj)
+  #plot(hj$Date,hj$GapFlow, type="l", col=3)
+  #lines(hj$Date,hj$Flow, col=2)
+
   num_flows <- length(flows)
   ixs <- 1:num_flows
   if(any(diff(as.double(dates)) != 1)) {
     dffs <- c(0,diff(as.double(dates)))
-    gxs <- ixs[dffs > 1];
+    gxs <- ixs[dffs > 1]; total_days <- sum(dffs[gxs])
     gaps <- paste(dates[gxs],"[",dffs[gxs],"days]", sep="", collapse=", ")
     message("          for ",site_no," noncontinuous data between ",
-            sdate," to ",edate, "\n          gaps about: ",gaps)
+            sdate," to ",edate, "\n          gaps about: ",gaps,
+            " : total=",total_days)
     return(NULL)
   }
   if(any(is.na(flows))) {
@@ -94,6 +118,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
             sdate, " to ", edate)
     return(NULL)
   }
+
+  # Basically the PART algorithm from here on out.
   Nact <- max(cda^0.2, 1)
   N    <- as.integer(ceiling(Nact))
   NF   <- max(N-1L, 1L); NC <- max(N, 2L)
@@ -107,7 +133,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   # ALLGW is set to logical: TRUE (*) and FALSE (0)
   ALLGWF <- ALLGWC <- ALLGWC1 <- rep(FALSE,    num_flows)
   BaseQF <- BaseQC <- BaseQC1 <- rep(NA_real_, num_flows)
-  
+
   # Step 2 Recored all GW flow where antecendent recession OK
   DiffQ   <- c(0, diff(flows))
   AnteF   <- na2miss(filter(DiffQ <= 0, rep(1, NF ), sides=1), to=0)
@@ -119,13 +145,13 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   BaseQC  <- ifelse(ALLGWC,  flows, BaseQC)
   ALLGWC1 <- ifelse(AnteC1 == NC1, TRUE, ALLGWC1)
   BaseQC1 <- ifelse(ALLGWC1, flows, BaseQC1)
-  
+
   # Step 3 Revise all GW where necessary
   CkQ <- (flows > 1e-9) & (flows/shiftData(flows, k=-1, fill=1) > 1.258925)
   ALLGWF  <- ifelse(ALLGWF  & CkQ, FALSE, ALLGWF )
   ALLGWC  <- ifelse(ALLGWC  & CkQ, FALSE, ALLGWC )
   ALLGWC1 <- ifelse(ALLGWC1 & CkQ, FALSE, ALLGWC1)
-  
+
   # Step 4 Interpolate Baseflows
   BaseQF  <- exp(approx(ixs[ALLGWF],  log(flows[ALLGWF]),  xout=ixs, rule=2)$y)
   BaseQC  <- exp(approx(ixs[ALLGWC],  log(flows[ALLGWC]),  xout=ixs, rule=2)$y)
@@ -147,7 +173,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
     BaseQF <- exp(approx(ixs[ALLGWF], log(flows[ALLGWF]), xout=ixs, rule=2)$y)
     BaseQF <- ifelse(BaseQF < SMALL, 0, BaseQF) # Clean up
   }
-  
+
   while(any(CkQ <- (BaseQC > flows + SMALL))) { # Avoid rounding problems
     CkQ <- CkQ & ! ALLGWC # The trouble makers
     Ck0 <- eventNum(! ALLGWC, reset=TRUE) # Each block of !ALLGW
@@ -163,7 +189,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
     BaseQC <- exp(approx(ixs[ALLGWC], log(flows[ALLGWC]), xout=ixs, rule=2)$y)
     BaseQC <- ifelse(BaseQC < SMALL, 0, BaseQC)
   }
-  
+
   while(any(CkQ <- (BaseQC1 > flows + SMALL))) { # Avoid rounding problems
     CkQ <- CkQ & ! ALLGWC1 # The trouble makers
     Ck0 <- eventNum(! ALLGWC1, reset=TRUE) # Each block of !ALLGW
@@ -191,9 +217,9 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
                    decade   =akdvtable$decade,
                    wyear    =akdvtable$wyear,
                    month    =akdvtable$month,
-                   FlowBase =round(BaseQ,   digits=3L), 
+                   FlowBase =round(BaseQ,   digits=3L),
                    FlowPart1=round(BaseQF,  digits=4L),
-                   FlowPart2=round(BaseQC,  digits=4L), 
+                   FlowPart2=round(BaseQC,  digits=4L),
                    FlowPart3=round(BaseQC1, digits=3L),
                    stringsAsFactors=FALSE)
   return(zz)
