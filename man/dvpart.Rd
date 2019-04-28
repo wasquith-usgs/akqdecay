@@ -17,6 +17,7 @@ dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...)
 }
 \value{
   An \R \code{data.frame} is returned with these expected columns.
+  \item{agency_cd}{The agency code for the data;}
   \item{site_no}{The streamgage identification number;}
   \item{Date}{The date, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case;}
   \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case or an alternative name for streamflow;}
@@ -25,10 +26,10 @@ dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...)
   \item{decade}{The decade of the daily value. The decade is assign by taking the year and the trailing digit has been stripped and replaced with zero. This is \emph{not} a technique in which a \dQuote{decade} is centered on an even step of 10---meaning, say that 1996--2005 \emph{is not the} \dQuote{2000 decade} but simply 01/01/2000--12/31/2009 \emph{is the} \dQuote{2000 decade;}}
   \item{wyear}{The water year;}
   \item{month}{The month.}
-  \item{FlowBase}{The baseflow of the \code{Flow} and same as \code{BaseQ} from \code{DVstats::part};}
-  \item{FlowPart1}{The baseflow of the \code{Flow} and same as \code{Part1} from \code{DVstats::part};}
-  \item{FlowPart2}{The baseflow of the \code{Flow} and same as \code{Part2} from \code{DVstats::part}; and}
-  \item{FlowPart3}{The baseflow of the \code{Flow} and same as \code{Part3} from \code{DVstats::part}.}
+  \item{FlowBase}{The baseflow of the \code{Flow} and same as column \code{BaseQ} from \code{DVstats::part};}
+  \item{FlowPart1}{The baseflow of the \code{Flow} and same as column \code{Part1} from \code{DVstats::part};}
+  \item{FlowPart2}{The baseflow of the \code{Flow} and same as column \code{Part2} from \code{DVstats::part}; and}
+  \item{FlowPart3}{The baseflow of the \code{Flow} and same as column \code{Part3} from \code{DVstats::part}.}
 }
 \note{
 For the greater purposes of the \pkg{akqdecay} package, it was desired to have an independent subsystem for streamflow partitioning from external packages. The \code{DVstats::part} as stated above is the basis with some code cleaning to the style of Asquith and Knight that includes the critical adjustment to processing on daily values in the canonical form of \code{\link{dvget}}. The \code{part} implementation requires a short suite of utilities: \code{smwrBase::eventNum}, \code{smwrBase::na2miss}, and \code{smwrBase::shiftData}. These are embedded within \code{dvpart}. Both \code{na2miss} and \code{shiftData} in original form have special handling for factor variables. This logic is not needed and stripped within the \code{dvpart} sources.
