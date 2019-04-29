@@ -12,11 +12,12 @@ Extract the raw computations from output of \code{\link{akqdecay}} and place the
 By providing this \code{NA}, as shown, graphical operations on the table will be able to \dQuote{lift the pen} when the successive streamgage is encountered.
 }
 \usage{
-akq_table(akqenv, NAline.insert=TRUE, silent=FALSE, ...)
+akq_table(akqenv, NAline.insert=TRUE, type=c("akqdecay", "other"), silent=FALSE, ...)
 }
 \arguments{
   \item{akqenv}{The \R \code{environment} previously populated by \code{\link{fill_akqenv}}. This argument can also be an \R \code{list} directly from \code{\link{akqdecay}}; special accommodation is made;}
   \item{NAline.insert}{A logical that can be used to suppress the \code{NA} line insertion described in the \bold{Description} section;}
+  \item{type}{What type of table is sought? The \code{"akqdecay"} means that the \code{Z$table} of the list from \code{\link{fill_akqenv}} is to be extracted from the value \code{Z} in the environment stored under the site. The \code{"other"} just means that the environment is storing data frames, and this type is for environments from \code{\link{fill_dvenv}} or \code{\link{fill_dvpartenv}}. Internally, the source code has some different column accessing based on \code{type} that is partly an artifact of early design decision;}
   \item{silent}{Suppress informative calls to \code{message()}; and}
   \item{...}{Additional arguments to pass (see source code to ascertain flexible usage).}
 }
