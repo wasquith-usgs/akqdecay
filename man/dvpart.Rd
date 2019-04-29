@@ -1,8 +1,11 @@
 \name{dvpart}
 \alias{dvpart}
-\title{ Peform Streamflow Partitioning after Rutledge (1998) structured for Asquith--Knight Daily Streamflow Table }
+\title{ Peform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table }
 \description{
-Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows to help in data mining studies. First, instead of issuing \code{stop()} as done in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. Second, a more sophisticated method is optionally available (see \bold{Details}).
+Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The function \code{\link{fill_dvpartenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{dvpart} function.
+
+
+The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows to help in data mining studies. First, instead of issuing \code{stop()} as done in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. Second, a more sophisticated method is optionally available (see \bold{Details}).
 }
 \usage{
 dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ...)
@@ -30,6 +33,7 @@ The fifth step is critical. For only the dates in the \code{akdvtable}, extract 
   \item{Date}{The date, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case;}
   \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case or an alternative name for streamflow;}
   \item{Flow_cd}{A coding system for the streamflow (\code{A}, approved record; \code{P}, provisional, and \code{W}, working record);}
+  \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
   \item{year}{The calendar year of the date;}
   \item{decade}{The decade of the daily value. The decade is assign by taking the year and the trailing digit has been stripped and replaced with zero. This is \emph{not} a technique in which a \dQuote{decade} is centered on an even step of 10---meaning, say that 1996--2005 \emph{is not the} \dQuote{2000 decade} but simply 01/01/2000--12/31/2009 \emph{is the} \dQuote{2000 decade;}}
   \item{wyear}{The water year;}
@@ -40,7 +44,7 @@ The fifth step is critical. For only the dates in the \code{akdvtable}, extract 
   \item{FlowPart3}{The baseflow of the \code{Flow} (the column \code{Part3} from \code{DVstats::}\code{part()}).}
 }
 \note{
-For the greater purposes of the \pkg{akqdecay} package, it was desired to have an independent subsystem for streamflow partitioning from external packages. The \code{DVstats::}\code{part()} as stated above is the basis with some code cleaning to the style of Asquith and Knight that includes the critical adjustment to processing on daily values in the canonical form of \code{\link{dvget}}. The \code{part()} implementation requires a short suite of utilities: \code{smwrBase::}\code{eventNum()}, \code{smwrBase::}\code{na2miss()}, and \code{smwrBase::}\code{shiftData()}. These are embedded within \code{dvpart}. Both \code{na2miss()} and \code{shiftData()} in original form have special handling for factor variables. This logic is not needed and stripped within the \code{dvpart} sources.
+For the greater purposes of the \pkg{akqdecay} package, it was desired to have an independent subsystem for streamflow partitioning from external packages. The \code{DVstats::}\code{part()} as stated above is the basis with some code cleaning to the style of Asquith and Knight that includes the critical adjustment to processing on daily values in the canonical form of \code{\link{dvget}}. The \code{part()} implementation requires a short suite of utilities: \code{smwrBase::}\code{eventNum()}, \code{smwrBase::}\code{na2miss()}, and \code{smwrBase::}\code{shiftData()}. These are embedded within \code{dvpart}. Both \code{na2miss()} and \code{shiftData()} in original form have special handling for factor variables. This logic is not needed and has been stripped within the \code{dvpart} sources.
 }
 \author{ W.H. Asquith}
 \references{
