@@ -1,8 +1,8 @@
 \name{dvpart}
 \alias{dvpart}
-\title{ Retrieve USGS Discharge Daily Values structured for Asquith--Knight Discharge Decay Analyses }
+\title{ Peform Streamflow Partitioning after Rutledge (1998) structured for Asquith--Knight Daily Streamflow Table }
 \description{
-Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows. Instead of issuing \code{stop} as in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. This will help in data mining studies. A more sophisticated method is optionally available (see \bold{Details}).
+Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows to help in data mining studies. First, instead of issuing \code{stop()} as done in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. Second, a more sophisticated method is optionally available (see \bold{Details}).
 }
 \usage{
 dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ...)
@@ -44,9 +44,9 @@ For the greater purposes of the \pkg{akqdecay} package, it was desired to have a
 }
 \author{ W.H. Asquith}
 \references{
-De Cicco, L., Lorenz, D., 2017, smwrBase---Functions to import and manipulate hydrologic data: R package version 1.1.5, September 18, 2017, accessed April 28, 2019 at \url{https://github.com/USGS-R/smwrBase}.
+De Cicco, L.A., Lorenz, D.L., 2017, smwrBase---Functions to import and manipulate hydrologic data: R package version 1.1.5, September 18, 2017, accessed April 28, 2019 at \url{https://github.com/USGS-R/smwrBase}.
 
-Lorenz, D., De Cicco, L., 2017, DVstats---Functions to manipulate daily-values data: R package version 0.3.4, July 26, 2017, accessed April 28, 2019 at \url{https://github.com/USGS-R/DVstats}.
+Lorenz, D.L., De Cicco, L.A., 2017, DVstats---Functions to manipulate daily-values data: R package version 0.3.4, July 26, 2017, accessed April 28, 2019 at \url{https://github.com/USGS-R/DVstats}.
 
 Rutledge, A.T., 1998, Computer programs for describing the recession of ground-water discharge and for estimating mean ground-water recharge and discharge from streamflow data--Update: U.S. Geological Survey Water-Resources Investigations Report 98--4148, 43 p., \url{https://pubs.usgs.gov/wri/wri984148/}.
 }
@@ -62,6 +62,59 @@ lines(pdv$Date, pdv$FlowBase,  col=1)
 lines(pdv$Date, pdv$FlowPart1, col=2)
 lines(pdv$Date, pdv$FlowPart2, col=3)
 lines(pdv$Date, pdv$FlowPart3, col=4) #}
+
+\dontrun{
+DV  <- dvget("07031740", edate="2017-12-31"); cda <- 788 # square miles
+pDV <- dvpart(DV, cda=cda) # NULL will be return and here is the message
+#         for 07031740 noncontinuous data between 1995-02-01 to 2017-11-28
+#         gaps about: 1995-03-23[12days], 1995-06-25[53days], 1995-10-22[22days],
+# 1996-02-12[18days], 1996-03-19[11days], 1996-04-20[26days], 1996-06-29[65days],
+# 2017-01-21[97days], 2017-03-07[28days], 2017-04-05[17days], 2017-04-27[6days],
+# 2017-06-16[3days] : total=358
+
+pDV <- dvpart(DV, cda=cda, fillgaps=TRUE) # see Details
+length(pDV$Date)  # 7,991. This means this many discharges NA or numeric
+length(seq(pDV$Date[1],
+       as.Date("2017-12-31"), by=1)) # 8370. This mean days desired/expected.
+# Note 8370 - 7991 != 358 above because gaps at beginning or ending not counted.
+
+DV  <- dvget("07031740", edate="2017-12-31", ignore.provisional=FALSE)
+pDV <- dvpart(DV, cda=cda, fillgaps=FALSE)
+#          for 07031740 noncontinuous data between 1995-02-01 to 2017-12-31
+#          gaps about: 1995-03-23[12days], 1995-06-25[53days], 1995-10-22[22days],
+# 1996-02-12[18days], 1996-03-19[11days], 1996-04-20[26days],
+# 1996-06-29[65days] : total=207
+# ** So we see improvement! Gaps only at beginning of gage. ** #}
+
+\dontrun{
+# Let us now work on practical example with further implications.
+# We want monthly baseflows for this gage that had the record gaps.
+cda <- 788 # square miles
+DV  <- dvget("07031740", edate="2017-12-31", ignore.provisional=FALSE)
+pDV <- dvpart(DV, cda=cda, fillgaps=TRUE)
+length(DV$Date)  # 8,170   See how no new days are created!
+length(pDV$Date) # 8,170   This is a big deal (see Details).
+
+# now compute monthly mean values of the flows, number of observations
+# suppressWarnings() used because mean of character columns is a warning
+suppressWarnings(MN <- aggregate(pDV, by=list(pDV$year, pDV$month), mean))
+ml <- data.frame(year=pDV$year, month=pDV$month) # subset for speed
+suppressWarnings(ml <- aggregate(ml, by=list(ml$year, ml$month), length))
+
+# tidy up the results, resort to year, month ordering
+MN <- MN[order(MN$Group.1),]; ml <- ml[order(ml$Group.1),];
+MN$Group.1 <- MN$Group.2 <- NULL # delete these two columns
+MN$agency_cd <- dv$agency_cd[1]  # add back the agency code
+MN$site_no   <- dv$site_no[1]    # add back the streamgage number
+MN$month_count   <- ml$month; rm(ml)  # delete the ml (do not need further)
+MN$days_in_month <- lubridate::days_in_month(mn$Date)
+MN <- MN[MN$month_count/MN$days_in_month == 1,]
+nm <- names(mn); nm[3] <- "DateMean"; names(mn) <- nm; rm(nm)
+tail(mn); # shows July 2017 as 351.3871, manual NWISWeb shows 351.4
+
+plot(MN$DateMean, MN$Flow, type="l", log="y",
+                  xlab="Date", ylab="Streamflow, cfs")
+lines(MN$DateMean, MN$FlowBase, col=2) #}
 }
 \keyword{streamflow partitioning}
 \keyword{baseflow}
