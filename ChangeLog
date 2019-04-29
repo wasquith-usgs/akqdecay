@@ -11,5 +11,9 @@ Version 0.20--2019-04-10
       correct relative to the old 0.02 and 99.98 because 1/(3652+1).
  
 
-Version 0.21--2019-04-28
+Version 0.21--2019-04-29
 1.  Added dvpart() for discussion amongst researchers.
+2.  Added fill_dvpartenv() for data mining scale use.
+3.  Minor change in mnget().
+4.  Extended akq_write() to ability to serialize environments holding just
+       data frames and not be tied only to dumping akqdecay subtable.
