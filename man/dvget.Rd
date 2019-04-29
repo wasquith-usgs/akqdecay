@@ -36,6 +36,7 @@ dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,
   \item{Date}{The date, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case;}
   \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case or an alternative name for streamflow;}
   \item{Flow_cd}{A coding system for the streamflow (\code{A}, approved record; \code{P}, provisional, and \code{W}, working record);}
+  \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
   \item{year}{The calendar year of the date;}
   \item{decade}{The decade of the daily value. The decade is assign by taking the year and the trailing digit has been stripped and replaced with zero. This is \emph{not} a technique in which a \dQuote{decade} is centered on an even step of 10---meaning, say that 1996--2005 \emph{is not the} \dQuote{2000 decade} but simply 01/01/2000--12/31/2009 \emph{is the} \dQuote{2000 decade;}}
   \item{wyear}{The water year; and}
