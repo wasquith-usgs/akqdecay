@@ -2,7 +2,7 @@
 \alias{fill_mnenv}
 \title{ Fill an R Environment with Monthly Streamflow by Streamgage }
 \description{
-Fill an \R \code{environment} with \R \code{data.frames} of monthly streamflow for USGS streamgages. This function is a wrapper (abstraction layer) on the \code{\link{mnget}} function.
+Fill an \R \code{environment} with \R \code{data.frames} of monthly streamflow for USGS streamgages. This function is a wrapper (abstraction layer) on the \code{\link{mnget}} function. Users interested in monthly values might be especially interested in the monthly computations based on the daily streamflows but with the inclusion of separated streamflow in \code{\link{dvpart}} and \code{\link{fill_dvpartenv}} (see \bold{Examples} in \code{\link{dvpart}} for a demonstration).
 }
 \usage{
 fill_mnenv(siteNumbers, envir=NULL,  sdates=NULL,  edates=NULL,
