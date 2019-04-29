@@ -1,5 +1,5 @@
 "dvpart" <-
-function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
+function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ...) {
   if(is.null(akdvtable)) {
     warning("akdvtable is NULL, returning NULL"); return(NULL)
   }
@@ -92,19 +92,22 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
 
   flows <- pmax(flows, 1e-99) # Convert 0 to a small number
 
-  #nova_core <- seq(sdate, edate, by=1)
-  #gap_infill_flow <- approx(dates[! is.na(flows)],
-  #                          flows[! is.na(flows)], xout=nova_core)$y
-  #df <- data.frame(Date=nova_core, GapFlow=gap_infill_flow)
-  #do <- data.frame(Date=dates, Flow=flows)
-  #hj <- merge(df,do, all=TRUE); print(head(hj))
-  #return(hj)
-  #plot(hj$Date,hj$GapFlow, type="l", col=3)
-  #lines(hj$Date,hj$Flow, col=2)
+  if(fillgaps) { # WHA magic
+    nova_core <- seq(sdate, edate, by=1) # every day needed
+    gap_infill_flow <- approx(      dates[! is.na(flows)],
+                              log10(flows[! is.na(flows)]), xout=nova_core)$y
+    # log-linear interpolated flows, connecting the dots across the gap
+    dates <- nova_core # revise the dates we are going to PART
+    flows <- 10^gap_infill_flow # return to real space
+    dates <- dates[! is.na(flows)] # now drop NAs
+    flows <- flows[! is.na(flows)] # now drop NAs
+    # The NA check could result if say the beginning or ending of the
+    # record is NA, the sdate and edate will have these
+  }
 
   num_flows <- length(flows)
   ixs <- 1:num_flows
-  if(any(diff(as.double(dates)) != 1)) {
+  if(any(diff(as.double(dates)) != 1)) { # if fillgaps should cause this to not trigger
     dffs <- c(0,diff(as.double(dates)))
     gxs <- ixs[dffs > 1]; total_days <- sum(dffs[gxs])
     gaps <- paste(dates[gxs],"[",dffs[gxs],"days]", sep="", collapse=", ")
@@ -113,13 +116,13 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
             " : total=",total_days)
     return(NULL)
   }
-  if(any(is.na(flows))) {
+  if(any(is.na(flows))) { # if fillgaps should cause this to not trigger
     message("          for ",site_no," NA flows between ",
             sdate, " to ", edate)
     return(NULL)
   }
 
-  # Basically the PART algorithm from here on out.
+  # BEGIN THE PART ALGORITHM
   Nact <- max(cda^0.2, 1)
   N    <- as.integer(ceiling(Nact))
   NF   <- max(N-1L, 1L); NC <- max(N, 2L)
@@ -209,19 +212,48 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...) {
   ## Compute the linear interpolation of baseflow
   Ffact <- NC - Nact # Must be between 0 and 1
   BaseQ <- BaseQF*Ffact + BaseQC*(1-Ffact)
-  zz <- data.frame(agency_cd=akdvtable$agency_cd,
-                   site_no=site_no, Date=dates,
-                   Flow     =round(flows,   digits=3L),
-                   Flow_cd  =akdvtable$Flow_cd,
-                   year     =akdvtable$year,
-                   decade   =akdvtable$decade,
-                   wyear    =akdvtable$wyear,
-                   month    =akdvtable$month,
-                   FlowBase =round(BaseQ,   digits=3L),
-                   FlowPart1=round(BaseQF,  digits=4L),
-                   FlowPart2=round(BaseQC,  digits=4L),
-                   FlowPart3=round(BaseQC1, digits=3L),
+
+  #Flow      <- round(flows,   digits=3L) # why was original algorithm touching this
+  FlowBase  <- round(BaseQ,   digits=3L)
+  FlowPart1 <- round(BaseQF,  digits=4L)
+  FlowPart2 <- round(BaseQC,  digits=4L)
+  FlowPart3 <- round(BaseQC1, digits=4L)
+  # END THE PART ALGORITHM
+
+  if(fillgaps) { # Asquith hacking magic, use env to track all dates
+    .dvp.env <- new.env() # then switch around only get dates we WANT then build zz
+    for(k in ixs) assign(as.character(dates[k]), FlowBase[k], envir=.dvp.env)
+    FlowBase <- sapply(as.character(akdvtable$Date),
+                     function(k) ifelse(exists(k, .dvp.env), get(k, .dvp.env), NA))
+    .dvp.env <- new.env() # insurance policy to recreate
+    for(k in ixs) assign(as.character(dates[k]), FlowPart1[k], envir=.dvp.env)
+    FlowPart1 <- sapply(as.character(akdvtable$Date),
+                     function(k) ifelse(exists(k, .dvp.env), get(k, .dvp.env), NA))
+    .dvp.env <- new.env() # insurance policy to recreate
+    for(k in ixs) assign(as.character(dates[k]), FlowPart2[k], envir=.dvp.env)
+    FlowPart2 <- sapply(as.character(akdvtable$Date),
+                     function(k) ifelse(exists(k, .dvp.env), get(k, .dvp.env), NA))
+    .dvp.env <- new.env() # insurance policy to recreate
+    for(k in ixs) assign(as.character(dates[k]), FlowPart3[k], envir=.dvp.env)
+    FlowPart3 <- sapply(as.character(akdvtable$Date),
+                     function(k) ifelse(exists(k, .dvp.env), get(k, .dvp.env), NA))
+  }
+  zz <- data.frame(agency_cd = akdvtable$agency_cd,
+                   site_no   = site_no,
+                   Date      = akdvtable$Date,
+                   Flow      = akdvtable$Flow,
+                   Flow_cd   = akdvtable$Flow_cd,
+                   year      = akdvtable$year,
+                   decade    = akdvtable$decade,
+                   wyear     = akdvtable$wyear,
+                   month     = akdvtable$month,
+                   FlowBase  = FlowBase,
+                   FlowPart1 = FlowPart1,
+                   FlowPart2 = FlowPart2,
+                   FlowPart3 = FlowPart3,
                    stringsAsFactors=FALSE)
+  #plot(zz$Date, zz$Flow, type="l", col=grey(0.8))
+  #lines(zz$Date, zz$FlowBase, col=2); mtext(site_no)
   return(zz)
 }
 

@@ -5,14 +5,15 @@
 Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::part} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The algorithms implement the procedures of Rutledge (1998). \bold{For the \pkg{akqdecay} package, some new development needs to be made on how to handle missing flows. Instead of issuing \code{stop} as in the \code{part}, the \code{dvpart} implementation returns \code{NULL}. This will help in data mining studies. Need to design a ``lift the pen'' strategy to the \code{NAs} before worrying about \code{fillenv}-like logic.}
 }
 \usage{
-dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, ...)
+dvpart(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ...)
 }
 \arguments{
   \item{akdvtable}{A USGS daily-value of streamflow table with some extensions unique to this package as returned by \code{\link{dvget}};}
   \item{sdate}{Start date (default is earliest) and nomenclature matches that of the \pkg{dataRetrieval} package with string format of \dQuote{YYYY-MM-DD} for year (YYYY), month (MM), and day (DD) respectively padded by zeros as needed;}
   \item{edate}{Ending date (default is earliest) and nomenclature matches that of the \pkg{dataRetrieval} package with string format of \dQuote{YYYY-MM-DD} for year (YYYY), month (MM), and day (DD) respectively padded by zeros as needed;}
   \item{cda}{Contributing drainage area of the streamgage in square miles;}
-  \item{site_no}{Optional site number that will be taken if \code{NA} from the \code{akdvtable} as needed; and}
+  \item{site_no}{Optional site number that will be taken if \code{NA} from the \code{akdvtable} as needed;}
+  \item{fillgaps}{A logical to trigger the record gap infiller within \code{\link{dvpart}} to log-linearly prorate raw streamflow (\code{Flow}) across record gaps, then perform streamflow separation, and then pack the separated streamflows back onto the input that still retains gaps in record. This gap filler does not actually then appear to create synthetic flow record---this is a very important point; and}
   \item{...}{Other arguments to pass.}
 }
 \value{

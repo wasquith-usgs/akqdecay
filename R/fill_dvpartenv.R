@@ -1,4 +1,4 @@
-"fill_dvpartenv" <- function(sites=NULL, dvenv=NULL, envir=NULL, silent=FALSE,  ...) {
+"fill_dvpartenv" <- function(sites=NULL, dvenv=NULL, envir=NULL, fillgaps=FALSE, silent=FALSE, ...) {
    if(! is.environment(dvenv)) {
       warning(" dvenv is not testing as an environment")
       return()
@@ -19,7 +19,7 @@
       if(length(as.data.frame(D)[1,]) == 1) {
          assign(site, NA, envir=envir)
       } else {
-         Z <- dvpart(D, site_no=site, ...)
+         Z <- dvpart(D, site_no=site, fillgaps=fillgaps, ...)
          k <- k + 1
          assign(site, Z,  envir=envir)
       }
@@ -29,4 +29,5 @@
 }
 
 # wolfpart.env <- new.env()
-# fill_dvpartenv(dvenv=wolf.env, envir=wolfpart.env)
+# fill_dvpartenv(dvenv=wolf.env, envir=wolfpart.env, fillgaps=FALSE)
+# fill_dvpartenv(dvenv=wolf.env, envir=wolfpart.env, fillgaps=TRUE)
