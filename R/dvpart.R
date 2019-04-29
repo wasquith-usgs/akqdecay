@@ -91,11 +91,12 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   dates <- akdvtable$Date # daily dates
 
   flows <- pmax(flows, 1e-99) # Convert 0 to a small number
-
+  original_number_of_flows <- length(flows)
   if(fillgaps) { # WHA magic
     nova_core <- seq(sdate, edate, by=1) # every day needed
-    gap_infill_flow <- approx(      dates[! is.na(flows)],
-                              log10(flows[! is.na(flows)]), xout=nova_core)$y
+    number_of_nova_core <- length(nova_core)
+    gap_infill_flow <- stats::approx(      dates[! is.na(flows)],
+                                     log10(flows[! is.na(flows)]), xout=nova_core)$y
     # log-linear interpolated flows, connecting the dots across the gap
     dates <- nova_core # revise the dates we are going to PART
     flows <- 10^gap_infill_flow # return to real space
@@ -139,9 +140,9 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
 
   # Step 2 Recored all GW flow where antecendent recession OK
   DiffQ   <- c(0, diff(flows))
-  AnteF   <- na2miss(filter(DiffQ <= 0, rep(1, NF ), sides=1), to=0)
-  AnteC   <- na2miss(filter(DiffQ <= 0, rep(1, NC ), sides=1), to=0)
-  AnteC1  <- na2miss(filter(DiffQ <= 0, rep(1, NC1), sides=1), to=0)
+  AnteF   <- na2miss(stats::filter(DiffQ <= 0, rep(1, NF ), sides=1), to=0)
+  AnteC   <- na2miss(stats::filter(DiffQ <= 0, rep(1, NC ), sides=1), to=0)
+  AnteC1  <- na2miss(stats::filter(DiffQ <= 0, rep(1, NC1), sides=1), to=0)
   ALLGWF  <- ifelse(AnteF == NF,   TRUE, ALLGWF )
   BaseQF  <- ifelse(ALLGWF,  flows, BaseQF)
   ALLGWC  <- ifelse(AnteC == NC,   TRUE, ALLGWC )
@@ -156,9 +157,9 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   ALLGWC1 <- ifelse(ALLGWC1 & CkQ, FALSE, ALLGWC1)
 
   # Step 4 Interpolate Baseflows
-  BaseQF  <- exp(approx(ixs[ALLGWF],  log(flows[ALLGWF]),  xout=ixs, rule=2)$y)
-  BaseQC  <- exp(approx(ixs[ALLGWC],  log(flows[ALLGWC]),  xout=ixs, rule=2)$y)
-  BaseQC1 <- exp(approx(ixs[ALLGWC1], log(flows[ALLGWC1]), xout=ixs, rule=2)$y)
+  BaseQF  <- exp(stats::approx(ixs[ALLGWF],  log(flows[ALLGWF]),  xout=ixs, rule=2)$y)
+  BaseQC  <- exp(stats::approx(ixs[ALLGWC],  log(flows[ALLGWC]),  xout=ixs, rule=2)$y)
+  BaseQC1 <- exp(stats::approx(ixs[ALLGWC1], log(flows[ALLGWC1]), xout=ixs, rule=2)$y)
 
   # Steps 5, 6, and 4 for each F, C, C1
   while(any(CkQ <- (BaseQF > flows + SMALL))) { # Avoid rounding problems
@@ -173,7 +174,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
       BaseQF[ixset[pck]] <- flows[ixset[pck]]
     }
     ## Redo 4
-    BaseQF <- exp(approx(ixs[ALLGWF], log(flows[ALLGWF]), xout=ixs, rule=2)$y)
+    BaseQF <- exp(stats::approx(ixs[ALLGWF], log(flows[ALLGWF]), xout=ixs, rule=2)$y)
     BaseQF <- ifelse(BaseQF < SMALL, 0, BaseQF) # Clean up
   }
 
@@ -189,7 +190,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
       BaseQC[ixset[pck]] <- flows[ixset[pck]]
     }
     ## Redo 4
-    BaseQC <- exp(approx(ixs[ALLGWC], log(flows[ALLGWC]), xout=ixs, rule=2)$y)
+    BaseQC <- exp(stats::approx(ixs[ALLGWC], log(flows[ALLGWC]), xout=ixs, rule=2)$y)
     BaseQC <- ifelse(BaseQC < SMALL, 0, BaseQC)
   }
 
@@ -205,7 +206,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
       BaseQC1[ixset[pck]] <- flows[ixset[pck]]
     }
     ## Redo 4
-    BaseQC1 <- exp(approx(ixs[ALLGWC1], log(flows[ALLGWC1]), xout=ixs, rule=2)$y)
+    BaseQC1 <- exp(stats::approx(ixs[ALLGWC1], log(flows[ALLGWC1]), xout=ixs, rule=2)$y)
     BaseQC1 <- ifelse(BaseQC1 < SMALL, 0, BaseQC1)
   }
   ## Wrap up
