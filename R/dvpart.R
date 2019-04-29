@@ -9,7 +9,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
     x[is.na(x)] <- to; return(x) # because not needed in part()
   } # end na2miss() function
   "shiftData" <- # from smwrBase::shiftData()
-  function(x, k=1, fill=NA, circular=FALSE) {
+  function(x, k=1, fill=NA, circular=FALSE) { # circular not needed but leave as is
     # Offset a vector by an amount equal to k
     # if k is positive the data are shifted down (fill at the beginning)
     # otherwise, they are shifted up (fill at the end)
@@ -90,11 +90,11 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   flows <- akdvtable$Flow # streamflows
   dates <- akdvtable$Date # daily dates
 
-  flows <- pmax(flows, 1e-99) # Convert 0 to a small number
-  original_number_of_flows <- length(flows)
-  if(fillgaps) { # WHA magic
+  flows <- pmax(flows, 1e-99) # Convert 0 to a small number (original PART logic)
+  original_number_of_flows <- length(flows)  # if desired someday to report changes
+  if(fillgaps) { # Asquith hacking magic
     nova_core <- seq(sdate, edate, by=1) # every day needed
-    number_of_nova_core <- length(nova_core)
+    number_of_nova_core <- length(nova_core) # if desired someday to report changes
     gap_infill_flow <- stats::approx(      dates[! is.na(flows)],
                                      log10(flows[! is.na(flows)]), xout=nova_core)$y
     # log-linear interpolated flows, connecting the dots across the gap
@@ -104,7 +104,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
     flows <- flows[! is.na(flows)] # now drop NAs
     # The NA check could result if say the beginning or ending of the
     # record is NA, the sdate and edate will have these
-  }
+  } # end the algorithm for daily-continuous data processing
 
   num_flows <- length(flows)
   ixs <- 1:num_flows
@@ -126,8 +126,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   # BEGIN THE PART ALGORITHM
   Nact <- max(cda^0.2, 1)
   N    <- as.integer(ceiling(Nact))
-  NF   <- max(N-1L, 1L); NC <- max(N, 2L)
-  NC1  <- NC + 1L
+  NF   <- max(N-1L, 1L); NC <- max(N, 2L); NC1  <- NC + 1L
   # From the flow chart in Rutledge, with additions for 0 flows
   # The variable suffixes are F is the floor of Nact, C is the
   # ceiling of Nact, and C1 is the ceiling plus 1. These correspond
@@ -214,11 +213,12 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   Ffact <- NC - Nact # Must be between 0 and 1
   BaseQ <- BaseQF*Ffact + BaseQC*(1-Ffact)
 
-  #Flow      <- round(flows,   digits=3L) # why was original algorithm touching this
-  FlowBase  <- round(BaseQ,   digits=3L)
-  FlowPart1 <- round(BaseQF,  digits=4L)
-  FlowPart2 <- round(BaseQC,  digits=4L)
-  FlowPart3 <- round(BaseQC1, digits=4L)
+  #Flow      <- round(flows,   digits=3L) # why was original algorithm touching this?
+  # descision here is to not touch the Flow.
+  FlowBase  <- round(BaseQ,   digits=3L) # part of original PART
+  FlowPart1 <- round(BaseQF,  digits=4L) # part of original PART
+  FlowPart2 <- round(BaseQC,  digits=4L) # part of original PART
+  FlowPart3 <- round(BaseQC1, digits=4L) # part of original PART
   # END THE PART ALGORITHM
 
   if(fillgaps) { # Asquith hacking magic, use env to track all dates
@@ -244,6 +244,7 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
                    Date      = akdvtable$Date,
                    Flow      = akdvtable$Flow,
                    Flow_cd   = akdvtable$Flow_cd,
+                   site      = site_no,
                    year      = akdvtable$year,
                    decade    = akdvtable$decade,
                    wyear     = akdvtable$wyear,
@@ -257,8 +258,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   #set <- is.na(zz$Flow); zz$FlowBase[ set] <- NA; zz$FlowPart1[set] <- NA
   #                       zz$FlowPart2[set] <- NA; zz$FlowPart3[set] <- NA
   #
-  #plot(zz$Date, zz$Flow, type="l", col=grey(0.8))
-  #lines(zz$Date, zz$FlowBase, col=2); mtext(site_no)
+  #plot(zz$Date, zz$Flow, type="l", col=grey(0.8))    # part of testing for Asquith
+  #lines(zz$Date, zz$FlowBase, col=2); mtext(site_no) # part of testing for Asquith
   return(zz)
 }
 
