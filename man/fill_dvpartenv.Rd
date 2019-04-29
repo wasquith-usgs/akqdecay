@@ -17,7 +17,7 @@ fill_dvpartenv(sites=NULL, dvenv=NULL, envir=NULL, fillgaps=FALSE,
   \item{...}{Additional arguments to pass to control \code{\link{akqdecay}}.}
 }
 \value{
-  This function is used for its side effects on the \code{envir} argument but does return a count of the sites processed by \code{\link{dvpart}}.
+This function is used for its side effects on the \code{envir} argument but does return a count of the sites processed by \code{\link{dvpart}}.
 }
 \author{ W.H. Asquith}
 \seealso{\code{\link{dvpart}}, \code{\link{fill_dvenv}}
@@ -25,8 +25,17 @@ fill_dvpartenv(sites=NULL, dvenv=NULL, envir=NULL, fillgaps=FALSE,
 \examples{
 \dontrun{
 # See fill_dvenv() Examples for the creation of wolf.env used here.
+# Six USGS streamgages of the Wolf River in Tennessee
+wolfriver <- c("07030392", "07030500", "07031650",
+               "07031660", "07031700", "07031740")
+wolf.env <- new.env() # the standard declaration of an environment
+fill_dvenv(wolfriver, envir=wolf.env) # wolf.env now filled with six tables.
 partwolf.env <- new.env() # the standard declaration of an environment
 fill_dvpartenv(dvenv=wolf.env, envir=partwolf.env, fillgaps=FALSE)
+# It is advised to pay attention to the messages about the gaps in the records
+# from the above call. Only 07030392 appears to have "complete" record
+
+# Now, let us trigger the gap filler and the messages disappear.
 fill_dvpartenv(dvenv=wolf.env, envir=partwolf.env, fillgaps=TRUE) #}
 }
 \keyword{streamflow partitioning}

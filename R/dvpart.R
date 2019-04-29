@@ -252,6 +252,10 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
                    FlowPart2 = FlowPart2,
                    FlowPart3 = FlowPart3,
                    stringsAsFactors=FALSE)
+  # Following is explicitly not needed because dates and flows had already be trimmed from NAs
+  #set <- is.na(zz$Flow); zz$FlowBase[ set] <- NA; zz$FlowPart1[set] <- NA
+  #                       zz$FlowPart2[set] <- NA; zz$FlowPart3[set] <- NA
+  #
   #plot(zz$Date, zz$Flow, type="l", col=grey(0.8))
   #lines(zz$Date, zz$FlowBase, col=2); mtext(site_no)
   return(zz)

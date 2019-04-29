@@ -42,7 +42,7 @@ However, such an operation would be destructive to the \code{old_dv} environment
 }
 }
 \author{ W.H. Asquith}
-\seealso{\code{\link{dvget}}, \code{\link{akqdecay}}, \code{\link{fill_akqenv}}, \code{\link{dvoverlap}}
+\seealso{\code{\link{dvget}}, \code{\link{akqdecay}}, \code{\link{fill_akqenv}}, \code{\link{fill_dvpartenv}}, \code{\link{dvoverlap}}
 }
 \examples{
 \dontrun{
@@ -51,7 +51,7 @@ wolfriver <- c("07030392", "07030500", "07031650",
                "07031660", "07031700", "07031740")
 wolf.env <- new.env() # the standard declaration of an environment
 fill_dvenv(wolfriver, envir=wolf.env) # wolf.env now filled with six tables.
-# and wolf.env is shown within the Examples of fill_akqenv. #}
+# and wolf.env is shown within the Examples of fill_akqenv and fill_dvpartenv. #}
 }
 \keyword{data retrieval}
 \keyword{environment filling}
