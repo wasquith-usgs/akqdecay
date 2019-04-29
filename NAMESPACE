@@ -1,6 +1,8 @@
 importFrom("graphics",
            "boxplot")
-importFrom("stats", "aggregate", "complete.cases", "cor", "cor.test",
+importFrom("stats", "aggregate", "approx",
+                    "complete.cases", "cor", "cor.test",
+                    "filter",
                     "median", "quantile", "qnorm")
 importFrom("utils", "write.table")
 importFrom("grDevices", "dev.off", "pdf")
