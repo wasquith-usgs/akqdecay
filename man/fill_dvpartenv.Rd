@@ -36,7 +36,11 @@ fill_dvpartenv(dvenv=wolf.env, envir=partwolf.env, fillgaps=FALSE)
 # from the above call. Only 07030392 appears to have "complete" record
 
 # Now, let us trigger the gap filler and the messages disappear.
-fill_dvpartenv(dvenv=wolf.env, envir=partwolf.env, fillgaps=TRUE) #}
+fill_dvpartenv(dvenv=wolf.env, envir=partwolf.env, fillgaps=TRUE)
+
+# Now just to finish out a demonstration, serialize the data frames
+wolfdf <- akq_table(partwolf.env, type="other") # and then write to
+akq_write(wolfdf, file="wolf_baseflows.txt") # the file system. }
 }
 \keyword{streamflow partitioning}
 \keyword{baseflow}
