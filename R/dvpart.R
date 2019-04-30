@@ -1,5 +1,5 @@
 "dvpart" <-
-function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ...) {
+function(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...) {
   if(is.null(akdvtable)) {
     warning("akdvtable is NULL, returning NULL"); return(NULL)
   }
@@ -124,7 +124,8 @@ function(akdvtable, sdate="", edate="", cda=NULL, site_no=NA, fillgaps=FALSE, ..
   }
 
   # BEGIN THE PART ALGORITHM
-  Nact <- max(cda^0.2, 1)
+  Nact <- max(cda[1]^0.2, 1, na.rm=TRUE) # index 1 if cda vector
+                                         # na.rm needed if cda=NA
   N    <- as.integer(ceiling(Nact))
   NF   <- max(N-1L, 1L); NC <- max(N, 2L); NC1  <- NC + 1L
   # From the flow chart in Rutledge, with additions for 0 flows
