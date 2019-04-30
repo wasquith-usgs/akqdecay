@@ -18,6 +18,11 @@ sites_to_SpatialPointsDataFrame(siteNumbers, latlongcrs=NA, proj4string=NA,
 }
 \value{
   A \code{SpatialPointsDataFrame} of the \pkg{sp} package unless \code{usesp=}\code{FALSE} at which point a standard \R \code{data.frame} is returned. For the standard \code{data.frame} option, a vector of bad sites, which are sites for which the web interface of NWIS does not know about, is stored in the attribute triggered as \code{attr("bad sites")}. Bad sites can be those for which the number has never been a USGS number and perhaps these numbers are mistakes on part of the user. There is another possibility. A user might have acquired a valid USGS streamgage identification number for some really old and also likely short record site that did not \dQuote{fully make it} to the digital age. It is possible that internal USGS database access might find some information about these.
+
+Also the \pkg{akqdecay} package is oriented around streamflow processing. To this end, columns related to groundwater site information are removed (see source code). Also, two drainage areas are recorded in the USGS database: total drainage area (\code{drain_area_va}) and contributing drainage area (\code{contrib_drain_area_va}). The pairwise minimum or
+\preformatted{  CDA <- pmin(drain_area_va, contrib_drain_area_va, na.rm=TRUE)
+}
+of these is computed and placed into a new column \code{CDA} in an effort to have a canonical access point of contributing drainage area. Not all streamgages will have both drainage areas populated in the site file.
 }
 \author{ W.H. Asquith}
 \examples{

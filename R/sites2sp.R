@@ -34,6 +34,21 @@ function(siteNumbers, latlongcrs=NA, proj4string=NA, usesp=TRUE, silent=FALSE, .
       LATLONG <- sp::CRS(latlongcrs)
    }
 
+   sitefile$CDA <- pmin(sitefile$drain_area_va,
+                        sitefile$contrib_drain_area_va, na.rm=TRUE)
+
+   sitefile$inventory_dt    <- NULL
+   sitefile$instruments_cd  <- NULL
+   sitefile$construction_dt <- NULL
+   sitefile$gw_file_cd      <- NULL
+   sitefile$nat_aqfr_cd     <- NULL
+   sitefile$aqfr_cd         <- NULL
+   sitefile$aqfr_type_cd    <- NULL
+   sitefile$well_depth_va   <- NULL
+   sitefile$hole_depth_va   <- NULL
+   sitefile$depth_src_cd    <- NULL
+   sitefile$project_no      <- NULL
+ 
    # The sp library is needed here
    coords  <- cbind(sitefile$dec_long_va, sitefile$dec_lat_va)
    spSites <- sp::SpatialPointsDataFrame(coords, sitefile, proj4string=LATLONG)
