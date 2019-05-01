@@ -105,8 +105,23 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL, date2s=NA, da
                                          paste0("at least one -999999 discharge: first=",
                                                 first_hit," and last=",last_hit)
    }
+   if(length(names(zz)) > 10) {
+      message("  extra columns, close inspection might be needed")
+   }
+   if(length(zz$Flow[is.na(zz$Flow)]) == length(zz$Flow)) {
+      message("  all Flow is NA, likely desired flow exists in a nonstandard column")
+   }
+   if(length(grep("Flow_cd", names(zz))) > 1) {
+      message("  desired flow might exist in a nonstandard column or across columns")
+   }
    return(zz)
 }
+
+#for(site in sort(ls(DV))) {
+#  zz <- get(site, envir=DV)
+#  message(site," has ",length(names(zz))," columns")
+#}
+
 
 # From waterdata link for discharge, note two discharges and the missingness
 # If I don't switch zz$Flow_cd[is.na(zz$Flow_cd)] <- "NA" and then switch

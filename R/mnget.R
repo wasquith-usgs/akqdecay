@@ -61,6 +61,11 @@ function(siteNumber, sdate="", edate="", flowlo=NULL, flowhi=NULL,
    if(message != "") {
       if(! silent) message("         found ",length(zz$Flow)," months of flow")
    }
-
+   if(length(names(zz)) > 7) {
+      message("  extra columns, close inspection might be needed")
+   }
+   if(length(zz$Flow[is.na(zz$Flow)]) == length(zz$Flow)) {
+      message("  all Flow is NA, likely desired flow exists in a nonstandard column")
+   }
    return(zz)
 }
