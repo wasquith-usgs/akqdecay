@@ -1,8 +1,8 @@
 \name{dvpart}
 \alias{dvpart}
-\title{ Peform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table }
+\title{ Perform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table }
 \description{
-Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The function \code{\link{fill_dvpartenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{dvpart} function.
+Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The function \code{\link{fill_dvpartenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{dvpart} function. (Users interested in monthly streamflow partitioning should consult \code{\link{dvpart2mnpart}}.)
 
 
 The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows to help in data mining studies. First, instead of issuing \code{stop()} as done in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. Second, a more sophisticated method is optionally available (see \bold{Details}).
@@ -31,7 +31,7 @@ The fifth and last step is crucial. For only the dates in the \code{akdvtable}, 
   \item{agency_cd}{The agency code for the data;}
   \item{site_no}{The streamgage identification number;}
   \item{Date}{The date, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case;}
-  \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case or an alternative name for streamflow;}
+  \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package;}
   \item{Flow_cd}{A coding system for the streamflow (\code{A}, approved record; \code{P}, provisional, and \code{W}, working record);}
   \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
   \item{year}{The calendar year of the date;}
@@ -39,9 +39,9 @@ The fifth and last step is crucial. For only the dates in the \code{akdvtable}, 
   \item{wyear}{The water year;}
   \item{month}{The month.}
   \item{FlowBase}{The baseflow of the \code{Flow} (the column \code{BaseQ} from \code{DVstats::}\code{part()});}
-  \item{FlowPart1}{The baseflow of the \code{Flow} (the column \code{Part1} from \code{DVstats::}\code{part()});}
-  \item{FlowPart2}{The baseflow of the \code{Flow} (the column \code{Part2} from \code{DVstats::}\code{part()}); and}
-  \item{FlowPart3}{The baseflow of the \code{Flow} (the column \code{Part3} from \code{DVstats::}\code{part()}).}
+  \item{FlowPart1}{The  partition 1 baseflow of the \code{Flow} (the column \code{Part1} from \code{DVstats::}\code{part()});}
+  \item{FlowPart2}{The  partition 2 baseflow of the \code{Flow} (the column \code{Part2} from \code{DVstats::}\code{part()}); and}
+  \item{FlowPart3}{The  partition 3 baseflow of the \code{Flow} (the column \code{Part3} from \code{DVstats::}\code{part()}).}
 }
 \note{
 For the greater purposes of the \pkg{akqdecay} package, it was desired to have an independent subsystem for streamflow partitioning from external packages. The \code{DVstats::}\code{part()} as stated above is the basis with some code cleaning to the style of Asquith and Knight that includes the critical adjustment to processing on daily values in the canonical form of \code{\link{dvget}}. The \code{part()} implementation requires a short suite of utilities: \code{smwrBase::}\code{eventNum()}, \code{smwrBase::}\code{na2miss()}, and \code{smwrBase::}\code{shiftData()}. These are embedded within \code{dvpart}. Both \code{na2miss()} and \code{shiftData()} in original form have special handling for factor variables. This logic is not needed and has been stripped within the \code{dvpart} sources.
@@ -56,7 +56,7 @@ Lorenz, D.L., De Cicco, L.A., 2017, DVstats---Functions to manipulate daily-valu
 
 Rutledge, A.T., 1998, Computer programs for describing the recession of ground-water discharge and for estimating mean ground-water recharge and discharge from streamflow data--Update: U.S. Geological Survey Water-Resources Investigations Report 98--4148, 43 p., \url{https://pubs.usgs.gov/wri/wri984148/}.
 }
-\seealso{\code{\link{dvget}}, \code{\link{fill_dvpartenv}}
+\seealso{\code{\link{dvget}}, \code{\link{fill_dvpartenv}}, \code{\link{dvpart2mnpart}}
 }
 \examples{
 \dontrun{
@@ -101,21 +101,7 @@ pDV <- dvpart(DV, cda=cda, fillgaps=TRUE)
 length(DV$Date)  # 8,170   See how no new days are created!
 length(pDV$Date) # 8,170   This is a big deal (see Details).
 
-# now compute monthly mean values of the flows, number of observations
-# suppressWarnings() used because mean of character columns is a warning
-suppressWarnings(MN <- aggregate(pDV, by=list(pDV$year, pDV$month), mean))
-ml <- data.frame(year=pDV$year, month=pDV$month) # subset for speed
-suppressWarnings(ml <- aggregate(ml, by=list(ml$year, ml$month), length))
-
-# tidy up the results, resort to year, month ordering
-MN <- MN[order(MN$Group.1),]; ml <- ml[order(ml$Group.1),];
-MN$Group.1 <- MN$Group.2 <- NULL # delete these two columns
-MN$agency_cd <- pDV$agency_cd[1]  # add back the agency code
-MN$site_no   <- pDV$site_no[1]    # add back the streamgage number
-MN$month_count   <- ml$month; rm(ml)  # delete the ml (do not need further)
-MN$days_in_month <- lubridate::days_in_month(MN$Date)
-MN <- MN[MN$month_count/MN$days_in_month == 1,]
-nm <- names(MN); nm[3] <- "DateMean"; names(MN) <- nm; rm(nm)
+MN <- dvpart2mnpart(pDV)
 tail(MN); # shows July 2017 Flow as 351.3871, manually NWISWeb shows 351.4
           # shows July 2017 FlowBase as 275.7239
 plot(MN$DateMean, MN$Flow, type="l", log="y",
