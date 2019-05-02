@@ -43,7 +43,11 @@ Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S
 \seealso{\code{\link{fill_tfdcenv}}
 }
 \examples{
-# See Examples under fill_tfdcenv and elsewhere in this documentation.
+# See also Examples under fill_tfdcenv and elsewhere in this documentation.
+\dontrun{
+dv <- dvget("08167000", edate="2015-09-30", ignore.provisional=FALSE)
+ft <- fdctrend(dv); head(ft) # see that the 2015 year is gone because incomplete
+qk <- visFDCtrend(ft); # qk stores ordinates of the Quantile-Kendall plot #}
 }
 \keyword{flow-duration curve}
 \keyword{flow-duration curve (trend)}
