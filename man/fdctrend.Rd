@@ -2,7 +2,7 @@
 \alias{fdctrend}
 \title{ Perform Kendall's Tau Test for Monotonic Trend by Year for each of 365 Quantiles of the Flow-Duration Curve  }
 \description{
-The \code{cor.test} function built-in to \R computes the Kendall's tau test between two variables, and if one variable is time, then the test is one for monotonic correlation (association) with time (Helsel and Hirsch, 2002).  An annual daily-flow-duration curve (empirical distribution function of the daily mean streamflow) is constructed for each year, and for this function, a year is calendar and not water year.
+The \code{cor.test} function built-in to \R computes the Kendall's tau test between two variables, and if one variable is time, then the test is one for monotonic correlation (association) with time (Helsel and Hirsch, 2002).  An annual daily-flow-duration curve (empirical distribution function of the daily mean streamflow) is constructed for each year, and for this function, a year is calendar and not water year. Hirsch refers to this analysis type as \dQuote{Quantile-Kendall.}
 
 Not counting leap years, there are 365 days in a year. From the annual daily-flow-duration curve and for each of the 365 probabilities (actually plotting position form determined by the \code{type} argument), the streamflow is computed. Then for each probability, the correlation test is applied for the available years. The estimated correlation coefficient and its p-value are computed. There is no feature for testing of statistical significance, that is left to the end user. Finally, the probabilities \eqn{F} by type (\eqn{t \in [4,9]}) for a ranking of \eqn{d \in [1,n]} for \eqn{n = 365} by
 \deqn{
