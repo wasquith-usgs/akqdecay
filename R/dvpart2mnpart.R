@@ -21,7 +21,9 @@
     zz$days_in_month <- my_monthly_days(zz$year,zz$month)
     zz <- zz[zz$month_count/zz$days_in_month == 1,]
     nm <- names(zz); nm[3] <- "DateMean"; names(zz) <- nm; rm(nm)
-    zz$Flow_cd <- NULL; zz$Date <- NULL
+    zz$Flow_cd <- NULL # the code would be meaniningless
+    zz$Date <- as.Date(paste0(zz$year,"-",zz$month,"-","01"))
+    zz <- zz[,c(1,2,16,3:15)] # rearrange the column order
     row.names(zz) <- NULL
     return(zz)
 }

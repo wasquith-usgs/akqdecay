@@ -2,7 +2,7 @@
 \alias{dvpart2mnpart}
 \title{ Perform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table }
 \description{
-Convert daily streamflow partitioning from the \R \code{data.frame} from \code{\link{dvpart}} to monthly streamflow partitioning. Only complete months are permitted, which means (say) that 30 days of flow in an October will not be converted to a month.
+Convert daily streamflow partitioning from the \R \code{data.frame} from \code{\link{dvpart}} to monthly streamflow partitioning. Only complete months are permitted, which means (say) that 30 days of streamflows (baseflow and others) in an October will not be converted to a monthly values.
 }
 \usage{
 dvpart2mnpart(pdv, ...)
@@ -15,6 +15,7 @@ dvpart2mnpart(pdv, ...)
   An \R \code{data.frame} is returned with these expected columns. Note that the requirement for a complete month means some months might not be presented and that the \code{DateMean} is not required to be monthly continuous.
   \item{agency_cd}{The agency code for the data;}
   \item{site_no}{The streamgage identification number;}
+  \item{Date}{The date set to the first of the month. This presentation might be useful if this table were to be joined against other tables, such as meteorologic that use the first of the month to represent time;}
   \item{DateMean}{The mean date, which wil be the 14th, 15th, or 16th depending on the month and year. This is a diagnostic on the mean aggregation by the \code{aggregate()} function in the sources;}
   \item{Flow}{The monthly streamflow in cubic feet per second;}
   \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
@@ -30,7 +31,7 @@ dvpart2mnpart(pdv, ...)
   \item{days_in_month}{The real number of days in the month. This column is equal to \code{month_count} when the criteria that a complete month of streamflow must be available.}
 }
 \note{
-The code here represents monthly mean computation independent of USGS monthly values that are also reported through the Internet but with rounding conventions enforced. The two values are expected to be very close to each other. This means that the \code{\link{mnget}} function of this package is not used for \code{dvpart2mnpart}.
+The code here represents monthly mean computation independent of USGS monthly values that are also reported through the Internet but with rounding by the USGS being used. Nevertheless, the two values are expected to be very close to each other. This means that the \code{\link{mnget}} function of this package is not used for \code{dvpart2mnpart}.
 }
 \author{ W.H. Asquith}
 \seealso{\code{\link{dvget}}, \code{\link{dvpartenv2mnpartenv}}
