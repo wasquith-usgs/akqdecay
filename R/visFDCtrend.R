@@ -1,5 +1,7 @@
 "visFDCtrend" <- function(fdcenv=NULL, file=NA, alpha=0.05,
-                           fast=FALSE, site=NA, ...) {
+                           fast=FALSE, site=NA,
+                           notitle=FALSE, showflowregime=TRUE,
+                           width=7, height=5, ...) {
    was.data.frame <- FALSE
    if(is.null(fdcenv)) {
       warning(" need to specify the fdcenv environment")
@@ -17,7 +19,7 @@
       ALLz <- NULL
       MX <- data.frame(site=NA, years=NA, min=NA, max=NA)
    }
-   if(! is.na(file)) pdf(file, useDingbats=FALSE)
+   if(! is.na(file)) pdf(file, useDingbats=FALSE, width=width, height=height)
    pars <- par(..., mgp=c(2,0.25,0)) #"parOFmine" <- function() par(las=1, mgp=c(2,0.25,0), tcl=0.5)
 
    for(station in sort(ls(fdcenv))) {
@@ -30,7 +32,8 @@
       nm <- names(Z); yrs <- nm[2:(length(nm)-3)]; n <- length(yrs)
       station.text <- station
       if(was.data.frame && ! is.na(site)) station.text <- site
-      txt  <- paste0(station.text,": ",yrs[1],"-",yrs[n]," (",n," complete calendar years)")
+      txt <- paste0(station.text,": ",yrs[1],"-",yrs[n],
+                    " (",n," complete calendar years)")
       site <- rep(station.text, 365); count <- rep(n, 365)
 
       if(! fast) {
@@ -72,7 +75,7 @@
       lines(c(0,1), rep(-sigTau, 2), col=grey(0.25), lty=4, lwd=1.1)
       lines(c(0,1), rep(+sigTau, 2), col=grey(0.25), lty=4, lwd=1.1)
       points(Z$prob, Z$estimate, col=col)
-      mtext(txt, lwd=0.80, cex=0.95)
+      if(! notitle) mtext(txt, lwd=0.80, cex=0.95)
       legend(0.02,-.70, c(paste0("Upper and lower Kendall's tau at significance ",
                                  "level of alpha=", alpha), "Origin line (no association)",
                           paste0("Kendall's tau for the corresponding probability ",
@@ -83,8 +86,12 @@
       axis(3, labels=NA, at=axTicks(1), tcl=0.5, las=2, col=NA, col.ticks=1) # add ticks to top
       axis(2, labels=sprintf("%0.1f",axTicks(2)), at=axTicks(2), tcl=0.5, las=2, col=NA, col.ticks=1) # add ticks to left
       axis(4, labels=NA, at=axTicks(4), tcl=0.5, las=2, col=NA, col.ticks=1) # add ticks to top
-      text(c(0.1,0.5,0.9), rep(0.90,3),
-           c("low flow\nregime", "median flow\nregime", "high flow\nregime"), cex=0.85, col=grey(0.10))
+      if(showflowregime) {
+        text(c(0.1,0.5,0.9), rep(0.90,3), c("low flow\nregime",
+                                            "median flow\nregime",
+                                            "high flow\nregime"),
+             cex=0.85, col=grey(0.10))
+      }
       message(", ", appendLF=FALSE)
    }
    message("done")

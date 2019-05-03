@@ -5,9 +5,10 @@ importFrom("stats", "aggregate", "approx",
                     "filter",
                     "median", "quantile", "qnorm")
 importFrom("utils", "write.table")
-importFrom("grDevices", "dev.off", "pdf")
-importFrom("graphics", "abline", "legend", "lines", "par", "plot",
-           "points", "text")
+importFrom("grDevices", "dev.off", "grey", "pdf")
+importFrom("graphics", "abline", "axTicks", "axis", "legend",
+                       "lines", "mtext", "par", "plot",
+                       "points", "text")
 #-----------------------------------------------
 importFrom("dataRetrieval",
            "readNWISdv", "renameNWISColumns", "readNWISsite")
