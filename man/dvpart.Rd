@@ -110,3 +110,4 @@ lines(MN$DateMean, MN$FlowBase, col=2) #}
 }
 \keyword{streamflow partitioning}
 \keyword{baseflow}
+\keyword{streamflow separation}

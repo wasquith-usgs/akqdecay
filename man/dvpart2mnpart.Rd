@@ -46,4 +46,5 @@ pmn <- dvpart2mnpart(pdv) # }
 \keyword{streamflow partitioning}
 \keyword{baseflow}
 \keyword{monthly streamflow}
+\keyword{streamflow separation}
 

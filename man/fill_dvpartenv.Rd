@@ -49,3 +49,4 @@ akq_write(wolfdf, file="wolf_baseflows.txt") # the file system. }
 \keyword{streamflow partitioning}
 \keyword{baseflow}
 \keyword{environment filling}
+\keyword{streamflow separation}
