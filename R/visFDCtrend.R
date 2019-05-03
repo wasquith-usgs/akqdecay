@@ -18,7 +18,8 @@
       MX <- data.frame(site=NA, years=NA, min=NA, max=NA)
    }
    if(! is.na(file)) pdf(file, useDingbats=FALSE)
-   pars <- par(...)
+   pars <- par(..., mgp=c(2,0.25,0)) #"parOFmine" <- function() par(las=1, mgp=c(2,0.25,0), tcl=0.5)
+
    for(station in sort(ls(fdcenv))) {
       message(station, appendLF=FALSE)
       Z <- get(station, envir=fdcenv)
@@ -29,7 +30,7 @@
       nm <- names(Z); yrs <- nm[2:(length(nm)-3)]; n <- length(yrs)
       station.text <- station
       if(was.data.frame && ! is.na(site)) station.text <- site
-      txt  <- paste0(station.text,": ",yrs[1],"-",yrs[n]," (",n," yrs)")
+      txt  <- paste0(station.text,": ",yrs[1],"-",yrs[n]," (",n," complete calendar years)")
       site <- rep(station.text, 365); count <- rep(n, 365)
 
       if(! fast) {
@@ -40,7 +41,7 @@
             mn <- min(tmp, na.rm=TRUE)
             mx <- max(tmp, na.rm=TRUE)
          } else {
-            message("\n No 'complete' FDCs for ", station)
+            message("\n No 'complete' calendar year FDCs for ", station)
             mn <- mx <- Inf
          }
          if(! is.finite(mn)) mn <- NA; if(! is.finite(mx)) mx <- NA
@@ -60,23 +61,30 @@
 
       xlim <- c(0,1); ylim <- c(-1,1)
       plot(0, 0, xlim=xlim, ylim=ylim, xaxs="i", yaxs="i", type="n",
+           xaxt="n", yaxt="n",
            xlab="Annual daily-flow-duration nonexceedance probability",
-           ylab="Kendall's tau, dimensionless")
-      abline(0,0, lty=2, col=8, lwd=1.1)
+           ylab="Kendall's tau, dimensionless", las=1, tcl=0.5)
+      abline(0,0, lty=2, col=grey(0.25), lwd=1.1)
       if(! is.finite(sigTau)) { # note use of alpha/2 here but alpha above
          sigTau <- qnorm(1-alpha/2, mean=0,
                          sd=sqrt(LargeSampleVarKendallTau(n)))
       }
-      lines(c(0,1), rep(-sigTau, 2), col=6, lty=2, lwd=1.1)
-      lines(c(0,1), rep(+sigTau, 2), col=6, lty=2, lwd=1.1)
+      lines(c(0,1), rep(-sigTau, 2), col=grey(0.25), lty=4, lwd=1.1)
+      lines(c(0,1), rep(+sigTau, 2), col=grey(0.25), lty=4, lwd=1.1)
       points(Z$prob, Z$estimate, col=col)
-      text(0,0.94, txt, pos=4, lwd=0.80, cex=0.85)
-      legend(0.02,-.75, c(paste0("Upper and lower Kendall's tau at significance ",
-                             "level alpha=", alpha), "Origin line (no association)",
-                      paste0("Kendall's tau for the corresponding probability ",
-                             "(red if statistically significant)")),
-             lwd=c(1.1, 1.1, 0.80), pch=c(NA,NA,1), lty=c(2,2,0), col=c(6,8,4),
+      mtext(txt, lwd=0.80, cex=0.95)
+      legend(0.02,-.70, c(paste0("Upper and lower Kendall's tau at significance ",
+                                 "level of alpha=", alpha), "Origin line (no association)",
+                          paste0("Kendall's tau for the corresponding probability ",
+                                 "(red if statistically significant)")),
+             lwd=c(1.1, 1.1, 0.80), pch=c(NA,NA,1), lty=c(4,2,0), col=c(grey(0.25),grey(0.25),4),
              cex=0.85, bty="n")
+      axis(1, labels=sprintf("%0.1f",axTicks(1)), at=axTicks(1), tcl=0.5, las=1, col=NA, col.ticks=1) # add ticks to left
+      axis(3, labels=NA, at=axTicks(1), tcl=0.5, las=2, col=NA, col.ticks=1) # add ticks to top
+      axis(2, labels=sprintf("%0.1f",axTicks(2)), at=axTicks(2), tcl=0.5, las=2, col=NA, col.ticks=1) # add ticks to left
+      axis(4, labels=NA, at=axTicks(4), tcl=0.5, las=2, col=NA, col.ticks=1) # add ticks to top
+      text(c(0.1,0.5,0.9), rep(0.90,3),
+           c("low flow\nregime", "median flow\nregime", "high flow\nregime"), cex=0.85, col=grey(0.10))
       message(", ", appendLF=FALSE)
    }
    message("done")
