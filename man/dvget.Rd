@@ -21,7 +21,7 @@ dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,
   \item{date2e}{An optional ending date of record (less than and equal to) in the same format as \code{edate}. This option is only used \bold{after} the \code{readNWISdv()} function has retrieved the data; this option is provided for accommodating situations in which \code{readNWISdv()} has difficulties in pulling the correct data. This option is provided on an experimental basis because the author has become aware that sites with multiple daily-streamflow data descriptors do not have similar behavior when \code{edate} is attempted for the start of record. The issues causing the inclusion of this option otherwise difficult to explain---please contact the authors as needed.}
   \item{ignore.working}{The USGS identifies at least \dQuote{Approved} (\code{A}), \dQuote{Provisional} (\code{P}), and \dQuote{Working} (\code{W}) record types. The default triggers the deletion of data rows flagged as working record;}
   \item{ignore.provisional}{The USGS identifies at least \dQuote{Approved} (\code{A}), \dQuote{Provisional} (\code{P}), and \dQuote{Working} (\code{W}) record types. The default triggers the deletion of data rows flagged as provisional record;}
-  \item{silent}{Suppress informative calls to \code{message};}
+  \item{silent}{Suppress informative calls to \code{message()} with the \code{message};}
   \item{drsilent}{The argument though converted to \dQuote{silent} that is passed to \code{try} for a level of informative error trapping on top of \code{dataRetrieval::}\code{readNWISdv()};}
   \item{drget}{If set, the retrieval from \code{dataRetrieval::}\code{readNWISdv()} is immediately returned following the internal call to \code{dataRetrieval::}\code{renameNWISColumns()};}
   \item{pCode}{Parameter code (default is discharge [streamflow]) and nomenclature almost matches that of the \pkg{dataRetrieval} package;}
@@ -36,7 +36,7 @@ dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,
   \item{Date}{The date, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case;}
   \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case or an alternative name for streamflow;}
   \item{Flow_cd}{A coding system for the streamflow (\code{A}, approved record; \code{P}, provisional, and \code{W}, working record);}
-  \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
+  \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for having another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
   \item{year}{The calendar year of the date;}
   \item{decade}{The decade of the daily value. The decade is assign by taking the year and the trailing digit has been stripped and replaced with zero. This is \emph{not} a technique in which a \dQuote{decade} is centered on an even step of 10---meaning, say that 1996--2005 \emph{is not the} \dQuote{2000 decade} but simply 01/01/2000--12/31/2009 \emph{is the} \dQuote{2000 decade;}}
   \item{wyear}{The water year; and}
@@ -58,3 +58,4 @@ Copper <- dvget("14362000", sdate="1940-01-01", edate="1940-01-31")
 print(Copper) # An inspection of the retrieved daily values. #}
 }
 \keyword{data retrieval}
+\keyword{daily streamflow}

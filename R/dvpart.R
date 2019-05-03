@@ -57,7 +57,7 @@ function(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...)
   } # end eventNum function
   # END EMBEDMENT
 
-  SMALL <- 1E-6 # new standardization from DVstats::part() use
+  SMALL <- 1E-6 # new standardization from use by DVstats::part()
   if(is.na(site_no)) { # working on defaults etc
     if(length(unique(akdvtable$site_no)) != 1) {
       warning("multiple sites on the akdvtable, returning NULL")

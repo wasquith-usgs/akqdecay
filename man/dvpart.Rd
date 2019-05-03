@@ -33,11 +33,11 @@ The fifth and last step is crucial. For only the dates in the \code{akdvtable}, 
   \item{Date}{The date, note that the capitalization is from the \pkg{dataRetrieval} package, elsewhere in \pkg{akqdecay} this will become lower case;}
   \item{Flow}{The streamflow in cubic feet per second, note that the capitalization is from the \pkg{dataRetrieval} package;}
   \item{Flow_cd}{A coding system for the streamflow (\code{A}, approved record; \code{P}, provisional, and \code{W}, working record);}
-  \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
+  \item{site}{A character representation of the \code{site_no}, which likely is already a character. The reasoning for having another site column is in case a user need some type of flexibility in later processing. The user could freely replace contents of this column;}
   \item{year}{The calendar year of the date;}
   \item{decade}{The decade of the daily value. The decade is assign by taking the year and the trailing digit has been stripped and replaced with zero. This is \emph{not} a technique in which a \dQuote{decade} is centered on an even step of 10---meaning, say that 1996--2005 \emph{is not the} \dQuote{2000 decade} but simply 01/01/2000--12/31/2009 \emph{is the} \dQuote{2000 decade;}}
   \item{wyear}{The water year;}
-  \item{month}{The month.}
+  \item{month}{The month;}
   \item{FlowBase}{The baseflow of the \code{Flow} (the column \code{BaseQ} from \code{DVstats::}\code{part()});}
   \item{FlowPart1}{The  partition 1 baseflow of the \code{Flow} (the column \code{Part1} from \code{DVstats::}\code{part()});}
   \item{FlowPart2}{The  partition 2 baseflow of the \code{Flow} (the column \code{Part2} from \code{DVstats::}\code{part()}); and}

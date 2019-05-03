@@ -52,3 +52,6 @@ qk <- visFDCtrend(ft); # qk stores ordinates of the Quantile-Kendall plot #}
 \keyword{flow-duration curve}
 \keyword{flow-duration curve (trend)}
 \keyword{Kendall tau}
+\keyword{Quantile-Kendall plot}
+\concept{quantile kendall}
+\concept{quantile Kendall}
