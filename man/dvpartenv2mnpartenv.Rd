@@ -5,7 +5,7 @@
 Converted processing from \code{\link{fill_dvpartenv}} to monthly aggregated streamflow stored in another \R \code{environment}.
 }
 \usage{
-dvpartenv2mnpartenv(sites=NULL, dvpartenv=NULL, envir=NULL, silent=FALSE,...)
+dvpartenv2mnpartenv(sites=NULL, dvpartenv=NULL, envir=NULL, silent=FALSE, ...)
 }
 \arguments{
   \item{sites}{An optional, likely partial, list of sites within \code{dvenv} for population into \code{envir}. This option means that a massive environment of daily values can be retained in the user's space but streamflow partitioning analyses can be restricted to a smaller subset of sites. If \code{sites=NULL}, then internally all of the sites within \code{dvenv} will be processed, and this would be almost universally the way to use this function;}

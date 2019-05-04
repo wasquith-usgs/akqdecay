@@ -5,9 +5,8 @@
 Fill an \R \code{environment} with \R \code{data.frames} of daily-mean streamflow for USGS streamgages. This function is a wrapper (abstraction layer) on the \code{\link{dvget}} function.
 }
 \usage{
-fill_dvenv(siteNumbers, envir=NULL,  sdates=NULL,  edates=NULL,
-                                    flowlos=NULL, flowhis=NULL,
-                        silent=FALSE, ...)
+fill_dvenv(siteNumbers, envir=NULL,   sdates=NULL,  edates=NULL,
+                        flowlos=NULL, flowhis=NULL, silent=FALSE, ...)
 }
 \arguments{
   \item{siteNumbers}{A vector of USGS streamgage identification numbers;}

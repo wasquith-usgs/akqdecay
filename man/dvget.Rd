@@ -2,7 +2,7 @@
 \alias{dvget}
 \title{ Retrieve USGS Discharge Daily Values structured for Asquith--Knight Discharge Decay Analyses }
 \description{
-Retrieve U.S. Geological Survey (USGS) daily mean-streamflow values for a streamgage identification number. This function is a wrapper on \code{dataRetrieval::}\code{readNWISdv()} to provide an abstraction layer to the \pkg{dataRetrieval} package. The \code{dvget} function adds some additional information for purpose of the \pkg{akqdecay} package. The function creates the canonical daily-mean streamflow table (an \R \code{data.frame}) to be picked up in turn by the \code{\link{akqdecay}} function of this package. The function \code{\link{fill_dvenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{\link{akqdecay}} function.
+Retrieve U.S. Geological Survey (USGS) daily mean-streamflow values for a streamgage identification number. This function is a wrapper on \code{dataRetrieval::}\code{readNWISdv()} and thus provides an abstraction layer to the \pkg{dataRetrieval} package but this wrapper has powerful features suitable for data-mining scale study of daily values. The \code{dvget} function adds some additional information for purpose of the \pkg{akqdecay} package. The function creates the canonical daily-mean streamflow table (an \R \code{data.frame}) to be picked up in turn by the \code{\link{akqdecay}} function of this package. The function \code{\link{fill_dvenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{\link{akqdecay}} function.
 }
 \usage{
 dvget(siteNumber, sdate="",   edate="", flowlo=NULL, flowhi=NULL,

@@ -2,7 +2,7 @@
 \alias{gfredo}
 \title{ Recompute Gfactor from the L-moment Data Frames from Asquith--Knight Discharge Decay Analyses }
 \description{
-Recompute parametric Gfactors (\code{gfactor}; \eqn{G^\mathrm{type}_f}) from L-moment \code{lmoments$} data frames for \code{por}, \code{by_year}, and \code{by_decade}. Also recompute empirical Gfactors (\code{gfactor_emp}; \eqn{G^\mathrm{emp}_f}) from the \code{table} data frame. Specifically, the function modifies the \code{gfactor} and \code{gfactor_emp} columns in the output structure of \code{\link{akqdecay}}. The Gfactor specifically is \eqn{G_f(F;\Theta_\mathrm{type})} for nonexceedance probability \eqn{F \in [0,1]} and parameters \eqn{\Theta} for a given type of distribution computed by the method of L-moments. This function is a wrapper (abstraction layer) on \code{\link{lmrdf2gfactor}} and serves as a means for updating the \R \code{environment} from \code{\link{fill_akqenv}}. The \code{gfredo} function can thus be used to avoid recalling \code{\link{fill_akqenv}} as a means to update the \eqn{G_f} estimation but avoids a huge amount of redundant computation---there is no need to recompute the L-moments, for example.
+Recompute parametric Gfactors (\code{gfactor}; \eqn{G^\mathrm{type}_f}) from L-moment \code{lmoments$} data frames for \code{por}, \code{by_year}, and \code{by_decade}. Also recompute empirical Gfactors (\code{gfactor_emp}; \eqn{G^\mathrm{emp}_f}) from the \code{table} data frame. Specifically, the function modifies the \code{gfactor} and \code{gfactor_emp} columns in the output structure of \code{\link{akqdecay}}. The Gfactor specifically is \eqn{G_f(F;\Theta_\mathrm{type})} for nonexceedance probability \eqn{F \in [0,1]} and parameters \eqn{\Theta} for a given type of distribution computed by the method of L-moments (Asquith, 2018). This function is a wrapper (abstraction layer) on \code{\link{lmrdf2gfactor}} and serves as a means for updating the \R \code{environment} from \code{\link{fill_akqenv}}. The \code{gfredo} function can thus be used to avoid recalling \code{\link{fill_akqenv}} as a means to update the \eqn{G_f} estimation but avoids a huge amount of redundant computation---there is no need to recompute the L-moments, for example.
 }
 \usage{
 gfredo(akqenv, f=0.90, type="gpa", which=c("por", "year", "decade"),
@@ -23,7 +23,7 @@ gfredo(akqenv, f=0.90, type="gpa", which=c("por", "year", "decade"),
   This function is intended to be used for its side effects on the \code{akenv}. Though if that argument is an \R \code{data.frame} then that after \eqn{G_f} modification is returned.
 }
 \references{
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}
 }
 \author{ W.H. Asquith}
 \seealso{\code{\link{lmrdf2gfactor}}

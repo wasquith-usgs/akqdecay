@@ -2,7 +2,7 @@
 \alias{fdclmr}
 \title{ Compute the First Six L-moments of the Flow-Duration Curve for Each Year or Decade (and Other Statistics) }
 \description{
-Compute the first six sample L-moments (\eqn{\hat\lambda_1}, \eqn{\hat\lambda_2}, \eqn{\hat\tau_3}, \eqn{\hat\tau_4}, \eqn{\hat\tau_5}, and \eqn{\hat\tau_6}; Asquith [2011a,b, 2017]) of the flow-duration curve (FDC) for each year passing a maximum number of missing days permissible. The missing days are implicitly assumed to be randomly distributed within a given year. (Most partial years in USGS databases are those on years of activation or discontinuance of a streamgage.)
+Compute the first six sample L-moments (\eqn{\hat\lambda_1}, \eqn{\hat\lambda_2}, \eqn{\hat\tau_3}, \eqn{\hat\tau_4}, \eqn{\hat\tau_5}, and \eqn{\hat\tau_6}; Asquith [2011a,b, 2018]) of the flow-duration curve (FDC) for each year passing a maximum number of missing days permissible. The missing days are implicitly assumed to be randomly distributed within a given year. (Most partial years in USGS databases are those on years of activation or discontinuance of a streamgage.)
 
 The function also computes the minimum, median, and maximum in conjunction with the 7-day annual minimum flow (7-days consecutive) and the 7-day annual maximum flows. The total number of flow values and the number of zero flows (see \bold{Note}) also are tracked. Finally, the function can compute on a decadal basis and when it does the quantiles of the FDC are computed too (see extended discussion in the \bold{Value} section).
 }
@@ -44,7 +44,7 @@ An \R \code{data.frame} of mutable length but containing the following columns f
   \item{T7}{Seventh unnamed L-moment ratio (\eqn{\tau_7}), but the term L-siete could be used; and}
   \item{T8}{Eighth unnamed L-moment ratio (\eqn{\tau_8}), but the term L-ocho could be used; and}
   \item{median_nozero}{The median of the nonzero flows (computation is \code{median(fdclo$xin)}, see source code).}
-  The output is the effectively the same with \code{decade=TRUE}, except \code{year} becomes \code{decade}, the \code{median}, \code{min7day}, and \code{max7day} are dropped. Some 27 columns holding quantiles of the empirical FDC are then included. These have column titles such as \code{f50} (median), \code{f0.1} (0.1 percentile), or \code{f99.97} (99.97 percentile). These column titles are percentiles and not nonexceedance probabilities so division by 100 would be needed if the titles were parsed (leading \code{f} stripped) to dynamically compute the probabilities. These percentiles are fixed internally. Finally because \eqn{1 - 1/(10 \times 365.25+1) = 0.99972}, the computed percentile extremum will match the \code{min} and \code{max} where 365.25 is the approximate average number of days and 10 represents a decade. The \code{quantile()} function with its argument \code{type=6} (Weibull) is used internally to compute the empirical FDC.
+  The output is the effectively the same with \code{decade=TRUE}, except \code{year} becomes \code{decade}, the \code{median}, \code{min7day}, and \code{max7day} are dropped. There are 27 columns holding quantiles of the empirical FDC are then included not counting the two for the minimum and maximum. These have column titles such as \code{f50} (median), \code{f0.1} (0.1 percentile), or \code{f99.97} (99.97 percentile). These column titles are percentiles and not nonexceedance probabilities so division by 100 would be needed if the titles were parsed (leading \code{f} stripped) to dynamically compute the probabilities. These percentiles are fixed internally. Finally because \eqn{1 - 1/(10 \times 365.25+1) = 0.99972}, the computed percentile extremum will match the \code{min} and \code{max} where 365.25 is the approximate average number of days and 10 represents a decade. The \code{quantile()} function with its argument \code{type=6} (Weibull) is used internally to compute the empirical FDC.
 }
 \note{
 Concerning zero flows, these are used if \code{log=FALSE}. Otherwise additional adjustments are made for protection against \code{-Inf}. The germane logic for the arguments \code{subzero} and \code{plusit} is
@@ -60,12 +60,20 @@ Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the
 
 Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
 
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
+
 }
 \seealso{\code{\link{fill_lmrfdcenv}}, \code{\link{lmrfdc_table}}
 }
 \examples{
 # See Examples under fill_lmrfdcenv and elsewhere in this documentation.
+
+\dontrun{
+# USGS 14362000 Applegate River near Copper, Oregon
+dv <- dvget("14362000", sdate="1980-01-01", edate="1999-12-12")
+fdclmr(dv, decade=TRUE) # see the 1990 decade is populated but 1999 by itself
+# in yearly extraction have more than one week missing and is not provided
+fdclmr(dv, decade=TRUE) # because 70 days missing in the decade were okay.}
 }
 \keyword{flow-duration curve}
 \keyword{flow-duration curve (L-moments)}

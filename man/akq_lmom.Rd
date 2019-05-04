@@ -5,7 +5,7 @@
 \alias{akq_lmom_decade}
 \title{ L-moment Table from the Asquith--Knight Discharge Decay Analyses }
 \description{
-Extract the L-moments from the Asquith--Knight discharge decay analyses returned by \code{\link{akqdecay}} for a sequence of USGS streamgages contained within the \R \code{environment} that has been previously populated by \code{\link{fill_akqenv}}. The \code{\link{akq_lmom_yeardecade}} function is a parent function called by the functions \code{\link{akq_lmom_year}} and \code{\link{akq_lmom_decade}} in a self-evident manner. There are provisions for performing the Kendall Tau test for monotonic trend in time (Helsel and Hirsch, 2002) using the built-in \R \code{cor.test()} function.
+Extract the L-moments (Asquith, 2018) from the Asquith--Knight discharge decay analyses returned by \code{\link{akqdecay}} for a sequence of USGS streamgages contained within the \R \code{environment} that has been previously populated by \code{\link{fill_akqenv}}. The \code{\link{akq_lmom_yeardecade}} function is a parent function called by the functions \code{\link{akq_lmom_year}} and \code{\link{akq_lmom_decade}} in a self-evident manner. There are provisions for performing the Kendall Tau test for monotonic trend in time (Helsel and Hirsch, 2002) using the built-in \R \code{cor.test()} function.
 }
 \usage{
 akq_lmom(           akqenv, silent=FALSE, ...)
@@ -30,7 +30,7 @@ An attribute \code{skipped_sites} is attached to the returned data frame when \c
 \references{
 Asquith, W.H., 2011, Distributional analysis with L-moment statistics using the R environment for statistical computing: Createspace Independent Publishing Platform, ISBN 978--146350841--8, \url{http://www.amazon.com/dp/1463508417/}
 
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
 
 Asquith, W.H., 2014, Parameter estimation for the 4-parameter asymmetric exponential power distribution by the method of L-moments using R: Computational Statistics and Data Analysis, v. 71, pp. 955--970, \url{http://dx.doi.org/10.1016/j.csda.2012.12.013}
 

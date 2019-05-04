@@ -12,7 +12,8 @@ Extract the raw computations from output of \code{\link{akqdecay}} and place the
 By providing this \code{NA}, as shown, graphical operations on the table will be able to \dQuote{lift the pen} when the successive streamgage is encountered.
 }
 \usage{
-akq_table(akqenv, NAline.insert=TRUE, type=c("akqdecay", "other"), silent=FALSE, ...)
+akq_table(akqenv, NAline.insert=TRUE, type=c("akqdecay", "other"),
+                                      silent=FALSE, ...)
 }
 \arguments{
   \item{akqenv}{The \R \code{environment} previously populated by \code{\link{fill_akqenv}}. This argument can also be an \R \code{list} directly from \code{\link{akqdecay}}; special accommodation is made;}

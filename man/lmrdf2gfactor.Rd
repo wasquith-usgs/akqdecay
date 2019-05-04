@@ -2,7 +2,7 @@
 \alias{lmrdf2gfactor}
 \title{ Convert L-moment Data Frame from Asquith--Knight Discharge Decay Analyses to Their Probabilistic Gfactor }
 \description{
-Internally, \code{\link{akqdecay}} generates an \R \code{data.frame} (actually several) having columns named \code{L1}, \code{L2}, \code{T3}, \code{T4}, \code{T5}, \code{T6} for the first six L-moments of the \eqn{N}-day-over-day change values. This data frame is then augmented by a call to this function (\code{lmrdf2gfactor}) to compute the quantile for a given nonexceedance probability (\eqn{F \in [0,1]}) and distribution type as supported by the \pkg{lmomco} package.
+Internally, \code{\link{akqdecay}} generates an \R \code{data.frame} (actually several) having columns named \code{L1}, \code{L2}, \code{T3}, \code{T4}, \code{T5}, \code{T6} for the first six L-moments (Asquith, 2018) of the \eqn{N}-day-over-day change values. This data frame is then augmented by a call to this function (\code{lmrdf2gfactor}) to compute the quantile for a given nonexceedance probability (\eqn{F \in [0,1]}) and distribution type as supported by the \pkg{lmomco} package.
 
 Let us suppose that some 4,600 one-day-over-day of streamflow declines, expressed in units of days per base-10 logarithmic cycle (just \dQuote{days}), have the following L-moments: \eqn{\lambda_1 = 73} days (mean), \eqn{\lambda_2 = 38} days (L-scale), and \eqn{\tau_3 = 0.4} dimensionless (L-skew). Let us suppose that the three-parameter generalized Pareto distribution (GPA) is applicable. The parameters of this distribution when fit to the L-moments are \eqn{\xi = 2.429}, \eqn{\alpha = 60.490}, and \eqn{\kappa = -0.1429}. If the 90th percentile (\eqn{F=0.90} nonexceedance probability) is reflective of long-term streamflow persistence (perhaps caused by sustained groundwater contributions) and is a suitable metric for Gfactor (\eqn{G_f}), this value thus is
 \deqn{G_f = x_{\mathrm{gpa}}(0.9; \Theta) = 167\ \mathrm{days}\mbox{,}}
@@ -53,7 +53,7 @@ Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the
 
 Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
 
-Asquith, W.H., 2017, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.2.9 at \url{https://cran.r-project.org/package=lmomco}.
+Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
 }
 \seealso{\code{\link{akqdecay}}
 }
