@@ -46,7 +46,7 @@ function(akdvtable, missing.days=7, site="", decade=FALSE,
      zz <- zz[0,]
   }
 
-  # The akdvtable must has a decade, year, and Flow (daily mean flow) column.
+  # The akdvtable must have a decade, year, and Flow (daily mean flow) column.
   # All other information in that table is ignored (not used). NA protection
   # exists in the loop that follows.
 
