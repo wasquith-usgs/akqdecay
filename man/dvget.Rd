@@ -56,6 +56,13 @@ Hirsch, R.M., and De Cicco, L.A., 2015, User guide to Exploration and Graphics f
 # USGS 14362000 Applegate River near Copper, Oregon
 Copper <- dvget("14362000", sdate="1940-01-01", edate="1940-01-31")
 print(Copper) # An inspection of the retrieved daily values. #}
+
+\dontrun{
+dv <- dvget("07040000") # 2019-05-05 testing. This is how we can have a look
+# at the streamgage. The Internet indicates gage discontinued in 2011 but
+# -999999 start showing up in May 2016---Is this related to the AQ database change?
+attributes(dv)$akqdecay
+# [1] "at least one -999999 discharge: first=2016-05-05 and last=2019-05-04" }
 }
 \keyword{data retrieval}
 \keyword{daily streamflow}
