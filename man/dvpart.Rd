@@ -8,15 +8,17 @@ Perform streamflow partitioning to baseflow using port of algorithms of the \pkg
 The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows to help in data mining studies. First, instead of issuing \code{stop()} as done in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. Second, a more sophisticated method is optionally available (see \bold{Details}).
 }
 \usage{
-dvpart(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...)
+dvpart(akdvtable, sdate="", edate="", cda=NA, site_no=NA,
+                  fillgaps=FALSE, na.negflow=FALSE, ...)
 }
 \arguments{
   \item{akdvtable}{A USGS daily-value of streamflow table with some extensions unique to this package as returned by \code{\link{dvget}};}
   \item{sdate}{Optional start date (default is earliest) and nomenclature matches that of the \pkg{dataRetrieval} package with string format of \dQuote{YYYY-MM-DD} for year (YYYY), month (MM), and day (DD) respectively padded by zeros as needed. The \cr \code{akdvtable} is consulted for the first day of record for the default is \code{sdate = ""};}
   \item{edate}{Optional ending date (default is earliest) and nomenclature matches that of the \pkg{dataRetrieval} package with string format of \dQuote{YYYY-MM-DD} for year (YYYY), month (MM), and day (DD) respectively padded by zeros as needed. The \cr \code{akdvtable} is consulted for the last day of record for the default is \code{edate = ""};}
-  \item{cda}{Contributing drainage area of the streamgage in square miles. Only the first value is used without warning if a vector is given. The area can readily be determined from \code{\link{sites_to_SpatialPointsDataFrame}}, though a missing area will default to unity inside \code{dvpart};}
+  \item{cda}{Contributing drainage area of the streamgage in square miles. Only the first value is used without warning if a vector is given. The area can readily be determined from \code{\link{sites_to_SpatialPointsDataFrame}}, though a missing drainage area will default to unity inside \code{dvpart};}
   \item{site_no}{Optional site number that will be taken if \code{NA} from the \code{akdvtable} as needed;}
-  \item{fillgaps}{A logical to trigger the record gap infiller; and}
+  \item{fillgaps}{A logical to trigger the record gap infiller (see \bold{Details}). This trigger when set to \code{TRUE} is an extension of the Rutledge (1998) algorithm as represented by \code{DVstats::}\code{part()};}
+  \item{na.negflow}{A logical to trigger the conversion of \code{FlowBase}, \code{FlowPart1}, \code{FlowPart2}, and \code{FlowPart3} to \code{NA} is the \code{Flow} (actual daily mean streamflow) is a negative value. The original algorithms truncate negative flows a \dQuote{small} near $0^{+} value. This trigger when set to \code{TRUE} is an extension of the Rutledge (1998) algorithm as represented by \code{DVstats::}\code{part()}; and}
   \item{...}{Other arguments to pass.}
 }
 \details{
@@ -107,6 +109,18 @@ tail(MN); # shows July 2017 Flow as 351.3871, manually NWISWeb shows 351.4
 plot(MN$DateMean, MN$Flow, type="l", log="y",
                   xlab="Date", ylab="Streamflow, cfs")
 lines(MN$DateMean, MN$FlowBase, col=2) #}
+
+\dontrun{
+# This example demonstrates setting the baseflows to NA when flows are NA
+cda <- sites_to_SpatialPointsDataFrame("07382500")$CDA # 715 square miles
+DV  <- dvget("07382500", sdate="2000-01-01", edate="2012-12-31",
+                         ignore.provisional=FALSE)
+pDV <- dvpart(DV, cda=cda, fillgaps=TRUE, na.negflow=TRUE)
+head(pDV[pDV$Flow < 0,]) # see how the baseflows are NAs
+mDV <- dvpart2mnpart(pDV)
+mDV[      mDV$Flow  < 0,] # October 2010 with baseflows as NAs
+mDV[is.na(mDV$FlowBase),] # to view all months in which at least one
+daily streamflow was less than zero }
 }
 \keyword{streamflow partitioning}
 \keyword{baseflow}

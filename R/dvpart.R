@@ -1,5 +1,6 @@
 "dvpart" <-
-function(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...) {
+function(akdvtable, sdate="", edate="", cda=NA, site_no=NA,
+                    fillgaps=FALSE, na.negflow=FALSE, ...) {
   if(is.null(akdvtable)) {
     warning("akdvtable is NULL, returning NULL"); return(NULL)
   }
@@ -91,6 +92,12 @@ function(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...)
   dates <- akdvtable$Date # daily dates
 
   flows <- pmax(flows, 1e-99) # Convert 0 to a small number (original PART logic)
+  # Note that the above operation is destructive on negative flows by turning them
+  # also to the 1e-99 number. Some streamgages do have occasional negative
+  # streamflow --- not directly referring to tidal gages --- what exactly should
+  # happen to hydrograph separation when negatives exist? No clear, so the
+  # na.negflow argument to this function was added.
+
   original_number_of_flows <- length(flows)  # if desired someday to report changes
   if(fillgaps) { # Asquith hacking magic
     nova_core <- seq(sdate, edate, by=1) # every day needed
@@ -245,6 +252,13 @@ function(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...)
   FlowPart1[is.na(akdvtable$Flow)] <- NA
   FlowPart2[is.na(akdvtable$Flow)] <- NA
   FlowPart3[is.na(akdvtable$Flow)] <- NA
+
+  if(na.negflow) {
+    FlowBase[ ! is.na(akdvtable$Flow) & akdvtable$Flow < 0] <- NA # baseflows are set to missing
+    FlowPart1[! is.na(akdvtable$Flow) & akdvtable$Flow < 0] <- NA # when the daily streamflow itself
+    FlowPart2[! is.na(akdvtable$Flow) & akdvtable$Flow < 0] <- NA # is zero
+    FlowPart3[! is.na(akdvtable$Flow) & akdvtable$Flow < 0] <- NA
+  }
   zz <- data.frame(agency_cd = akdvtable$agency_cd,
                    site_no   = site_no,
                    Date      = akdvtable$Date,
