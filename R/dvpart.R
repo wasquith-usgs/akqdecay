@@ -240,6 +240,11 @@ function(akdvtable, sdate="", edate="", cda=NA, site_no=NA, fillgaps=FALSE, ...)
     FlowPart3 <- sapply(as.character(akdvtable$Date),
                      function(k) ifelse(exists(k, .dvp.env), get(k, .dvp.env), NA))
   }
+  # Finally, in the event that the Flow is missing, we must ensure that all the
+  FlowBase[ is.na(akdvtable$Flow)] <- NA # baseflows are set to missing as well
+  FlowPart1[is.na(akdvtable$Flow)] <- NA
+  FlowPart2[is.na(akdvtable$Flow)] <- NA
+  FlowPart3[is.na(akdvtable$Flow)] <- NA
   zz <- data.frame(agency_cd = akdvtable$agency_cd,
                    site_no   = site_no,
                    Date      = akdvtable$Date,
