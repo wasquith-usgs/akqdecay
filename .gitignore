@@ -39,3 +39,6 @@ R/.DS_Store
 man/.DS_Store
 datastrucs/.DS_Store
 misc/.DS_Store
+inst/datastrucs/datastrucs.aux
+inst/datastrucs/datastrucs.synctex.gz
+inst/datastrucs/datastrucs.log
