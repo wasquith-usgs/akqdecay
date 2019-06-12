@@ -63,6 +63,23 @@ dv <- dvget("07040000") # 2019-05-05 testing. This is how we can have a look
 # -999999 start showing up in May 2016---Is this related to the AQ database change?
 attributes(dv)$akqdecay
 # [1] "at least one -999999 discharge: first=2016-05-05 and last=2019-05-04" }
+
+\dontrun{
+# Get all of the sites in Alabama that have discharge (00060) and then 
+# just work on those that seem to have record after June 1st, 2019.
+AL <- dataRetrieval::whatNWISsites(stateCd="AL", parameterCd="00060")
+AL <- AL[AL$site_tp_cd == "ST",]; # isolate just the streamgages, then remove
+AL <- AL[as.numeric(AL$site_no) <= 100000000000000,] # lat/long based site numbers
+sites <- AL$site_no
+DV <- new.env(); n <- length(sites); i <- 0
+for(site in sites) {
+  i <- i + 1
+  message("working on site ",site, "  ",i,"(",n,")")
+  dv <- NULL
+  try(dv <- dvget(site, sdate="2019-06-01", ignore.provisional=FALSE))
+  if(is.null(dv)) next; if(length(dv$site_no) == 0) next
+  assign(site, dv, envir=DV)
+}#}
 }
 \keyword{data retrieval}
 \keyword{daily streamflow}
