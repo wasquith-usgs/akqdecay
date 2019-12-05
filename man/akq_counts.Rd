@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_counts}
 \alias{akq_counts}
-\title{ Count Table from the Asquith--Knight Discharge Decay Analyses }
+\title{Count Table from the Asquith--Knight Discharge Decay Analyses}
 \description{
 Extract the count table (\code{counts}) from Asquith--Knight discharge decay analyses. The count table is an \R \code{data.frame} has been already made by \code{\link{akqdecay}} for a sequence of USGS streamgage identification numbers contained within an \R \code{environment}. This environment has already been populated by \code{\link{fill_akqenv}}. The various counts of direction of change in the daily-mean streamflows are computed (decreasing, increasing, or no change) in \code{\link{akqdecay}} regardless of the arguments \code{decreasing} and \code{lag} originally passed to that function.
 }

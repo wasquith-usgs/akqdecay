@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{dvoverlap}
 \alias{dvoverlap}
-\title{ Find Sites with Overlapping Complete Years of Daily Values }
+\title{Find Sites with Overlapping Complete Years of Daily Values}
 \description{
 Find sites with overlapping complete years of daily values from the daily-value environment.
 }

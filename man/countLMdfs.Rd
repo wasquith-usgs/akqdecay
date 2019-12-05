@@ -1,8 +1,9 @@
+\encoding{utf8}
 \name{countLMdfs}
 \alias{countLMdfs}
-\title{ Counts and Percentages from L-moment Tables of the Asquith--Knight Discharge Decay Analyses }
+\title{Counts and Percentages from L-moment Tables of the Asquith--Knight Discharge Decay Analyses}
 \description{
-Extract and combine the counts from various yearly or decadal L-moment tables between the three computation methods of Asquith--Knight discharge decay analyses and compute relative percentages. A check is made internally that the ordering of the arguments \code{DECR}, \code{INCR}, and \code{NC} looks proper---meaning that total summation (all sites and year/decade) of \eqn{\check\Psi} (decreasing) are larger than total summation of \eqn{\hat\Psi} and larger than total summation of \eqn{\ddot\Psi}, and total summation of \eqn{\hat\Psi} is larger than total summation of \eqn{\ddot\Psi}. This check is made because the number of decreases is almost uniformally about twice as often as increases and both those are larger than the number of no changes. Mathematically, for indicator function \eqn{\mathbf{1}(x_i)} for the presence of the \eqn{i}th value in the sample, the relations among the \eqn{\Psi} are
+Extract and combine the counts from various yearly or decadal L-moment tables between the three computation methods of Asquith--Knight discharge decay analyses and compute relative percentages. A check is made internally that the ordering of the arguments \code{DECR}, \code{INCR}, and \code{NC} looks proper---meaning that total summation (all sites and year/decade) of \eqn{\check\Psi} (decreasing) are larger than total summation of \eqn{\hat\Psi} and larger than total summation of \eqn{\ddot\Psi}, and total summation of \eqn{\hat\Psi} is larger than total summation of \eqn{\ddot\Psi}. This check is made because the number of decreases is almost uniformly about twice as often as increases and both those are larger than the number of no changes. Mathematically, for indicator function \eqn{\mathbf{1}(x_i)} for the presence of the \eqn{i}th value in the sample, the relations among the \eqn{\Psi} are
 \deqn{\sum_{i=1}^n \mathbf{1}(\check\Psi_i) \ge \sum_{i=1}^n \mathbf{1}(\hat\Psi_i) \ge \sum_{i=1}^n \mathbf{1}(\ddot\Psi_i)\mbox{.}}
 }
 \usage{

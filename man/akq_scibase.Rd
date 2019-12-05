@@ -1,8 +1,9 @@
+\encoding{utf8}
 \name{akq_scibase}
 \alias{akq_scibase}
-\title{ Asquith--Knight Discharge Decay Analyses Converted to Plain-Text Files Suitable for USGS ScienceBase-like Release}
+\title{Asquith--Knight Discharge Decay Analyses Converted to Plain-Text Files Suitable for USGS ScienceBase-like Release}
 \description{
-Extract all of the various results of Asquith--Knight discharge decay analyses and write these into parallel named plain-text output files. This function is a wrapper on calls to \code{\link{akq_write}} for the tables extracted by \code{\link{akq_counts}}, \code{\link{akq_lmom}}, \code{\link{akq_lmom_year}}, \code{\link{akq_lmom_decade}}, \code{\link{akq_summary}}, and \code{\link{akq_table}} (optional) utility functions. ScienceBase is a contemporaneous (\emph{c.}2017) distribution mechansim for certain USGS datasets.
+Extract all of the various results of Asquith--Knight discharge decay analyses and write these into parallel named plain-text output files. This function is a wrapper on calls to \code{\link{akq_write}} for the tables extracted by \code{\link{akq_counts}}, \code{\link{akq_lmom}}, \code{\link{akq_lmom_year}}, \code{\link{akq_lmom_decade}}, \code{\link{akq_summary}}, and \code{\link{akq_table}} (optional) utility functions. ScienceBase is a contemporaneous (\emph{c.}2017) distribution mechanism for certain USGS datasets.
 }
 \usage{
 akq_scibase(akqenv, basename="SciBase_", extension=".txt",

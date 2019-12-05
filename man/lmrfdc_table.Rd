@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{lmrfdc_table}
 \alias{lmrfdc_table}
-\title{ Convert an R Environment of L-moments by Annual Flow-Duration Curve to a Dataframe }
+\title{Convert an R Environment of L-moments by Annual Flow-Duration Curve to a Data Frame}
 \description{
 Extract the raw computations from output of \code{\link{fdclmr}} and place the results into an \R \code{data.frame}. This function will insert a row of \code{NA}'s into the returned table of the changes from one streamgage to the next using the built-in \R \code{rbind()} function. The inserted line will look something like row 6873:
 \preformatted{
@@ -32,7 +33,7 @@ An \R \code{data.frame} of mutable length but containing the following columns:
   \item{L2}{L-scale (\eqn{\lambda_2});}
   \item{T3}{L-skew (\eqn{\tau_3}), third L-moment ratio;}
   \item{T4}{L-kurtosis (\eqn{\tau_4}), fourth L-moment ratio;}
-  \item{T5}{Fifth unnamed L-moment ratio (\eqn{\tau_5}), but the term L-cinco occassionally could be used; and}
+  \item{T5}{Fifth unnamed L-moment ratio (\eqn{\tau_5}), but the term L-cinco occasionally could be used; and}
   \item{T6}{Fifth unnamed L-moment ratio (\eqn{\tau_6}), but the term L-seis could be used.}
 }
 \note{

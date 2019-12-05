@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_globe}
 \alias{akq_globe}
-\title{ Global Summary of Count Tables from the Asquith--Knight Discharge Decay Analyses }
+\title{Global Summary of Count Tables from the Asquith--Knight Discharge Decay Analyses}
 \description{
 Produce global summary of the count tables from Asquith--Knight discharge decay analyses returned by \code{\link{akqdecay}} for a sequence of USGS streamgage identification numbers contained within an \R \code{environment}. This environment has already been populated by \code{\link{fill_akqenv}}. The counts of number of sites, total (cumulative record length of daily values [minus the \code{lag} used for \code{\link{akqdecay}}?]) and totals for increasing, decreasing, no change, and missing days are computed.
 }

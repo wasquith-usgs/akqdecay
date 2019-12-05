@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{dvpart2mnpart}
 \alias{dvpart2mnpart}
-\title{ Perform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table }
+\title{Perform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table}
 \description{
 Convert daily streamflow partitioning from the \R \code{data.frame} from \code{\link{dvpart}} to monthly streamflow partitioning. Only complete months are permitted, which means (say) that 30 days of streamflows (baseflow and others) in an October will not be converted to a monthly values.
 }

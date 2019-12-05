@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fdclmr}
 \alias{fdclmr}
-\title{ Compute the First Six L-moments of the Flow-Duration Curve for Each Year or Decade (and Other Statistics) }
+\title{Compute the First Six L-moments of the Flow-Duration Curve for Each Year or Decade (and Other Statistics)}
 \description{
 Compute the first six sample L-moments (\eqn{\hat\lambda_1}, \eqn{\hat\lambda_2}, \eqn{\hat\tau_3}, \eqn{\hat\tau_4}, \eqn{\hat\tau_5}, and \eqn{\hat\tau_6}; Asquith [2011a,b, 2018]) of the flow-duration curve (FDC) for each year passing a maximum number of missing days permissible. The missing days are implicitly assumed to be randomly distributed within a given year. (Most partial years in USGS databases are those on years of activation or discontinuance of a streamgage.)
 
@@ -16,10 +17,10 @@ fdclmr(akdvtable, missing.days=7, site="", decade=FALSE,
   \item{missing.days}{The number of permissible missing days in a given year on which to still compute the annual flow-duration curve and use that year in the trend test; The default is one week and it is advised to not exceed that count. The streamflow values are first reduced by removing \code{NA} before comparing the total number of values for a year against the value 365 minus \code{missing.days}. This argument is scaled up by 10 if \code{decade=TRUE} (computations are internal, user just needs to think about how many missing days per year might be acceptable, but internally these could be a consecutive block, for example, if a week was permitted for the decadal computations 70 missing days in a row would be permissible);}
   \item{site}{An optional streamgage identification number (or other character string). It is deliberate that this function does not pickup the \code{site_no} from the daily-value table \code{akdvtable}. This permits the user to potentially intercept the site number or name and replace with their own for flexibility in categorical statistical analyses in their own custom scripts;}
   \item{decade}{A logical to switch to decadal computations. A decade is already available in the \code{akdvtable} and see its documentation in \code{\link{dvget}} for the definition of decade for this package.}
-  \item{minyear}{The optional minimum year of the daily-values table before any futher computations are made.}
-  \item{maxyear}{The optional maximum year of the daily-values table before any futher computations are made.}
+  \item{minyear}{The optional minimum year of the daily-values table before any further computations are made.}
+  \item{maxyear}{The optional maximum year of the daily-values table before any further computations are made.}
   \item{log}{Should base-10 logarithms of the daily streamflow be computed before L-moments computed (see also \code{subzero} and \code{plusit});}
-  \item{subzero}{If \code{log=TRUE}, a value for substitution for zero or less than zero values when \code{log=TRUE}. This feature is subject to change because of the nonoptimality of such substitution. The \code{subzero} is used before the \code{plusit};}
+  \item{subzero}{If \code{log=TRUE}, a value for substitution for zero or less than zero values when \code{log=TRUE}. This feature is subject to change because of the non-optimality of such substitution. The \code{subzero} is used before the \code{plusit};}
   \item{plusit}{If \code{log=TRUE}, a value for added to \emph{also} values (not just those that are zero or less than zero);}
   \item{verbose}{A logical controlling a potentially helpful message that prints the site and the current year as they are looped through. This is similar to the \code{silent} in \cr \code{\link{fill_lmrfdcenv}}, but named different here for discrete functionality between \code{fdclmr} and \code{\link{fill_lmrfdcenv}}; and}
   \item{...}{Additional arguments to pass.}

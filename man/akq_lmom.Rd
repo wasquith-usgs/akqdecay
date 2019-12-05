@@ -1,9 +1,10 @@
+\encoding{utf8}
 \name{akq_lmom}
 \alias{akq_lmom}
 \alias{akq_lmom_yeardecade}
 \alias{akq_lmom_year}
 \alias{akq_lmom_decade}
-\title{ L-moment Table from the Asquith--Knight Discharge Decay Analyses }
+\title{L-moment Table from the Asquith--Knight Discharge Decay Analyses}
 \description{
 Extract the L-moments (Asquith, 2018) from the Asquith--Knight discharge decay analyses returned by \code{\link{akqdecay}} for a sequence of USGS streamgages contained within the \R \code{environment} that has been previously populated by \code{\link{fill_akqenv}}. The \code{\link{akq_lmom_yeardecade}} function is a parent function called by the functions \code{\link{akq_lmom_year}} and \code{\link{akq_lmom_decade}} in a self-evident manner. There are provisions for performing the Kendall Tau test for monotonic trend in time (Helsel and Hirsch, 2002) using the built-in \R \code{cor.test()} function.
 }
@@ -24,7 +25,7 @@ akq_lmom_decade(    akqenv, ...) # wrapper on the above function
 \value{
   An \R \code{data.frame} containing the L-moments for each streamgage depending on which form of retrieval is requested. The first of the \bold{Examples} shows extraction of the Kendall Tau test for a single streamgage in Oregon. The second example shows the L-moments for the period of record for two streamgages in Wisconsin. The third example shows extraction of the Kendall Tau test for the two Wisconsin streamgages. The fourth example shows manual extraction of sample sizes and first L-moment (arithmetic mean) and plots a pair of time series. For both styles of Kendall Tau test, the results are accessed by the \code{tau} and \code{tau_p.value} attribute or label in the \code{environment}. Thus, this function also is used for its side effects on the \code{tauenv} argument as applicable.
 
-An attribute \code{skipped_sites} is attached to the returned data frame when \code{akenv} is an environment and contains, because most assurdly of sample size considerations, a vector of the sites that lacked an L-moment table (period-of-record, decadal, or yearly as applicable). Another attribute is \code{which} that contains the year or decade when either is triggered by the function call.
+An attribute \code{skipped_sites} is attached to the returned data frame when \code{akenv} is an environment and contains, because most assuredly of sample size considerations, a vector of the sites that lacked an L-moment table (period-of-record, decadal, or yearly as applicable). Another attribute is \code{which} that contains the year or decade when either is triggered by the function call.
 }
 \author{ W.H. Asquith}
 \references{

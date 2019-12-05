@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{dvpartenv2mnpartenv}
 \alias{dvpartenv2mnpartenv}
-\title{ Convert an R Environment with Daily Streamflow Partitioning to an R Environment with Monthly Aggregations }
+\title{Convert an R Environment with Daily Streamflow Partitioning to an R Environment with Monthly Aggregations}
 \description{
 Converted processing from \code{\link{fill_dvpartenv}} to monthly aggregated streamflow stored in another \R \code{environment}.
 }

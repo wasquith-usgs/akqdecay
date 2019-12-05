@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fill_dvenv}
 \alias{fill_dvenv}
-\title{ Fill an R Environment with Streamflow Partitioning Analyses by Streamgage }
+\title{Fill an R Environment with Streamflow Partitioning Analyses by Streamgage}
 \description{
 Fill an \R \code{environment} with \R \code{data.frames} of daily-mean streamflow for USGS streamgages. This function is a wrapper (abstraction layer) on the \code{\link{dvget}} function.
 }

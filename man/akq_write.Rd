@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_write}
 \alias{akq_write}
-\title{ Write Tables (data.frames) }
+\title{Write Tables from Data Frames}
 \description{
 Write the \R \code{data.frame} produced by either \code{\link{akq_counts}},  \code{\link{akq_lmom}}, \code{\link{akq_summary}}, and  \code{\link{akq_table}} to the file system via a wrapper on the built-in \R \code{write.table()} function. The output has quotation marks stripped and no row names [\code{row.names()}].
 }

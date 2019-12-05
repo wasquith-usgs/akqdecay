@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_table}
 \alias{akq_table}
-\title{ Tabulate (Extract) Raw Discharge Decay Computations }
+\title{Tabulate (Extract) Raw Discharge Decay Computations}
 \description{
 Extract the raw computations from output of \code{\link{akqdecay}} and place the results into an \R \code{data.frame}. This function will insert a row of \code{NA}'s into the returned table of the changes from one streamgage to the next using the built-in \R \code{rbind()} function. The inserted line will look something like row 9069:
 \preformatted{

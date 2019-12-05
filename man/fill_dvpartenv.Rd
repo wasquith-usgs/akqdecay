@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fill_dvpartenv}
 \alias{fill_dvpartenv}
-\title{ Fill an R Environment with Streamflow Partitioning using Asquith--Knight Daily-Value Table }
+\title{Fill an R Environment with Streamflow Partitioning using Asquith--Knight Daily-Value Table}
 \description{
 Compute streamflow partitioning for a succession of USGS streamgage identification numbers in an \R \code{environment} from \code{\link{fill_dvenv}} and populates (\emph{fills}) with output from \code{\link{dvpart}} as another \R \code{environment}.
 }

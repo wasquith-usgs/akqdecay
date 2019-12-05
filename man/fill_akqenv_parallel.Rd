@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fill_akqenv_parallel}
 \alias{fill_akqenv_parallel}
-\title{ Fill an R Environment by Parallel Processing with Asquith--Knight Discharge Decay Analyses }
+\title{Fill an R Environment by Parallel Processing with Asquith--Knight Discharge Decay Analyses}
 \description{
 Compute Asquith--Knight discharge decay analyses for a succession of USGS streamgage identification numbers in an \R \code{environment} from \code{\link{fill_dvenv}} and populates with output from \code{\link{akqdecay}} as another \R \code{environment}. This function is intended to be used as an alternative to \code{\link{fill_akqenv}} on unix-like platforms only. The \pkg{mcparallelDo} package is used, though this is not a required package for \pkg{akqdecay}. This function, thus, will only operate properly if \pkg{mcparallelDo} is in fact installed. The process is setup to parallel no more than six sites at a time, wait until all six jobs are finished, and then launch another ensemble. This might not be ideal because if a long-record site is among four very short-record sites, then there are fractions of time without all potential jobs running. However, the design of \code{fill_akqenv_parallel} has proven to be effective, robust, and yields much acceleration benchmarked against \code{\link{fill_akqenv}}.
 }

@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{mnget}
 \alias{mnget}
-\title{ Retrieve USGS Discharge Monthly Values structured in the spirit of this package }
+\title{Retrieve USGS Discharge Monthly Values structured in the spirit of this package}
 \description{
 Retrieve U.S. Geological Survey (USGS) daily mean-streamflow values for a streamgage identification number. This function is a wrapper on \code{dataRetrieval::}\code{readNWISstat()} to provide an abstraction layer to the \pkg{dataRetrieval} package. The \code{mnget} function adds some additional information for purpose of the \pkg{akqdecay} package. The function creates the canonical daily-mean streamflow table (an \R \code{data.frame}) to be picked up in turn by the \code{\link{akqdecay}} function of this package. The function \code{\link{fill_mnenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{\link{akqdecay}} function.  Users interested in monthly values might be especially interested in the monthly computations based on the daily streamflows but with the inclusion of separated streamflow in \code{\link{dvpart}} and \code{\link{fill_dvpartenv}} (see \bold{Examples} in \code{\link{dvpart}} for a demonstration).
 }

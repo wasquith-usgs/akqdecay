@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fill_akqenv}
 \alias{fill_akqenv}
-\title{ Fill an R Environment with Asquith--Knight Discharge Decay Analyses }
+\title{Fill an R Environment with Asquith--Knight Discharge Decay Analyses}
 \description{
 Compute Asquith--Knight discharge decay analyses for a succession of USGS streamgage identification numbers in an \R \code{environment} from \code{\link{fill_dvenv}} and populates (\emph{fills}) with output from \code{\link{akqdecay}} as another \R \code{environment}. This function is intended to be used just ahead of extraction functions such as \code{\link{akq_counts}}, \code{\link{akq_lmom}}, and \code{\link{akq_summary}}.
 }

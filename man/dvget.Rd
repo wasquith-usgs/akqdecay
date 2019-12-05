@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{dvget}
 \alias{dvget}
-\title{ Retrieve USGS Discharge Daily Values structured for Asquith--Knight Discharge Decay Analyses }
+\title{Retrieve USGS Discharge Daily Values structured for Asquith--Knight Discharge Decay Analyses}
 \description{
 Retrieve U.S. Geological Survey (USGS) daily mean-streamflow values for a streamgage identification number. This function is a wrapper on \code{dataRetrieval::}\code{readNWISdv()} and thus provides an abstraction layer to the \pkg{dataRetrieval} package but this wrapper has powerful features suitable for data-mining scale study of daily values. The \code{dvget} function adds some additional information for purpose of the \pkg{akqdecay} package. The function creates the canonical daily-mean streamflow table (an \R \code{data.frame}) to be picked up in turn by the \code{\link{akqdecay}} function of this package. The function \code{\link{fill_dvenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{\link{akqdecay}} function.
 }
@@ -65,7 +66,7 @@ attributes(dv)$akqdecay
 # [1] "at least one -999999 discharge: first=2016-05-05 and last=2019-05-04" }
 
 \dontrun{
-# Get all of the sites in Alabama that have discharge (00060) and then 
+# Get all of the sites in Alabama that have discharge (00060) and then
 # just work on those that seem to have record after June 1st, 2019.
 AL <- dataRetrieval::whatNWISsites(stateCd="AL", parameterCd="00060")
 AL <- AL[AL$site_tp_cd == "ST",]; # isolate just the streamgages, then remove

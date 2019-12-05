@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_rm}
 \alias{akq_rm}
-\title{ Remove or Extract Site Numbers from Copied Package Environments }
+\title{Remove or Extract Site Numbers from Copied Package Environments}
 \description{
 Remove from either the environments related to calls to \code{\link{fill_akqenv}} or \code{\link{fill_dvenv}} a vector of site numbers and return a copy as an \R \code{list}. This is a simple function saving marginally on number of lines of code for scripting by the user, but with the \code{invert} logical, flexibility of using \pkg{akqdecay} package is compressed into a simple operation.
 }

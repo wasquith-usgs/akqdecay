@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_summary}
 \alias{akq_summary}
-\title{ Summary Table from the Asquith--Knight Discharge Decay Analysis }
+\title{Summary Table from the Asquith--Knight Discharge Decay Analysis}
 \description{
 Extract the summary table from Asquith--Knight discharge decay analyses returned by \code{\link{akqdecay}} for a sequence of USGS streamgages contained within the \R \code{environment} that has been previously populated by \code{\link{fill_akqenv}}.
 }
@@ -30,7 +31,7 @@ akq_summary(akqenv, silent=FALSE, ...)
 \note{
 As yet, Asquith and Knight have definitive opinion on what the optimal \dQuote{Gfactor} is in regards to depth into the distribution tail of days per log-cycle change on the recession limb of hydrographs. Please contact the authors for further information.
 
-The \code{L1L2} as a term or concept is expected to have little direct meaning to most users. The first L-moment (arthimetic mean) is \eqn{\lambda_1}. The second L-moment (L-scale) is \eqn{\lambda_2} and is directly interpretable as, but not numerically equal to, the well-known standard deviation (\eqn{\sigma}). Thus, it has units of days per log-cycle and matches those of the mean. The \eqn{\sigma} is the second parameter of the normal distribution, and this parameter in terms of L-scale is \eqn{\sigma = \lambda_2\sqrt{\pi}}. Thus, this is an estimate of the standard deviation via L-moments. The percentile \code{pnorm(sqrt(pi), sd=sqrt(pi))} is the 84 percentile of the normal for \eqn{\lambda_1 = 0}---hence, \code{L1L2} can loosely be thought of as a parametric estimate of a \eqn{G_{\mathrm{nor}}(F=0.84)} Gfactor. This would be a Gfactor defined as about \dQuote{one standard deviation into the right tail of the distribution.}
+The \code{L1L2} as a term or concept is expected to have little direct meaning to most users. The first L-moment (arithmetic mean) is \eqn{\lambda_1}. The second L-moment (L-scale) is \eqn{\lambda_2} and is directly interpretable as, but not numerically equal to, the well-known standard deviation (\eqn{\sigma}). Thus, it has units of days per log-cycle and matches those of the mean. The \eqn{\sigma} is the second parameter of the normal distribution, and this parameter in terms of L-scale is \eqn{\sigma = \lambda_2\sqrt{\pi}}. Thus, this is an estimate of the standard deviation via L-moments. The percentile \code{pnorm(sqrt(pi), sd=sqrt(pi))} is the 84 percentile of the normal for \eqn{\lambda_1 = 0}---hence, \code{L1L2} can loosely be thought of as a parametric estimate of a \eqn{G_{\mathrm{nor}}(F=0.84)} Gfactor. This would be a Gfactor defined as about \dQuote{one standard deviation into the right tail of the distribution.}
 
 }
 \author{ W.H. Asquith}

@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fill_lmrfdcenv}
 \alias{fill_lmrfdcenv}
-\title{ Fill an R Environment with L-moments by Annual Flow-Duration Curve }
+\title{Fill an R Environment with L-moments by Annual Flow-Duration Curve}
 \description{
 Perform tests for monotonic trend for each of 365 probabilities on the flow-duration curve with year for a succession of USGS streamgage identification numbers in an \R \code{environment} from \code{\link{fill_dvenv}}. The function \code{fill_lmrfdcenv} populates (\emph{fills}) with output from \code{\link{fdclmr}} as another \R \code{environment}.  In source code, this function is structurally almost identical to \code{\link{fill_tfdcenv}}.
 }

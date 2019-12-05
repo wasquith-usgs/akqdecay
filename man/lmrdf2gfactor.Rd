@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{lmrdf2gfactor}
 \alias{lmrdf2gfactor}
-\title{ Convert L-moment Data Frame from Asquith--Knight Discharge Decay Analyses to Their Probabilistic Gfactor }
+\title{Convert L-moment Data Frame from Asquith--Knight Discharge Decay Analyses to Their Probabilistic Gfactor}
 \description{
 Internally, \code{\link{akqdecay}} generates an \R \code{data.frame} (actually several) having columns named \code{L1}, \code{L2}, \code{T3}, \code{T4}, \code{T5}, \code{T6} for the first six L-moments (Asquith, 2018) of the \eqn{N}-day-over-day change values. This data frame is then augmented by a call to this function (\code{lmrdf2gfactor}) to compute the quantile for a given nonexceedance probability (\eqn{F \in [0,1]}) and distribution type as supported by the \pkg{lmomco} package.
 

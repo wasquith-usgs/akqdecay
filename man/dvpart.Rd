@@ -1,8 +1,9 @@
+\encoding{utf8}
 \name{dvpart}
 \alias{dvpart}
-\title{ Perform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table }
+\title{Perform Streamflow Partitioning after Rutledge (1998) Structured for Processing the Asquith--Knight Daily Streamflow Table}
 \description{
-Perform streamflow partitioning to baseflow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The function \code{\link{fill_dvpartenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{dvpart} function. (Users interested in monthly streamflow partitioning should consult \code{\link{dvpart2mnpart}}.)
+Perform streamflow partitioning to base-flow using port of algorithms of the \pkg{DVstats} package and the function \code{DVstats::}\code{part()} of daily mean-streamflow values based on the daily value structure of \code{\link{dvget}}. The function \code{\link{fill_dvpartenv}} is a wrapper that can be used to fill an \R \code{environment} with the output of the \code{dvpart} function. (Users interested in monthly streamflow partitioning should consult \code{\link{dvpart2mnpart}}.)
 
 
 The algorithms implement the procedures of Rutledge (1998). For the \pkg{akqdecay} package, some new development was made on how to handle missing flows to help in data mining studies. First, instead of issuing \code{stop()} as done in \code{DVstats::}\code{part()}, the \code{dvpart} implementation returns \code{NULL}. Second, a more sophisticated method is optionally available (see \bold{Details}).
@@ -22,7 +23,7 @@ dvpart(akdvtable, sdate="", edate="", cda=NA, site_no=NA,
   \item{...}{Other arguments to pass.}
 }
 \details{
-Missing data and gaps in the record can actually be accommodated by a simple approach triggered by the \code{fillgaps} argument. It does require mentioning that there are two types of missingness. Real \code{NA}s could be delivered on the daily value retrieval, but also jumps or gaps in time too. The \code{dvpart} checks for both conditions and returns \code{NULL} if either is encountered---Except if the \code{fillgaps} is set.
+Missing data and gaps in the record can actually be accommodated by a simple approach triggered by the \code{fillgaps} argument. It does require mentioning that there are two types of missing information. Real \code{NA}s could be delivered on the daily value retrieval, but also jumps or gaps in time too. The \code{dvpart} checks for both conditions and returns \code{NULL} if either is encountered---Except if the \code{fillgaps} is set.
 
 The strategy has the following steps. First, construct an absolutely daily-continuous sequence of dates from \code{sdate} to \code{edate}. Second, flows that are less than or equal to zero are set to small number (see \code{pmax} use in the sources). Third, log-linearly interpolate for the daily-continuous sequence that streamflow across record gaps using the non-\code{NA} flows and respective dates in \code{akdvtable}. Fourth, streamflow separation is made on the daily-continuous streamflows instead of the non-\code{NA} original non-daily continuous data.
 

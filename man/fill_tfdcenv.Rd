@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{fill_tfdcenv}
 \alias{fill_tfdcenv}
-\title{ Fill an R Environment with Kendall's Tau Trend Tests of the Flow-Duration Curve }
+\title{Fill an R Environment with Kendall's Tau Trend Tests of the Flow-Duration Curve}
 \description{
 Perform tests for monotonic trend for each of 365 probabilities on the flow-duration curve with year for a succession of USGS streamgage identification numbers in an \R \code{environment} from \code{\link{fill_dvenv}}. The function \code{fill_tfdcenv} populates (\emph{fills}) with output from \code{\link{fdctrend}} as another \R \code{environment}.  In source code, this function is structurally almost identical to \code{\link{fill_akqenv}}.
 }

@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akq_na}
 \alias{akq_na}
-\title{ Check within an Environment for NA (Missing) Daily Asquith--Knight Discharge Decay Analyses or Zero Rows of Daily Values }
+\title{Check within an Environment for NA (Missing) Daily Asquith--Knight Discharge Decay Analyses or Zero Rows of Daily Values}
 \description{
 This function has two effects depending on the anticipated type, which means the \emph{contents}, for an \R \code{environment}. First, check by streamgage for exclusively one \code{NA} stored in the \R \code{environment} created by \code{\link{fill_akqenv}} and return those site numbers. Second, check by streamgage for zero rows of the daily-value \code{data.frame} created by \code{\link{fill_akqenv}} and return those site numbers.
 }

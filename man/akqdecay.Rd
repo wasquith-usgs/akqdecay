@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{akqdecay}
 \alias{akqdecay}
-\title{ Asquith--Knight Discharge Decay Analyses }
+\title{Asquith--Knight Discharge Decay Analyses}
 \description{
 Compute statistics associated with the today-to-tomorrow or \eqn{N}-day-over-day base-10 logarithm decline of daily streamflows. The preferred expression for this package is the inverse of the base-10 logarithm per day to form the days per unit log-cycle decline in streamflow.
 
@@ -14,7 +15,7 @@ A setting of \code{differences} greater than 1 is applied recursively and is dif
 
 The \pkg{akqdecay} package inverts \code{delQ} prior to \emph{any statistical processing}. Let us refer to \code{1/delQ} as \eqn{\Psi(l,d)} where \eqn{l} is \code{lag} and \eqn{d} is \code{differences}. For brevity however, days per log-cycle may simply be denoted as \eqn{\Psi}. The inversion has the effect of changing the unit system to units of time per log-cycle change. The reasoning is that \eqn{\Psi} is in readily interpreted units of time. Asquith and Knight suggest that units of time provide a straightforward unit system to describe these extension computations to broad audiences (e.g. nontechnical stakeholders).
 
-Further, the choice of days per unit log10-cycle change (decline) was chosen because \eqn{\Psi} values are in the same units as the persistant recession slope previously studied in Alabama (Bingham, 1982) and then again in Tennessee (Bingham, 1986). That slope was referred to as the \dQuote{\eqn{G_b}-factor} (the \dQuote{Bingham geologic factor}). Here in the \pkg{akqdecay} package, the \code{gfactor} (parametrical) or \code{gfactor_emp} (empirical) are used as monikers underwhich a specific definition of such a \dQuote{factor} is entwined with a probability level. The association of \eqn{\Psi}-like values to probability was not a subject of Bingham's studies.
+Further, the choice of days per unit log10-cycle change (decline) was chosen because \eqn{\Psi} values are in the same units as the persistent recession slope previously studied in Alabama (Bingham, 1982) and then again in Tennessee (Bingham, 1986). That slope was referred to as the \dQuote{\eqn{G_b}-factor} (the \dQuote{Bingham geologic factor}). Here in the \pkg{akqdecay} package, the \code{gfactor} (parametrical) or \code{gfactor_emp} (empirical) are used as monikers under which a specific definition of such a \dQuote{factor} is entwined with a probability level. The association of \eqn{\Psi}-like values to probability was not a subject of Bingham's studies.
 }
 \usage{
 akqdecay(akdvtable, as.list=TRUE, as.ra7=FALSE, f=0.90,

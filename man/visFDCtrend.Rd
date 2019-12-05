@@ -1,6 +1,7 @@
+\encoding{utf8}
 \name{visFDCtrend}
 \alias{visFDCtrend}
-\title{ Visualization of Kendall's Tau Trend Test throughout the Annual Daily-Flow-Duration Curves  }
+\title{Visualization of Kendall's Tau Trend Test throughout the Annual Daily-Flow-Duration Curves}
 \description{
 Draw plots of the Kendall's tau trend test of the annual daily-flow-duration curves housed in the \code{environment} from \code{\link{fill_tfdcenv}}. Calendar year is the basis as provided by the \code{\link{fdctrend}}, which is the real algorithm deployment. Some have referred to the visualization as the \dQuote{Quantile-Kendall plot.}
 }
@@ -16,7 +17,7 @@ visFDCtrend(fdcenv=NULL, file=NA, alpha=0.05, fast=FALSE, site=NA,
   \item{fast}{A logical controlling whether the progressively lengthening \code{data.frame} of the return is created. This \code{data.frame} can be really CPU heavy and potentially unneeded by many users. If set, just \code{"fast option used"} will be returned. With either setting, all graphics proceed the same;}
   \item{site}{A possible optional string for the site number or other information to annotate on the graphic and used as the site identifier in the returned \code{data.frame} otherwise just plain-old \dQuote{site} is used. Finally, this \code{site} is only picked up if the \code{fdcenv} was a \code{data.frame} and the \code{site} is not missing;}
   \item{notitle}{A logical to trigger the title of the plot that is constructed internally from the \code{site} and other information such as year interval and number of years of record represented in the plot;}
-  \item{showflowregime}{A logical to trigger annotation about where the lowflow, median, and highflow regimes reside on the plot;}
+  \item{showflowregime}{A logical to trigger annotation about where the low-flow, median, and high-flow regimes reside on the plot;}
   \item{width}{The width of the portable document format graphics device that matches the \code{width} of the \code{pdf()} function;}
   \item{height}{The height of the portable document format graphics device that matches the \code{height} of the \code{pdf()} function; and}
   \item{...}{Additional arguments to pass to the \code{par()} function built-in to \R that is called internally.}
