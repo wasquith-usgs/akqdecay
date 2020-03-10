@@ -17,7 +17,7 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
     ylim <- c(flr, 10^ceiling(log10(ylim[2]))); rm(flr)
   }
 
-  if(! is.na(file)) pdf(file, useDingbats=FALSE, height=6, width=7)
+  if(! is.na(file)) pdf(file, useDingbats=FALSE, height=6.5, width=7)
     opts <- par(no.readonly=TRUE); par(las=1, mgp=c(3,0.5,0))
 
     plot(1,1, xlim=qnorm(c(0.0001, 0.9999)), ylim=ylim,
@@ -59,7 +59,5 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
 }
 
 #site <- "08167000"
-#dv   <- dvget(site, ignore.provisional=FALSE)
-#akq  <- akqdecay(dv)
-#gage  <- fdclmr(dv, decade=TRUE)
+#gage  <- fdclmr(dvget(site, ignore.provisional=FALSE), decade=TRUE)
 #akq_plotfdc(gage, site=site)
