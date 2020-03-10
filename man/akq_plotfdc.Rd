@@ -27,6 +27,6 @@ site <- "08167000"
 dv   <- dvget(site, ignore.provisional=FALSE)
 akq  <- akqdecay(dv)
 gage  <- fdclmr(dv, decade=TRUE)
-akq_plotfdc(gage) #}
+akq_plotfdc(gage, site=site) #}
 }
 \keyword{data output}
