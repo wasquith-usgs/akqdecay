@@ -6,13 +6,14 @@
 Plot decadal flow-duration curves.
 }
 \usage{
-akq_plotfdc(gagefdc, site="", file=NA, showtitle=TRUE, ...)
+akq_plotfdc(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...)
 }
 \arguments{
   \item{gagefdc}{An \R \code{data.frame} from \code{\link{fdclmr}} with the \code{decade=TRUE} argument triggered;}
   \item{site}{A name or site identification number;}
   \item{file}{An optional file name for a portable document format file of the plot;}
-  \item{showtitle}{A logical to trigger a helpful title for the plot that will include the \code{site}. This title is helpful in batch processing and report assembly because it acts as a caption of sorts; and}
+  \item{showtitle}{A logical to trigger a helpful title for the plot that will include the \code{site}. This title is helpful in batch processing and report assembly because it acts as a caption of sorts;}
+  \item{ylim}{A means to insert vertical axis limits under user's control. This potentially could be useful when running lots of different streamgages or if the plotting of the horizontal axis labels are not completely plotted because of a weakness (as of March 2020) in the \pkg{lmomco} package function \code{add.lmomco.axis}; and}
   \item{...}{Additional arguments to pass.}
 }
 \value{
