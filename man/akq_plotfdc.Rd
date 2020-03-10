@@ -25,9 +25,7 @@ akq_plotfdc(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...)
 \examples{
 \dontrun{
 site <- "08167000"
-dv   <- dvget(site, ignore.provisional=FALSE)
-akq  <- akqdecay(dv)
-gage  <- fdclmr(dv, decade=TRUE)
+gage  <- fdclmr(dvget(site, ignore.provisional=FALSE), decade=TRUE)
 akq_plotfdc(gage, site=site) #}
 }
 \keyword{data output}
