@@ -9,6 +9,13 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
     if(is.na(fdc[1,i])) fdc[,i] <- NULL
   }
   decades <- names(fdc)
+  if(length(decades) == 0) {
+    if(! is.na(file)) pdf(file, useDingbats=FALSE, height=6.5, width=7)
+      plot(0:2,0:2, xlab="", ylab="", xaxt="n", yaxt="n", type="n")
+      text( 1,  1,  "EMPTY DECADAL FDC INFORMATION")
+      if(showtitle) mtext(paste0("STREAMGAGE: ",site))
+    if(! is.na(file)) dev.off()
+  } else {
 
   if(is.null(ylim)) {
     ylim <- range(fdc)
@@ -56,6 +63,7 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
     if(showtitle) mtext(paste0("STREAMGAGE: ",site))
     par(opts)
   if(! is.na(file)) dev.off()
+  }
 }
 
 #site <- "08167000"
