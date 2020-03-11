@@ -1,5 +1,9 @@
 "akq_plotfdc" <-
 function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
+  if(! is.data.frame(gagefdc)) {
+    message("ALERT: empty 'gagefdc' for site=",site)
+    return(NULL)
+  }
   fdc  <- as.data.frame(gagefdc[,c(7:33)])        # extracting the "f50" (median) etc column names
   ff   <- as.numeric(gsub("f","",names(fdc)))/100 # stripping the leading "f" and converted from percent
   ff   <- qnorm(ff)                               # transformation to standard normal variates
