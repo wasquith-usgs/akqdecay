@@ -1,4 +1,4 @@
-"akq_plotfdc" <-
+"akq_plotfdc2" <-
 function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
   if(! is.data.frame(gagefdc)) {
     message("ALERT: empty 'gagefdc' for site=",site)
@@ -37,7 +37,8 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
     lmomco::add.log.axis(side=2,    tcl=0.8*abs(par()$tcl), two.sided=TRUE)
     lmomco::add.log.axis(logs=c(1), tcl=+1.3*abs(par()$tcl), side=2, two.sided=TRUE)
     lmomco::add.log.axis(logs=c(1, 2, 4, 6), side=2, make.labs=TRUE, las=1, label="")
-    lmomco::add.lmomco.axis(las=2,  tcl=0.5, side.type="NPP", cex=0.8, case="lower")
+    add.lmomco.axis(las=2,  tcl=0.5, side.type="NPP", cex=0.8, case="lower",
+                    twoside=TRUE, twoside.suppress.labels=TRUE)
 
     ks <- seq(0.3,0.15*length(decades)+0.3, by=0.15)
     cols <- rev(ks/max(ks)) - 0.05
