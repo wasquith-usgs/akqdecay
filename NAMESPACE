@@ -12,7 +12,7 @@ importFrom("graphics", "abline", "axTicks", "axis", "legend",
 #-----------------------------------------------
 importFrom("dataRetrieval",
            "readNWISdv", "renameNWISColumns", "readNWISsite")
-importFrom("lmomco",
+importFrom("lmomco", "add.log.axis", "add.lmomco.axis",
            "lmoms", "qlmomco", "lmom2par")
 importFrom("sp",
            "spTransform", "CRS", "SpatialPointsDataFrame")
