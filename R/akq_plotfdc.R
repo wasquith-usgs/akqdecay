@@ -47,7 +47,7 @@ function(gagefdc, site="", file=NA, rev.decades=TRUE,
     plot(1,1, xlim=qnorm(c(0.0001, 0.9999)), ylim=ylim,
               xaxt="n", yaxt="n", xlab="", log="y", type="n",
               xaxs="i", yaxs="i", ylab="Streamflow, cfs")
-    tcl <- abs(par()$tcl
+    tcl <- abs(par()$tcl)
     lmomco::add.log.axis(side=2,    tcl= 0.8*tcl, two.sided=TRUE)
     lmomco::add.log.axis(logs=c(1), tcl=+1.3*tcl, two.sided=TRUE, side=2)
     lmomco::add.log.axis(logs=c(1, 2, 4, 6), side=2, make.labs=TRUE, las=1, label="")
