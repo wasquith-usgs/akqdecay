@@ -24,7 +24,7 @@ function(gagefdc, site="", file=NA, rev.decades=TRUE,
 
   if(is.null(ylim)) {
     ylim <- range(fdc)
-    flr <- 10^(floor(log10(ylim[1]))-1)
+    flr <- 10^(floor(log10(ylim[1])))
     flr <- ifelse(flr == 0, 0.01, flr)
     ylim <- c(flr, 10^ceiling(log10(ylim[2]))); rm(flr)
   }
@@ -67,7 +67,7 @@ function(gagefdc, site="", file=NA, rev.decades=TRUE,
                     "where dashed lines,\n",
                     "if present, indicate 1950 decade and earlier"))
     legend(-3.3, 10^(par()$usr[4] - 0.05*(diff(par()$usr[3:4]))), txt,
-           pt.bg=grey(0.7), bty="n", lwd=0.7, pch=21, cex=0.8, pt.cex=0.9)
+           pt.bg=grey(0.7), bty="n", lwd=0.7, pch=21, cex=0.7, pt.cex=0.9)
     if(showtitle) mtext(paste0("STREAMGAGE: ",site))
     par(opts)
   if(! is.na(file)) dev.off()
