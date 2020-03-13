@@ -1,6 +1,6 @@
 "akq_plotfdc" <-
 function(gagefdc, site="", file=NA, rev.decades=TRUE,
-                  showtitle=TRUE, ylim=NULL, ...) {
+                  showtitle=TRUE, ylim=NULL, return.fdc=FALSE, ...) {
   if(! is.data.frame(gagefdc)) {
     message("ALERT: empty 'gagefdc' for site=",site)
     return(NULL)
@@ -20,26 +20,39 @@ function(gagefdc, site="", file=NA, rev.decades=TRUE,
       text( 1,  1,  "EMPTY DECADAL FDC INFORMATION")
       if(showtitle) mtext(paste0("STREAMGAGE: ",site))
     if(! is.na(file)) dev.off()
+    if(return.fdc) return(NULL)
   } else {
 
   if(is.null(ylim)) {
-    ylim <- range(fdc)
-    flr <- 10^(floor(log10(ylim[1])))
-    flr <- ifelse(flr == 0, 0.01, flr)
-    ylim <- c(flr, 10^ceiling(log10(ylim[2]))); rm(flr)
+    wopts <- options(warn=-1) # suppressing of NaN warnings on pathological
+      ylim <- range(fdc)      # input data sets (e.g. missing data entirely)
+      flr <- 10^(floor(log10(ylim[1])))
+      flr <- ifelse(flr == 0, 0.01, flr)
+      ylim <- c(flr, 10^ceiling(log10(ylim[2]))); rm(flr)
+    options(wopts)
   }
-
+  if(! is.finite(ylim[1])) { # this case potentially is a little different
+    # than the prior EMPTY plotting, it is related to a gage having data but
+    # not in the expected column naming convention or other problems with NWIS
+    if(! is.na(file)) pdf(file, useDingbats=FALSE, height=6.5, width=7)
+      plot(0:2,0:2, xlab="", ylab="", xaxt="n", yaxt="n", type="n")
+      text( 1,  1,  "EMPTY (? no Flow column?) DECADAL FDC INFORMATION")
+      if(showtitle) mtext(paste0("STREAMGAGE: ",site))
+    if(! is.na(file)) dev.off()
+    if(return.fdc) return(NULL)
+  }
   if(! is.na(file)) pdf(file, useDingbats=FALSE, height=6.5, width=7)
     opts <- par(no.readonly=TRUE); par(las=1, mgp=c(3,0.5,0))
 
     plot(1,1, xlim=qnorm(c(0.0001, 0.9999)), ylim=ylim,
               xaxt="n", yaxt="n", xlab="", log="y", type="n",
               xaxs="i", yaxs="i", ylab="Streamflow, cfs")
-    lmomco::add.log.axis(side=2,    tcl=0.8*abs(par()$tcl), two.sided=TRUE)
-    lmomco::add.log.axis(logs=c(1), tcl=+1.3*abs(par()$tcl), side=2, two.sided=TRUE)
+    tcl <- abs(par()$tcl
+    lmomco::add.log.axis(side=2,    tcl= 0.8*tcl, two.sided=TRUE)
+    lmomco::add.log.axis(logs=c(1), tcl=+1.3*tcl, two.sided=TRUE, side=2)
     lmomco::add.log.axis(logs=c(1, 2, 4, 6), side=2, make.labs=TRUE, las=1, label="")
-    add.lmomco.axis(las=2,  tcl=0.5, side.type="NPP", cex=0.8, case="lower",
-                    twoside=TRUE, twoside.suppress.labels=TRUE)
+    lmomco::add.lmomco.axis(las=2,  tcl=0.5, side.type="NPP", cex=0.8, case="lower",
+                            twoside=TRUE, twoside.suppress.labels=TRUE)
 
     ks <- seq(0.3,0.15*length(decades)+0.3, by=0.15)
     cols <- rev(ks/max(ks)) - 0.05
@@ -72,6 +85,7 @@ function(gagefdc, site="", file=NA, rev.decades=TRUE,
     par(opts)
   if(! is.na(file)) dev.off()
   }
+  if(return.fdc) return(fdc)
 }
 
 #site <- "08167000"
