@@ -1,5 +1,6 @@
-"akq_plotfdc2" <-
-function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
+"akq_plotfdc" <-
+function(gagefdc, site="", file=NA, rev.decades=TRUE,
+                  showtitle=TRUE, ylim=NULL, ...) {
   if(! is.data.frame(gagefdc)) {
     message("ALERT: empty 'gagefdc' for site=",site)
     return(NULL)
@@ -44,7 +45,9 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
     cols <- rev(ks/max(ks)) - 0.05
     cols[cols > 0.85] <- 0.85
     cols[cols < 0.10] <- 0.10
-    for(i in 1:length(decades)) {
+    ord <- 1:length(decades)
+    if(rev.decades) ord <- rev(ord)
+    for(i in ord) {
       decade <- decades[i]
       gmp <- fdc[,i]; gmp[gmp == 0] <- 0.001
       lty <- ifelse(decade <= 1950, 2, 1)
@@ -52,9 +55,9 @@ function(gagefdc, site="", file=NA, showtitle=TRUE, ylim=NULL, ...) {
       points(ff, gmp, pch=21, bg=grey(cols[i]), lwd=0.7, cex=ks[i])
     }
 
-    legend(2,10^mean(par()$usr[3:4]),
+    legend(qnorm(0.95),10^mean(par()$usr[3:4]),
                   paste(decades,"s", sep=""), cex=0.7, bty="n", pch=21,
-                  pt.cex=ks, lty=0, pt.bg=grey(cols),
+                  pt.cex=ks, lty=0, pt.bg=grey(cols), ncol=2,
                   title="Flow-duration\ncurve (FDC)\nquantile")
 
 
