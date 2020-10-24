@@ -1,3 +1,5 @@
+# datasets::state.abb is also used but importFrom("datasets", "state.abb")
+# seems not acceptable syntax.
 importFrom("graphics",
            "boxplot")
 importFrom("stats", "aggregate", "approx",
@@ -9,6 +11,7 @@ importFrom("grDevices", "dev.off", "grey", "pdf")
 importFrom("graphics", "abline", "axTicks", "axis", "legend",
                        "lines", "mtext", "par", "plot",
                        "points", "text")
+importFrom("stringr",  "str_to_upper")
 #-----------------------------------------------
 importFrom("dataRetrieval",
            "readNWISdv", "renameNWISColumns", "readNWISsite")
@@ -53,4 +56,5 @@ export(lmrdf2gfactor)
 export(lmrfdc_table)
 export(gsid2str)
 export(sites_to_SpatialPointsDataFrame)
+export(sites_by_state)
 export(visFDCtrend)

@@ -40,7 +40,7 @@ for(i in 1:length(wolfriver)) { # Now plot the L-moment ratios of these sites.
 }
 for(i in 1:length(wolfriver)) { # Now plot the L-moment ratios of these sites.
    tmp <- get(wolfriver[i], envir=wolf.fdclmr.de)
-   points(tmp$T3, tmp$T4, pch=i, col=6)
+   points(tmp$T3, tmp$T4, pch=i, col=6, lwd=3)
 } # }
 }
 \keyword{environment filling}

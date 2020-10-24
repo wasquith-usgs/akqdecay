@@ -57,9 +57,9 @@ So with this logic arrangement it is possible, though the reasoning is uncertain
 }
 \author{ W.H. Asquith}
 \references{
-Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University, accessed on March 15, 2017 at \url{https://ttu-ir.tdl.org/ttu-ir/handle/2346/ETD-TTU-2011-05-1319}.
+Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University.
 
-Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
+Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, \url{https://www.amazon.com/dp/1463508417}. [reprinting of Asquith (2011a) with errata]
 
 Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
 
@@ -69,7 +69,7 @@ Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censore
 \examples{
 # See Examples under fill_lmrfdcenv and elsewhere in this documentation.
 
-\dontrun{
+\donttest{
 # USGS 14362000 Applegate River near Copper, Oregon
 dv <- dvget("14362000", sdate="1980-01-01", edate="1999-12-12")
 fdclmr(dv, decade=TRUE) # see the 1990 decade is populated but 1999 by itself

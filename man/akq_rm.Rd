@@ -21,7 +21,7 @@ akq_rm(siteNumbers, envir, invert=FALSE, ...)
 \seealso{\code{\link{fill_akqenv}}, \code{\link{fill_dvenv}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("05403500", "05405000") # Two USGS streamgages in Wisconsin
 WisExample <- new.env(); fill_dvenv( sites,              envir=WisExample,
                                      sdate="1945-01-01", edate="2014-12-31")
@@ -29,6 +29,6 @@ WisAKQ <- new.env(); fill_akqenv(dvenv=WisExample, envir=WisAKQ)
 nWisAKQ <- list2env(akq_rm("05405000", WisAKQ))
               akq_counts(nWisAKQ) # three columns removed below
 #      site total_count decreases increases nochanges NAs
-#  05403500       17714      8821      6011      2873   9 #}
+#  05403500       17713      8829      6023      2852   9 #}
 }
 \keyword{data editing}

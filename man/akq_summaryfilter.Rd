@@ -23,7 +23,7 @@ akq_summaryfilter(akqenv, mindv=NA, begyr=NA, endyr=NA, silent=FALSE, ...)
 \seealso{\code{\link{akq_summary}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("01396660", "01400500") # Two USGS streamgages in New Jersey
 njdv  <- new.env(); fill_dvenv(sites, envir=njdv)  # 01396660 first year 1977
 njAKQ <- new.env(); fill_akqenv(dvenv=njdv, envir=njAKQ) # 01400500 first year 1903

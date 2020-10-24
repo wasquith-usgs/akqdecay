@@ -40,7 +40,7 @@ akq_table(akqenv, NAline.insert=TRUE, type=c("akqdecay", "other"),
 \seealso{\code{\link{akqdecay}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("05403500", "05405000") # Two USGS streamgages in Wisconsin
 WisExample <- new.env(); fill_dvenv( sites,      envir=WisExample,
                                      sdate="1945-01-01", edate="2014-12-31")

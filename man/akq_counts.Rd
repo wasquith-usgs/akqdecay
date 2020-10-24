@@ -46,17 +46,17 @@ akq_counts(akqenv, silent=FALSE, ...)
 \seealso{\code{\link{akqdecay}}, \code{\link{fill_akqenv}}, \code{\link{akq_lmom}}, \code{\link{akq_summary}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("05403500", "05405000") # Two USGS streamgages in Wisconsin
 WisExample <- new.env(); fill_dvenv( sites,              envir=WisExample,
                                      sdate="1945-01-01", edate="2014-12-31")
 WisAKQ <- new.env(); fill_akqenv(dvenv=WisExample, envir=WisAKQ)
 akq_counts(WisAKQ) # hand editing for line wrapping made below
-    site total_count decreases increases nochanges NAs
-05403500       17714      8821      6011      2873   9
-05405000       25566     13293      9415      2858   0
-    site rawDV_zeros rawDV_NAs delDates_ne_lag
-05403500           0         0               9
-05405000           0         0               0 #}
+#    site total_count decreases increases nochanges NAs
+#05403500       17714      8829      6023      2852   9
+#05405000       25566     13293      9415      2858   0
+#    site rawDV_zeros rawDV_NAs delDates_ne_lag
+#05403500           0         0               9
+#05405000           0         0               0 #}
 }
 \keyword{data extraction}

@@ -20,12 +20,12 @@ akq_na(akqenv, silent=FALSE, ...)
 \seealso{\code{\link{fill_akqenv}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("05403500", "05405000") # Two USGS streamgages in Wisconsin
 WisExample <- new.env(); fill_dvenv( sites,              envir=WisExample,
                                      sdate="1945-01-01", edate="2014-12-31")
 WisAKQ <- new.env(); fill_akqenv(dvenv=WisExample, envir=WisAKQ)
 WisAKQ$"99999999" <- NA; # insert a fake site with simple NA
-print(akqna(WisAKQ)) #}
+print(akq_na(WisAKQ)) #}
 }
 \keyword{data editing}

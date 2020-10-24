@@ -25,7 +25,7 @@ dvoverlap(dvenv, begyr=1987, endyr=2016, type=c("wyear", "year"),
 \seealso{\code{\link{fill_dvenv}}
 }
 \examples{
-\dontrun{
+\donttest{
 # Six USGS streamgages of the Wolf River in Tennessee
 wolfriver <- c("07030392", "07030500", "07031650",
                "07031660", "07031700", "07031740")

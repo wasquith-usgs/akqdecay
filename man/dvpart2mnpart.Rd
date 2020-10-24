@@ -38,7 +38,7 @@ The code here represents monthly mean computation that is independent of USGS mo
 \seealso{\code{\link{dvget}}, \code{\link{mnget}}, \code{\link{dvpartenv2mnpartenv}}
 }
 \examples{
-\dontrun{
+\donttest{
 # USGS 14362000 Applegate River near Copper, Oregon
 dv <- dvget("14362000", sdate="1989-10-01", edate="1999-09-30")
 pdv <- dvpart(dv, cda=225) # The drainage area is 225 square miles.

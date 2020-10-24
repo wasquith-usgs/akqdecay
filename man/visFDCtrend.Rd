@@ -35,15 +35,15 @@ An \R \code{data.frame} of all the annual daily-flow-duration curve tables from 
 }
 \examples{
 # See Examples under fill_tfdcenv() and elsewhere in this documentation.
-\dontrun{
+\donttest{
 DV <- new.env()
 sites <- c("08093100","08093500")
 fill_dvenv(sites, envir=DV, edate="2016-09-30")
 TFDC <- new.env()
 n <- fill_tfdcenv(dvenv=DV, envir=TFDC) # number fdctrend() processed
-AllFDCtrend <- visFDCtrend2(TFDC$"08093500") # one plot is shown
-AllFDCtrend <- visFDCtrend2(TFDC$"08093500", site="") # no labeling
-AllFDCtrend <- visFDCtrend2(TFDC) # both plots are shown }
+AllFDCtrend <- visFDCtrend(TFDC$"08093500") # one plot is shown
+AllFDCtrend <- visFDCtrend(TFDC$"08093500", site="") # no labeling
+AllFDCtrend <- visFDCtrend(TFDC) # both plots are shown }
 }
 \keyword{flow-duration curve}
 \keyword{flow-duration curve (trend)}

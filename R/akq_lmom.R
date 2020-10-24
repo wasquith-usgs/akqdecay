@@ -34,7 +34,11 @@
               count=NC, median=MED, L1L2=L1L2,
               gfactor=GF, gfactor_emp=GFE,
               L1=L1, L2=L2, T3=T3, T4=T4, T5=T5, T6=T6, stringsAsFactors=FALSE)
-  if(! silent) message("  SKIPPED ", skips, " sites with NA lmoment$por table (degenerate circumstances)")
+  if(! silent) {
+    if(skips > 0) {
+      message("  SKIPPED ", skips, " sites with NA lmoments$por table (degenerate circumstances)")
+    }
+  }
   attr(zz, "skipped_sites") <- SKIPS
   return(zz)
 }

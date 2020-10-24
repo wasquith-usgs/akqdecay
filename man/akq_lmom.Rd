@@ -29,20 +29,22 @@ An attribute \code{skipped_sites} is attached to the returned data frame when \c
 }
 \author{ W.H. Asquith}
 \references{
-Asquith, W.H., 2011, Distributional analysis with L-moment statistics using the R environment for statistical computing: Createspace Independent Publishing Platform, ISBN 978--146350841--8, \url{http://www.amazon.com/dp/1463508417/}
+Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University.
+
+Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: Createspace Independent Publishing Platform, ISBN 978--146350841--8, \url{https://www.amazon.com/dp/1463508417}. [reprinting of Asquith (2011a) with errata]
 
 Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
 
-Asquith, W.H., 2014, Parameter estimation for the 4-parameter asymmetric exponential power distribution by the method of L-moments using R: Computational Statistics and Data Analysis, v. 71, pp. 955--970, \url{http://dx.doi.org/10.1016/j.csda.2012.12.013}
+Asquith, W.H., 2014, Parameter estimation for the 4-parameter asymmetric exponential power distribution by the method of L-moments using R: Computational Statistics and Data Analysis, v. 71, pp. 955--970, \url{https://doi.org/10.1016/j.csda.2012.12.013}.
 
-Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S. Geological Survey Techniques of Water Resources Investigations, book 4, chapter A3, 522 p., \url{https://pubs.usgs.gov/twri/twri4a3/}
+Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S. Geological Survey Techniques of Water Resources Investigations, book 4, chapter A3, 522 p., \url{https://doi.org/10.3133/twri04A3}.
 
 Hosking, J.R.M., 1990, L-moments---Analysis and estimation of distributions using linear combinations of order statistics: Journal of the Royal Statistical Society, Series B, v. 52, pp. 105--124.
 }
 \seealso{\code{\link{akqdecay}}, \code{\link{fill_akqenv}}, \code{\link{akq_counts}}, \code{\link{akq_summary}}
 }
 \examples{
-\dontrun{
+\donttest{
 # The Kendall Tau test is housed within the attributes of the data.frame when
 # a single station is involved.
 # USGS 11502500 Williamson River below Sprague River near Chiloquin, Oregon
@@ -61,13 +63,12 @@ WisExample <- new.env(); fill_dvenv( sites,              envir=WisExample,
 WisAKQ <- new.env(); fill_akqenv(dvenv=WisExample, envir=WisAKQ)
 akq_lmom(WisAKQ)
 #     site yr_range_str count   median     L1L2  gfactor gfactor_emp
-# 05403500   1945--2014  8821 37.98102 120.2955 133.0099    136.0137
+# 05403500   1945--2014  8829 37.98102 122.2805 134.2363    136.2484
 # 05405000   1945--2014 13293 34.52598 151.0085 157.0361    170.1584
 #       L1       L2        T3        T4        T5        T6
-# 63.06348 32.28971 0.5040707 0.3347492 0.2269736 0.1644391
-# 72.84326 44.10004 0.5655227 0.3728133 0.2536264 0.1770801 #}
+# 63.81979 32.98290 0.5122438 0.3445989 0.2373858 0.1744530
+# 72.84326 44.10004 0.5655227 0.3728133 0.2536264 0.1770801
 
-\dontrun{
 # The Kendall tau test for both Wisconsin streamgages.
 TY <- new.env() # to house the Kendall tau results by year
 TD <- new.env() # to house the Kendall tau results by decade
@@ -75,9 +76,8 @@ LY <- akq_lmom_year(  WisAKQ, tauenv=TY); # print(TY$tau); print(TY$tau_p.value)
 LD <- akq_lmom_decade(WisAKQ, tauenv=TD); # print(TD$tau); print(TD$tau_p.value)
 message("90th-percentile gfactor_emp: tau=",round(TY$tau[5], digits=4),
                                   " [pval=",round(TY$tau_p.value[5], digits=4),"]")
-# 90th-percentile gfactor_emp: tau=c(0.3051, 0.6704) [pval=c(0.0016, 0)] #}
+# 90th-percentile gfactor_emp: tau=c(0.3051, 0.6704) [pval=c(0.0016, 0)]
 
-\dontrun{
 # See first example using the two Wisconsin streamgages.
 TMP <- WisAKQ$"05405000"$lmoments$by_year
 txt <- "1-day-over-day declines, in days per log10-cycle decline"

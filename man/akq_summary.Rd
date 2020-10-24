@@ -38,17 +38,17 @@ The \code{L1L2} as a term or concept is expected to have little direct meaning t
 \seealso{\code{\link{akqdecay}}, \code{\link{akq_lmom}}, \code{\link{akq_counts}}, \code{\link{akq_summary}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("05403500", "05405000") # Two USGS streamgages in Wisconsin
 WisExample <- new.env(); fill_dvenv( sites,              envir=WisExample,
                                      sdate="1945-01-01", edate="2016-12-31")
 WisAKQ <- new.env(); fill_akqenv(dvenv=WisExample, envir=WisAKQ)
 akq_summary(WisAKQ) # These line-wrapped values will change as record increases.
 #     site beg_year end_year yr_range_str total_count count kendall_tau spearman_rho
-# 05403500     1945     2016   1945--2016       18353  9170 -0.20408960   -0.3078630
-# 05405000     1945     2016   1945--2016       26224 13664 -0.08470594   -0.1307734
+# 05403500     1945     2016   1945--2016       18444  9242 -0.20468258   -0.3083903
+# 05405000     1945     2016   1945--2016       26297 13724 -0.08380238   -0.1295017
 #   median     L1L2  gfactor gfactor_emp
-# 37.98102 123.0677 134.9577    139.3032
-# 34.90989 154.7865 160.7693    176.1453 #}
+# 37.98102 125.1716 136.3617    139.3032
+# 34.95030 155.0216 161.0996    176.1453 #}
 }
 \keyword{data extraction}

@@ -38,7 +38,7 @@ For the greater purposes of the \pkg{akqdecay} package, the argument \code{pCode
 }
 \author{ W.H. Asquith}
 \references{
-Hirsch, R.M., and De Cicco, L.A., 2015, User guide to Exploration and Graphics for RivEr Trends (EGRET) and dataRetrieval: R packages for hydrologic data (version 2.0, February 2015): U.S. Geological Survey Techniques and Methods book 4, chap. A10, 93 p., \url{http://dx.doi.org/10.3133/tm4A10}
+Hirsch, R.M., and De Cicco, L.A., 2015, User guide to Exploration and Graphics for RivEr Trends (EGRET) and dataRetrieval: R packages for hydrologic data (version 2.0, February 2015): U.S. Geological Survey Techniques and Methods book 4, chap. A10, 93 p., \url{https://doi.org/10.3133/tm4A10}.
 }
 \seealso{\code{\link{fill_mnenv}}
 }

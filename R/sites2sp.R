@@ -1,5 +1,5 @@
 "sites_to_SpatialPointsDataFrame" <-
-function(siteNumbers, latlongcrs=NA, proj4string=NA, usesp=TRUE, silent=FALSE, ...) {
+function(siteNumbers, latlongcrs="+init=epsg:4269", proj4string=NA, usesp=TRUE, silent=FALSE, ...) {
    sitefile <- NULL; haveFirst <- TRUE; i <- 0; n <- length(siteNumbers)
    badsites <- vector("character")
    for(site in siteNumbers) {
@@ -16,7 +16,6 @@ function(siteNumbers, latlongcrs=NA, proj4string=NA, usesp=TRUE, silent=FALSE, .
          sitefile <- asitefile
          haveFirst <- FALSE
       } else {
-         #sitefile <- merge(sitefile, asitefile, all=TRUE)
          sitefile <- rbind(sitefile, asitefile)
       }
    }
@@ -25,14 +24,7 @@ function(siteNumbers, latlongcrs=NA, proj4string=NA, usesp=TRUE, silent=FALSE, .
       return(sitefile)
    }
 
-   if(is.na(latlongcrs)) {
-      LATLONG <- paste0("+init=epsg:4269 +proj=longlat +ellps=GRS80 ",
-                        "+datum=NAD83 +no_defs +towgs84=0,0,0")
-      message("**using the default geographic coordinates CRS string:\n'", LATLONG,"'\n")
-      LATLONG <- sp::CRS(LATLONG)
-   } else {
-      LATLONG <- sp::CRS(latlongcrs)
-   }
+   LATLONG <- sp::CRS(latlongcrs)
 
    sitefile$CDA <- pmin(sitefile$drain_area_va,
                         sitefile$contrib_drain_area_va, na.rm=TRUE)
@@ -48,17 +40,18 @@ function(siteNumbers, latlongcrs=NA, proj4string=NA, usesp=TRUE, silent=FALSE, .
    sitefile$hole_depth_va   <- NULL
    sitefile$depth_src_cd    <- NULL
    sitefile$project_no      <- NULL
- 
+   sitefile$basin_cd        <- NULL
+   sitefile$topo_cd         <- NULL
+
    # The sp library is needed here
    coords  <- cbind(sitefile$dec_long_va, sitefile$dec_lat_va)
    spSites <- sp::SpatialPointsDataFrame(coords, sitefile, proj4string=LATLONG)
 
    if(is.na(proj4string)) {
-      ALBEA <- paste0("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 ",
-                      "+datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0")
+      ALBEA <- "+init=epsg:5070"
       message("**unprojected data are being returned**\n",
               "**consider using the 'proj4string' argument with a CRS, which could look\n",
-              "**something like this, say, for a Mississippi Embayment Albers-Equal Area:\n'",
+              "**something like this:\n'",
               ALBEA,"'\n")
       return(spSites)
    } else {

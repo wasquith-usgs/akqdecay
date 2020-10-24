@@ -1,0 +1,9 @@
+.git
+.gitignore
+.Rhistory
+DISCLAIMER.md
+CONTRIBUTING.md
+LICENSE.md
+code.json
+inst/www/avatar.jpg
+inst/www/akqdecay.pdf

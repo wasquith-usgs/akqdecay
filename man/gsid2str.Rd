@@ -20,14 +20,14 @@ gsid2str(siteNumbers, hack=FALSE, ...)
 \seealso{\code{\link{dvget}}
 }
 \examples{
-print(gsid2str(c(8167000, 08167500, 816750001, 81675000001)))
+print(gsid2str(c(8167000, 08167500, 816750001, 81675000001), hack=TRUE))
 # [1] "08167000"     "08167500"     "0816750001"   "081675000001"
 
 \dontrun{
 # USGS 08080700 Running Water Draw at Plainview, Texas
 # Literally "a view of a plain" and Asquith has passed through the town innumerable
 # times since a child and has serviced the streamgage many times.
-RunningWaterDraw <- dvget(gsid2str(8080700), hack=TRUE,
+RunningWaterDraw <- dvget(gsid2str(8080700, hack=TRUE),
                           sdate="2009-01-01", edate="2016-12-31") #}
 }
 \keyword{data retrieval}

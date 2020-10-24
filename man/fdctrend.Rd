@@ -39,13 +39,13 @@ An \R \code{data.frame} of mutable width. The first column is a \dQuote{day} (ju
 }
 \author{ W.H. Asquith}
 \references{
-Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S. Geological Survey Techniques of Water Resources Investigations, book 4, chapter A3, 522 p., \url{https://pubs.usgs.gov/twri/twri4a3/}
+Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S. Geological Survey Techniques of Water Resources Investigations, book 4, chapter A3, 522 p., \url{https://doi.org/10.3133/twri04A3}.
 }
 \seealso{\code{\link{fill_tfdcenv}}
 }
 \examples{
 # See also Examples under fill_tfdcenv and elsewhere in this documentation.
-\dontrun{
+\donttest{
 dv <- dvget("08167000", edate="2015-09-30", ignore.provisional=FALSE)
 ft <- fdctrend(dv); head(ft) # see that the 2015 year is gone because incomplete
 qk <- visFDCtrend(ft); # qk stores ordinates of the Quantile-Kendall plot #}

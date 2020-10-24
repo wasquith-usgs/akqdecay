@@ -1,4 +1,4 @@
-# LICENSE (./utc2nwislocal/LICENSE.md)
+# LICENSE (./akqdecay/LICENSE.md)
 
 ***
 ***

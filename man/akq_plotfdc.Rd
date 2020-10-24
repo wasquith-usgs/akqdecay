@@ -26,7 +26,7 @@ akq_plotfdc(gagefdc, site="", file=NA, rev.decades=TRUE,
 \seealso{\code{\link{fdclmr}}
 }
 \examples{
-\dontrun{
+\donttest{
 site <- "08167000"
 gage  <- fdclmr(dvget(site, ignore.provisional=FALSE), decade=TRUE)
 akq_plotfdc(gage, site=site) #}

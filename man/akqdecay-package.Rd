@@ -14,7 +14,7 @@ The conceptual underpinning of the \pkg{akqdecay} package is the study of the pe
 
 The function \code{\link{akqdecay}} is the central entry-point into this package, and this function provides the computational basis for the streamflow changes. The \code{\link{akqdecay}} function generates Asquith--Knight discharge decay analyses. Such analyses are a complex \R data structures and represent the core deliverables the package. These data structures contain the distributional properties of streamflow changes as imparted by the median, L-moments (succinct summary statistics), and special quantiles of both (1) a fitted distribution and (2) the empirical distribution. Special attention is made in order to make period-of-record, annual, and decadal aggregations simultaneously available.
 
-It is useful, though a little advanced in \R language syntax, to succinctly show a ``comprehensive'' regional study of the distributional properties of streamflow recession. Minimalist code showing a framework for batch processing seeking (1) lag one-day as well as (2) decreasing one-day-over-day streamflow (see arguments for \code{\link{akqdecay}}) for six selected USGS Tennessee streamgages on the Wolf River is shown in the snippet below:
+It is useful, though a little advanced in \R language syntax, to succinctly show a \dQuote{comprehensive} regional study of the distributional properties of streamflow recession. Minimalist code showing a framework for batch processing seeking (1) lag one-day as well as (2) decreasing one-day-over-day streamflow (see arguments for \code{\link{akqdecay}}) for six selected USGS Tennessee streamgages on the Wolf River is shown in the snippet below:
 \preformatted{
   wolfsites <- c("07030392", "07030500", "07031650",
                  "07031660", "07031700", "07031740")  # USGS streamgages
@@ -55,17 +55,17 @@ Though advanced statistical concepts are involved (Asquith, 2011a,b), the relati
 }
 }
 \references{
-Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University, accessed on March 15, 2017 at \url{https://ttu-ir.tdl.org/ttu-ir/handle/2346/ETD-TTU-2011-05-1319}.
+Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University.
 
-Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
+Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8,  \url{https://www.amazon.com/dp/1463508417}. [reprinting of Asquith (2011a) with errata]
 
-Asquith, W.H., 2014, Parameter estimation for the 4-parameter asymmetric exponential power distribution by the method of L-moments using R: Computational Statistics and Data Analysis, v. 71, pp. 955--970, \url{http://dx.doi.org/10.1016/j.csda.2012.12.013}
+Asquith, W.H., 2014, Parameter estimation for the 4-parameter asymmetric exponential power distribution by the method of L-moments using R: Computational Statistics and Data Analysis, v. 71, pp. 955--970, \url{https://doi.org/10.1016/j.csda.2012.12.013}.
 
 Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
 
-Bingham, R.H., 1982, Low-flow characteristics of Alabama streams, USGS Water Supply Paper 2083, 27 p., \url{http://pubs.er.usgs.gov/publication/wsp2083}
+Bingham, R.H., 1982, Low-flow characteristics of Alabama streams, USGS Water Supply Paper 2083, 27 p., \url{https://doi.org/10.3133/wsp2083}.
 
-Bingham, R.H., 1986, Regionalization of low-flow characteristics of Tennessee streams: U.S. Geological Survey Water-Resources Investigations Report 85--4191, 63 p., \url{http://pubs.usgs.gov/wri/wri85-4191/}
+Bingham, R.H., 1986, Regionalization of low-flow characteristics of Tennessee streams: U.S. Geological Survey Water-Resources Investigations Report 85--4191, 63 p., \url{https://doi.org/10.3133/wri854191}.
 }
 \author{ W.H. Asquith, \email{wasquith@usgs.gov}; R.R. Knight, \email{rrknight@usgs.gov} }
 \seealso{

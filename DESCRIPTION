@@ -1,12 +1,12 @@
 Package: akqdecay
 Type: Package
 Title: Many Distributional Statistics of USGS Daily Streamflow Hydrographs and Powerful Utilities
-Version: 0.2.4
+Version: 0.2.6
 Depends: R (>= 3.0.0), utils
-Imports: dataRetrieval, lmomco, graphics, sp, stats
+Imports: dataRetrieval, lmomco, graphics, sp, stats, stringr
 Suggests: mcparallelDo
-Date: 2020-03-10
-Author: William H. Asquith [aut, cre], Rodney R. Knight [ctb]
+Date: 2020-06-29
+Author: William H. Asquith [aut, cre], Rodney R. Knight [aut]
 Description: Compute distributional statistics of hydrograph recession (decay) based on
   N-day-over-day changes of daily-mean streamflows for an arbitrary number of U.S.
   Geological Survey streamgages. Computations are oriented around what are termed
@@ -20,10 +20,11 @@ Description: Compute distributional statistics of hydrograph recession (decay) b
   annual and decadal computation and manipulation are implemented including daily
   streamflow separation with roll up to monthly values.
 Maintainer: William H. Asquith <wasquith@usgs.gov>
-License: file LICENSE
+License: CC0
 Copyright: This software is in the public domain because it contains materials that
   originally came from the United States Geological Survey, an agency of the
   United States Department of Interior. For more information, see the official
   USGS copyright policy at
   https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits
 NeedsCompilation: no
+URL: https://code.usgs.gov/water/restore/akqdecay

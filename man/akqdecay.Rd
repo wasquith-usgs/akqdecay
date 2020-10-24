@@ -73,22 +73,22 @@ A nonparametric estimate for the \code{f} is emplaced in \code{gfactor_emp}. The
 }
 \author{ W.H. Asquith}
 \references{
-Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University, accessed on March 15, 2017 at \url{https://ttu-ir.tdl.org/ttu-ir/handle/2346/ETD-TTU-2011-05-1319}.
+Asquith, W.H., 2011a, Distributional analysis with L-moment statistics using the R environment for statistical computing: Ph.D. dissertation, Texas Tech University.
 
-Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, [reprinting of Asquith (2011a) with errata]
+Asquith, W.H., 2011b, Distributional analysis with L-moment statistics using the R environment for statistical computing: CreateSpace, [print-on-demand], ISBN 978--146350841--8, \url{https://www.amazon.com/dp/1463508417}. [reprinting of Asquith (2011a) with errata]
 
 Asquith, W.H., 2018, lmomco---L-moments, trimmed L-moments, L-comoments, censored \cr L-moments, and many distributions: R package version 2.3.2 at \url{https://cran.r-project.org/package=lmomco}.
 
-Bingham, R.H., 1982, Low-flow characteristics of Alabama streams, USGS Water Supply Paper 2083, 27 p., \url{http://pubs.er.usgs.gov/publication/wsp2083}
+Bingham, R.H., 1982, Low-flow characteristics of Alabama streams, USGS Water Supply Paper 2083, 27 p., \url{https://doi.org/10.3133/wsp2083}.
 
-Bingham, R.H., 1986, Regionalization of low-flow characteristics of Tennessee streams: U.S. Geological Survey Water-Resources Investigations Report 85--4191, 63 p., \url{http://pubs.usgs.gov/wri/wri85-4191/}
+Bingham, R.H., 1986, Regionalization of low-flow characteristics of Tennessee streams: U.S. Geological Survey Water-Resources Investigations Report 85--4191, 63 p., \url{https://doi.org/10.3133/wri854191}.
 
-Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S. Geological Survey Techniques of Water Resources Investigations, book 4, chapter A3, 522 p., \url{https://pubs.usgs.gov/twri/twri4a3/}
+Helsel, D.R. and Hirsch, R.M., 2002, Statistical Methods in Water Resources: U.S. Geological Survey Techniques of Water Resources Investigations, book 4, chapter A3, 522 p., \url{https://doi.org/10.3133/twri04A3}.
 }
 \seealso{\code{\link{dvget}}, \code{\link{fill_akqenv}}
 }
 \examples{
-\dontrun{
+\donttest{
 # USGS 07030392 Wolf River at Lagrange, Tennessee
 DVs <- dvget("07030392", sdate="1995-10-01", edate="1995-12-31")
 head(DVs) # We will look at the first decreasing day change.
@@ -109,7 +109,7 @@ head(AK$table) # We can see the foundational computations:
 # Let us retain a "forward bias" and report "tomorrow," hence AK$table
 # shows 78 cfs as the first row and retains it on the actual date 10/05/1995.}
 
-\dontrun{
+\donttest{
 # Continuing the above example, let us look at then a statistic of
 # the 52 declining days. Let us look first at the general computations
 head(AK$lmoments$por) # The period of record statistics are here.
@@ -129,7 +129,7 @@ names(RA7) <- NULL
 1/log10(exp(RA7))
 # [1] 51.34416 which approximately matches the 51.4 reported previously.}
 
-\dontrun{
+\donttest{
 # USGS 08167000 Guadalupe River at Comfort, Texas
 site <- "08167000"; my.data <- dvget("08167000")
 recession_limb <- akqdecay(my.data, as.list=TRUE, method="decreasing", site=site)

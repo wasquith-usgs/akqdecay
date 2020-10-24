@@ -22,7 +22,7 @@ akq_globe(akqenv, silent=TRUE, ...)
 \seealso{\code{\link{akq_counts}}
 }
 \examples{
-\dontrun{
+\donttest{
 sites <- c("05403500", "05405000") # Two USGS streamgages in Wisconsin
 WisExample <- new.env(); fill_dvenv( sites,              envir=WisExample,
                                      sdate="1945-01-01", edate="2014-12-31")
@@ -30,10 +30,10 @@ WisAKQ <- new.env(); fill_akqenv(dvenv=WisExample, envir=WisAKQ)
 akq_globe(WisAKQ)
 #$counts
 # num_sites total_count decreases increases no_change NAs
-#         2       43280     22114     15426      5731   9
+#         2       43279     22122     15438      5710   9
 #$percents
 # num_sites pct_total_count pct_decreases pct_increase pct_nochange pct_NAs
-#         2             100      51.09519     35.64233     13.24168 0.02079 #}
+#         2             100      51.11486     35.67088     13.19347 0.02080 #}
 }
 \keyword{data extraction}
 \keyword{data summary}

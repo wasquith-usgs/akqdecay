@@ -48,12 +48,12 @@ For the greater purposes of the \pkg{akqdecay} package, the arguments \code{pCod
 }
 \author{ W.H. Asquith}
 \references{
-Hirsch, R.M., and De Cicco, L.A., 2015, User guide to Exploration and Graphics for RivEr Trends (EGRET) and dataRetrieval: R packages for hydrologic data (version 2.0, February 2015): U.S. Geological Survey Techniques and Methods book 4, chap. A10, 93 p., \url{http://dx.doi.org/10.3133/tm4A10}
+Hirsch, R.M., and De Cicco, L.A., 2015, User guide to Exploration and Graphics for RivEr Trends (EGRET) and dataRetrieval: R packages for hydrologic data (version 2.0, February 2015): U.S. Geological Survey Techniques and Methods book 4, chap. A10, 93 p., \url{http://doi.org/10.3133/tm4A10}.
 }
 \seealso{\code{\link{akqdecay}}, \code{\link{fill_dvenv}}, \code{\link{gsid2str}}
 }
 \examples{
-\dontrun{
+\donttest{
 # USGS 14362000 Applegate River near Copper, Oregon
 Copper <- dvget("14362000", sdate="1940-01-01", edate="1940-01-31")
 print(Copper) # An inspection of the retrieved daily values. #}
@@ -63,9 +63,11 @@ dv <- dvget("07040000") # 2019-05-05 testing. This is how we can have a look
 # at the streamgage. The Internet indicates gage discontinued in 2011 but
 # -999999 start showing up in May 2016---Is this related to the AQ database change?
 attributes(dv)$akqdecay
-# [1] "at least one -999999 discharge: first=2016-05-05 and last=2019-05-04" }
+# [1] "at least one -999999 discharge: first=2016-05-05 and last=2019-05-04"
+# Test on June 29, 2020 shows this message or issue of -999999 appears gone. }
 
 \dontrun{
+# This is a big time sink so treated as a "dontrun."
 # Get all of the sites in Alabama that have discharge (00060) and then
 # just work on those that seem to have record after June 1st, 2019.
 AL <- dataRetrieval::whatNWISsites(stateCd="AL", parameterCd="00060")

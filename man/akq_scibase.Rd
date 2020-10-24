@@ -34,7 +34,29 @@ akq_scibase(akqenv, basename="SciBase_", extension=".txt",
 }
 \examples{
 \dontrun{
-akq_scibase(akqdecay(dvget("08167000"), site="08167000"), dotable=TRUE) #}
+akq_scibase(akqdecay(dvget("08167000"), site="08167000"), dotable=TRUE)
+#  Count extraction ...
+# writing /Users/wasquith/SciBase_counts.txt
+#      site            total_count      decreases       increases      nochanges   
+#  Length:1           Min.   :29580   Min.   :18307   Min.   :7677   Min.   :3247  
+#  Class :character   1st Qu.:29580   1st Qu.:18307   1st Qu.:7677   1st Qu.:3247  
+#  Mode  :character   Median :29580   Median :18307   Median :7677   Median :3247  
+#                     Mean   :29580   Mean   :18307   Mean   :7677   Mean   :3247  
+#                     3rd Qu.:29580   3rd Qu.:18307   3rd Qu.:7677   3rd Qu.:3247  
+#                     Max.   :29580   Max.   :18307   Max.   :7677   Max.   :3247  
+#       NAs       rawDV_zeros    rawDV_NAs delDates_ne_lag
+#  Min.   :349   Min.   :332   Min.   :0   Min.   :2      
+#  1st Qu.:349   1st Qu.:332   1st Qu.:0   1st Qu.:2      
+#  Median :349   Median :332   Median :0   Median :2      
+#  Mean   :349   Mean   :332   Mean   :0   Mean   :2      
+#  3rd Qu.:349   3rd Qu.:332   3rd Qu.:0   3rd Qu.:2      
+#  Max.   :349   Max.   :332   Max.   :0   Max.   :2      
+#   L-moment extraction ...
+# writing /Users/wasquith/SciBase_lmompor.txt
+#   Summary extraction ...
+# writing /Users/wasquith/SciBase_summary.txt
+#   Table extraction ...
+# writing /Users/wasquith/SciBase_table.txt #}
 
 \dontrun{
 sites <- c("05403500", "05405000") # Two streamgages in Wisconsin

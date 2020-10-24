@@ -52,7 +52,7 @@
       }
 
       col <- as.numeric(Z$p.value < alpha)
-      col[col == 0] <- 4; col[col == 1] <- 2
+      col[col == 0] <- "blue"; col[col == 1] <- "red"
 
       # na.rm=TRUE traps on cases where zeros are the only obvserved values
       # Extract the smallest magnitude of significant estimates. The presence

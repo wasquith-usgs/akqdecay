@@ -57,12 +57,12 @@ De Cicco, L.A., Lorenz, D.L., 2017, smwrBase---Functions to import and manipulat
 
 Lorenz, D.L., De Cicco, L.A., 2017, DVstats---Functions to manipulate daily-values data: R package version 0.3.4, July 26, 2017, accessed April 28, 2019 at \url{https://github.com/USGS-R/DVstats}.
 
-Rutledge, A.T., 1998, Computer programs for describing the recession of ground-water discharge and for estimating mean ground-water recharge and discharge from streamflow data---Update: U.S. Geological Survey Water-Resources Investigations Report 98--4148, 43 p., \url{https://pubs.usgs.gov/wri/wri984148/}.
+Rutledge, A.T., 1998, Computer programs for describing the recession of ground-water discharge and for estimating mean ground-water recharge and discharge from streamflow data---Update: U.S. Geological Survey Water-Resources Investigations Report 98--4148, 43 p., \url{https://doi.org/10.3133/wri984148}.
 }
 \seealso{\code{\link{dvget}}, \code{\link{fill_dvpartenv}}, \code{\link{dvpart2mnpart}}
 }
 \examples{
-\dontrun{
+\donttest{
 # USGS 14362000 Applegate River near Copper, Oregon
 dv <- dvget("14362000", sdate="1989-10-01", edate="1999-09-30")
 pdv <- dvpart(dv, cda=225) # The drainage area is 225 square miles.
@@ -72,7 +72,7 @@ lines(pdv$Date, pdv$FlowPart1, col=2)
 lines(pdv$Date, pdv$FlowPart2, col=3)
 lines(pdv$Date, pdv$FlowPart3, col=4) #}
 
-\dontrun{
+\donttest{
 DV  <- dvget("07031740", edate="2017-12-31"); cda <- 788 # square miles
 pDV <- dvpart(DV, cda=cda) # NULL will be return and here is the message
 #         for 07031740 noncontinuous data between 1995-02-01 to 2017-11-28
@@ -119,9 +119,9 @@ DV  <- dvget("07382500", sdate="2000-01-01", edate="2012-12-31",
 pDV <- dvpart(DV, cda=cda, fillgaps=TRUE, na.negflow=TRUE)
 head(pDV[pDV$Flow < 0,]) # see how the baseflows are NAs
 mDV <- dvpart2mnpart(pDV)
-mDV[      mDV$Flow  < 0,] # October 2010 with baseflows as NAs
-mDV[is.na(mDV$FlowBase),] # to view all months in which at least one
-daily streamflow was less than zero }
+mDV[      mDV$Flow  < 0,] # October 2010 with baseflows as NAs to view all
+mDV[is.na(mDV$FlowBase),] # months in which at least one daily streamflow
+                          # was less than zero }
 }
 \keyword{streamflow partitioning}
 \keyword{baseflow}
