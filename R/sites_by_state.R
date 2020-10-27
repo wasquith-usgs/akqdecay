@@ -63,7 +63,7 @@ function(states, parameterCd="00060", site_tp_cd="ST",
     sf$project_no      <- NULL
     sf$CDA <- pmin(sf$drain_area_va, sf$contrib_drain_area_va, na.rm=TRUE)
   }
-  if(make_CDA) {
+  if(makeCDA) {
     sf$CDA <- pmin(sf$drain_area_va, sf$contrib_drain_area_va, na.rm=TRUE)
   }
   if(rm_alt) {
